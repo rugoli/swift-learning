@@ -21,10 +21,14 @@ var optionalString: String? = "Hello"
 print(optionalString == nil)
 
 var optionalName: String? = "John Appleseed"
+// optionalName = nil
 var greeting = "Hello!"
 if let name = optionalName {
     greeting = "Hello, \(name)"
 }
+
+var testOptional: String = "This is a test"
+// testOptional = nil  // throws an error because not declared as optional
 
 //: - Experiment:
 //: Change `optionalName` to `nil`. What greeting do you get? Add an `else` clause that sets a different greeting if `optionalName` is `nil`.
@@ -48,6 +52,7 @@ switch vegetable {
     case let x where x.hasSuffix("pepper"):
         print("Is it a spicy \(x)?")
     default:
+        // can't remove this because switch has to be exhaustive
         print("Everything tastes good in soup.")
 }
 
@@ -66,14 +71,17 @@ let interestingNumbers = [
     "Square": [1, 4, 9, 16, 25],
 ]
 var largest = 0
+var largestType: String?
 for (kind, numbers) in interestingNumbers {
     for number in numbers {
         if number > largest {
             largest = number
+            largestType = kind
         }
     }
 }
 print(largest)
+print(largestType)
 
 //: - Experiment:
 //: Add another variable to keep track of which kind of number was the largest, as well as what that largest number was.
