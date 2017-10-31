@@ -4,8 +4,29 @@
 //:
 class Shape {
     var numberOfSides = 0
+    let pi: Double = 3.1415;
+    
     func simpleDescription() -> String {
         return "A shape with \(numberOfSides) sides."
+    }
+    
+    func shapeNameFromSides() -> String {
+        switch self.numberOfSides {
+        case 1, 2:
+            return "This is not a shape"
+        case 3:
+            return "This is a triangle"
+        case 4:
+            return "This is a quadrilateral"
+        case 5:
+            return "This is a pentagon"
+        default:
+            return "This is a \(self.numberOfSides)-gon"
+        }
+    }
+    
+    func printArg(shapeName name: String) -> String {
+        return "This shape is named \(name)"
     }
 }
 
@@ -15,24 +36,28 @@ class Shape {
 //: Create an instance of a class by putting parentheses after the class name. Use dot syntax to access the properties and methods of the instance.
 //:
 var shape = Shape()
-shape.numberOfSides = 7
+shape.numberOfSides = 5
 var shapeDescription = shape.simpleDescription()
+shape.printArg(shapeName: "Triangle")
+shape.shapeNameFromSides()
 
 //: This version of the `Shape` class is missing something important: an initializer to set up the class when an instance is created. Use `init` to create one.
 //:
 class NamedShape {
     var numberOfSides: Int = 0
     var name: String
+    private let id: String
 
     init(name: String) {
-       self.name = name
+        self.name = name
+        self.id = "test id"
     }
-
+    
     func simpleDescription() -> String {
-       return "A shape with \(numberOfSides) sides."
+        self.id
+        return "A shape with \(numberOfSides) sides."
     }
 }
-
 //: Notice how `self` is used to distinguish the `name` property from the `name` argument to the initializer. The arguments to the initializer are passed like a function call when you create an instance of the class. Every property needs a value assigned—either in its declaration (as with `numberOfSides`) or in the initializer (as with `name`).
 //:
 //: Use `deinit` to create a deinitializer if you need to perform some cleanup before the object is deallocated.
@@ -45,9 +70,10 @@ class Square: NamedShape {
     var sideLength: Double
 
     init(sideLength: Double, name: String) {
+        // must initialize child class vars first, then call init, then can access super vars
         self.sideLength = sideLength
         super.init(name: name)
-        numberOfSides = 4
+        self.numberOfSides = 4
     }
 
     func area() -> Double {
@@ -55,13 +81,39 @@ class Square: NamedShape {
     }
 
     override func simpleDescription() -> String {
-        return "A square with sides of length \(sideLength)."
+        return "A square with sides of length \(self.sideLength)."
     }
 }
 let test = Square(sideLength: 5.2, name: "my test square")
 test.area()
 test.simpleDescription()
 
+
+class Circle: NamedShape {
+    let radius: Double
+    
+    init(radius: Double, name: String) {
+        self.radius = radius
+        super.init(name: name)
+    }
+    
+    override func simpleDescription() -> String {
+        return "A circle with radius of \(self.radius)"
+    }
+    
+    func area() -> Double {
+        return Double.pi * (self.radius * self.radius)
+    }
+    
+    func circumference() -> Double {
+        return 2 * self.radius * Double.pi
+    }
+}
+
+let myCircle: Circle = Circle(radius: 3.0, name: "My circle")
+myCircle.simpleDescription()
+myCircle.area()
+myCircle.circumference()
 //: - Experiment:
 //: Make another subclass of `NamedShape` called `Circle` that takes a radius and a name as arguments to its initializer. Implement an `area()` and a `simpleDescription()` method on the `Circle` class.
 //:
@@ -69,6 +121,7 @@ test.simpleDescription()
 //:
 class EquilateralTriangle: NamedShape {
     var sideLength: Double = 0.0
+    private let testPrivateVar: String = "Test var"
 
     init(sideLength: Double, name: String) {
         self.sideLength = sideLength
@@ -80,8 +133,8 @@ class EquilateralTriangle: NamedShape {
         get {
              return 3.0 * sideLength
         }
-        set {
-            sideLength = newValue / 3.0
+        set (newPerimeter) {
+            sideLength = newPerimeter / 3.0
         }
     }
 
@@ -93,6 +146,7 @@ var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
 print(triangle.perimeter)
 triangle.perimeter = 9.9
 print(triangle.sideLength)
+// cannot access triangle.testPrivateVar
 
 //: In the setter for `perimeter`, the new value has the implicit name `newValue`. You can provide an explicit name in parentheses after `set`.
 //:
@@ -130,7 +184,8 @@ print(triangleAndSquare.triangle.sideLength)
 
 //: When working with optional values, you can write `?` before operations like methods, properties, and subscripting. If the value before the `?` is `nil`, everything after the `?` is ignored and the value of the whole expression is `nil`. Otherwise, the optional value is unwrapped, and everything after the `?` acts on the unwrapped value. In both cases, the value of the whole expression is an optional value.
 //:
-let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
+var optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
+optionalSquare = nil
 let sideLength = optionalSquare?.sideLength
 
 
