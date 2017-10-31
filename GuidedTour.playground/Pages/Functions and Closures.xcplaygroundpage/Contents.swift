@@ -50,7 +50,6 @@ func returnFifteen() -> Int {
     return y
 }
 returnFifteen()
-
 //: Functions are a first-class type. This means that a function can return another function as its value.
 //:
 func makeIncrementer() -> ((Int) -> Int) {
@@ -81,8 +80,10 @@ hasAnyMatches(list: numbers, condition: lessThanTen)
 //: Functions are actually a special case of closures: blocks of code that can be called later. The code in a closure has access to things like variables and functions that were available in the scope where the closure was created, even if the closure is in a different scope when it is executed—you saw an example of this already with nested functions. You can write a closure without a name by surrounding code with braces (`{}`). Use `in` to separate the arguments and return type from the body.
 //:
 numbers.map({ (number: Int) -> Int in
-    let result = 3 * number
-    return result
+  if !(number % 2 == 0) {
+    return 0
+  }
+  return number * 3
 })
 
 //: - Experiment:

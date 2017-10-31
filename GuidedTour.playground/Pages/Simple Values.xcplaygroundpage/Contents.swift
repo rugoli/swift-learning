@@ -32,6 +32,9 @@ let explicitDouble: Double = 70
 //:
 //: Values are never implicitly converted to another type. If you need to convert a value to a different type, explicitly make an instance of the desired type.
 //:
+// experiment
+let floatType: Float = 4
+
 let label = "The width is "
 let width = 94
 let widthLabel = label + String(width)
@@ -45,32 +48,40 @@ let apples = 3
 let oranges = 5
 let appleSummary = "I have \(apples) apples."
 let fruitSummary = "I have \(apples + oranges) pieces of fruit."
+let nonAppleSummary = "I have \(oranges) pieces of fruit that are not apples"
 
 //: - Experiment:
 //: Use `\()` to include a floating-point calculation in a string and to include someone’s name in a greeting.
 //:
 //: Use three double quotes (`"""`) for strings that take up multiple lines. Indentation at the start of each quoted line is removed, as long as it matches the indentation of the closing quote. For example:
 //:
+// doesn't work in swift 3/xcode 8
+/*
 let quotation = """
 I said "I have \(apples) apples."
 And then I said "I have \(apples + oranges) pieces of fruit."
 """
+ */
 
 //: Create arrays and dictionaries using brackets (`[]`), and access their elements by writing the index or key in brackets. A comma is allowed after the last element.
 //:
 var shoppingList = ["catfish", "water", "tulips", "blue paint"]
 shoppingList[1] = "bottle of water"
+shoppingList
 
 var occupations = [
     "Malcolm": "Captain",
     "Kaylee": "Mechanic",
  ]
 occupations["Jayne"] = "Public Relations"
-
+occupations
 //: To create an empty array or dictionary, use the initializer syntax.
 //:
 let emptyArray = [String]()
-let emptyDictionary = [String: Float]()
+var emptyDictionary = [String: Float]()
+// emptyDictionary["Testing key"] = "bad value" // throws error because value is not of the float type
+emptyDictionary["testing key"] = 2.0
+emptyDictionary
 
 //: If type information can be inferred, you can write an empty array as `[]` and an empty dictionary as `[:]`—for example, when you set a new value for a variable or pass an argument to a function.
 //:
