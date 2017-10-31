@@ -29,7 +29,6 @@ struct SimpleStructure: ExampleProtocol {
 var b = SimpleStructure()
 b.adjust()
 let bDescription = b.simpleDescription
-
 //: - Experiment:
 //: Write an enumeration that conforms to this protocol.
 //:
@@ -47,6 +46,19 @@ extension Int: ExampleProtocol {
  }
 print(7.simpleDescription)
 
+extension Double: ExampleProtocol {
+  var simpleDescription: String {
+    return "Find absolute value"
+  }
+  
+  mutating func adjust() {
+    self = abs(self)
+  }
+}
+
+var testDouble: Double = -2.0
+testDouble.adjust()
+
 //: - Experiment:
 //: Write an extension for the `Double` type that adds an `absoluteValue` property.
 //:
@@ -54,7 +66,7 @@ print(7.simpleDescription)
 //:
 let protocolValue: ExampleProtocol = a
 print(protocolValue.simpleDescription)
-// print(protocolValue.anotherProperty)  // Uncomment to see the error
+//print(protocolValue.anotherProperty)  // Uncomment to see the error
 
 //: Even though the variable `protocolValue` has a runtime type of `SimpleClass`, the compiler treats it as the given type of `ExampleProtocol`. This means that you can’t accidentally access methods or properties that the class implements in addition to its protocol conformance.
 //:
