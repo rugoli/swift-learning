@@ -34,7 +34,27 @@ func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
     }
    return false
 }
-anyCommonElements([1, 2, 3], [3])
+
+func findCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> [T.Iterator.Element]
+  where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
+    var commonItems: [T.Iterator.Element] = []
+    for lhsItem in lhs {
+      for rhsItem in rhs {
+        if lhsItem == rhsItem {
+          commonItems.append(lhsItem)
+        }
+      }
+    }
+    return commonItems
+}
+
+// one common element
+anyCommonElements([1, 2, 3], [2, 3])
+findCommonElements([1, 2, 3], [2, 3])
+
+// no common elements
+anyCommonElements([1, 2, 3], [4])
+findCommonElements([1, 2, 3], [4])
 
 //: - Experiment:
 //: Modify the `anyCommonElements(_:_:)` function to make a function that returns an array of the elements that any two sequences have in common.
