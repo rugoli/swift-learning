@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		014AB0DF1FABAC1D006ABF3E /* DFMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014AB0DE1FABAC1D006ABF3E /* DFMeasurementTests.swift */; };
+		01850F6A1FAB9EDE00837AC6 /* DFMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */; };
 		01C704BA1FAA617E0001BFBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704B91FAA617E0001BFBD /* AppDelegate.swift */; };
 		01C704BC1FAA617E0001BFBD /* DFCalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704BB1FAA617E0001BFBD /* DFCalculatorViewController.swift */; };
 		01C704BF1FAA617E0001BFBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C704BD1FAA617E0001BFBD /* Main.storyboard */; };
@@ -16,7 +18,21 @@
 		01C704D21FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704D11FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		014AB0E11FABAC1D006ABF3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01C704AE1FAA617D0001BFBD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01C704B51FAA617E0001BFBD;
+			remoteInfo = DogFoodCalculator;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		014AB0DC1FABAC1D006ABF3E /* DogFoodCalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogFoodCalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		014AB0DE1FABAC1D006ABF3E /* DFMeasurementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFMeasurementTests.swift; sourceTree = "<group>"; };
+		014AB0E01FABAC1D006ABF3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DFMeasurement.swift; path = DogFoodCalculator/DataAndModels/DFMeasurement.swift; sourceTree = SOURCE_ROOT; };
 		01C704B61FAA617E0001BFBD /* DogFoodCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogFoodCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01C704B91FAA617E0001BFBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01C704BB1FAA617E0001BFBD /* DFCalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFCalculatorViewController.swift; sourceTree = "<group>"; };
@@ -29,6 +45,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		014AB0D91FABAC1D006ABF3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		01C704B31FAA617E0001BFBD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -39,10 +62,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		014AB0DD1FABAC1D006ABF3E /* DogFoodCalculatorTests */ = {
+			isa = PBXGroup;
+			children = (
+				014AB0DE1FABAC1D006ABF3E /* DFMeasurementTests.swift */,
+				014AB0E01FABAC1D006ABF3E /* Info.plist */,
+			);
+			path = DogFoodCalculatorTests;
+			sourceTree = "<group>";
+		};
+		01850F6B1FAB9FE700837AC6 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		01C704AD1FAA617D0001BFBD = {
 			isa = PBXGroup;
 			children = (
 				01C704B81FAA617E0001BFBD /* DogFoodCalculator */,
+				014AB0DD1FABAC1D006ABF3E /* DogFoodCalculatorTests */,
 				01C704B71FAA617E0001BFBD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				01C704B61FAA617E0001BFBD /* DogFoodCalculator.app */,
+				014AB0DC1FABAC1D006ABF3E /* DogFoodCalculatorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -62,6 +103,7 @@
 				01C704C01FAA617E0001BFBD /* Assets.xcassets */,
 				01C704C21FAA617E0001BFBD /* LaunchScreen.storyboard */,
 				01C704C51FAA617E0001BFBD /* Info.plist */,
+				01850F6B1FAB9FE700837AC6 /* Other */,
 				01C704CE1FAA78600001BFBD /* DataAndModels */,
 				01C704CD1FAA78570001BFBD /* Views */,
 				01C704CB1FAA78370001BFBD /* Controllers */,
@@ -90,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				01C704CF1FAA78910001BFBD /* DFCollectionViewDataSource.swift */,
+				01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */,
 			);
 			path = DataAndModels;
 			sourceTree = "<group>";
@@ -97,6 +140,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		014AB0DB1FABAC1D006ABF3E /* DogFoodCalculatorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 014AB0E31FABAC1D006ABF3E /* Build configuration list for PBXNativeTarget "DogFoodCalculatorTests" */;
+			buildPhases = (
+				014AB0D81FABAC1D006ABF3E /* Sources */,
+				014AB0D91FABAC1D006ABF3E /* Frameworks */,
+				014AB0DA1FABAC1D006ABF3E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				014AB0E21FABAC1D006ABF3E /* PBXTargetDependency */,
+			);
+			name = DogFoodCalculatorTests;
+			productName = DogFoodCalculatorTests;
+			productReference = 014AB0DC1FABAC1D006ABF3E /* DogFoodCalculatorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		01C704B51FAA617E0001BFBD /* DogFoodCalculator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01C704C81FAA617E0001BFBD /* Build configuration list for PBXNativeTarget "DogFoodCalculator" */;
@@ -124,6 +185,11 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Roshan Goli";
 				TargetAttributes = {
+					014AB0DB1FABAC1D006ABF3E = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 01C704B51FAA617E0001BFBD;
+					};
 					01C704B51FAA617E0001BFBD = {
 						CreatedOnToolsVersion = 9.0.1;
 						ProvisioningStyle = Automatic;
@@ -144,11 +210,19 @@
 			projectRoot = "";
 			targets = (
 				01C704B51FAA617E0001BFBD /* DogFoodCalculator */,
+				014AB0DB1FABAC1D006ABF3E /* DogFoodCalculatorTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		014AB0DA1FABAC1D006ABF3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		01C704B41FAA617E0001BFBD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -162,6 +236,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		014AB0D81FABAC1D006ABF3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				014AB0DF1FABAC1D006ABF3E /* DFMeasurementTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		01C704B21FAA617E0001BFBD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -169,11 +251,20 @@
 				01C704BC1FAA617E0001BFBD /* DFCalculatorViewController.swift in Sources */,
 				01C704BA1FAA617E0001BFBD /* AppDelegate.swift in Sources */,
 				01C704D21FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift in Sources */,
+				01850F6A1FAB9EDE00837AC6 /* DFMeasurement.swift in Sources */,
 				01C704D01FAA78910001BFBD /* DFCollectionViewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		014AB0E21FABAC1D006ABF3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01C704B51FAA617E0001BFBD /* DogFoodCalculator */;
+			targetProxy = 014AB0E11FABAC1D006ABF3E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		01C704BD1FAA617E0001BFBD /* Main.storyboard */ = {
@@ -195,6 +286,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		014AB0E41FABAC1D006ABF3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y3QN5VQT38;
+				INFOPLIST_FILE = DogFoodCalculatorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.roshan.DogFoodCalculatorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogFoodCalculator.app/DogFoodCalculator";
+			};
+			name = Debug;
+		};
+		014AB0E51FABAC1D006ABF3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y3QN5VQT38;
+				INFOPLIST_FILE = DogFoodCalculatorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.roshan.DogFoodCalculatorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogFoodCalculator.app/DogFoodCalculator";
+			};
+			name = Release;
+		};
 		01C704C61FAA617E0001BFBD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -335,6 +458,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		014AB0E31FABAC1D006ABF3E /* Build configuration list for PBXNativeTarget "DogFoodCalculatorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				014AB0E41FABAC1D006ABF3E /* Debug */,
+				014AB0E51FABAC1D006ABF3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		01C704B11FAA617D0001BFBD /* Build configuration list for PBXProject "DogFoodCalculator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
