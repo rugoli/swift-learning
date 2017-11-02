@@ -19,7 +19,7 @@ class DFCollectionViewDataSource: NSObject, UICollectionViewDataSource, UICollec
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 100, height: 100)
+    return CGSize(width: 300, height: 150)
   }
 
 }
