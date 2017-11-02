@@ -29,7 +29,12 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
   override func layoutSubviews() {
     super.layoutSubviews()
     
-    self.testRectangle.frame = CGRect(x: 25, y: 25, width: 50, height: 50)
+    testRectangle.translatesAutoresizingMaskIntoConstraints = false
+    let horizontalConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: testRectangle, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
+    let verticalConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: testRectangle, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0)
+    let widthConstraint = NSLayoutConstraint(item: testRectangle, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 50)
+    let heightConstraint = NSLayoutConstraint(item: testRectangle, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 50)
+    NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
   }
     
 }

@@ -26,9 +26,11 @@ class DFCalculatorViewController: UIViewController {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
     flowLayout.minimumInteritemSpacing = 10
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 20)
     
     self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
-    self.collectionView.backgroundColor = UIColor.white
+    self.collectionView.backgroundColor = UIColor.black
+    self.collectionView.showsHorizontalScrollIndicator = false
     self.collectionView.dataSource = self.dataSource
     self.collectionView.delegate = self.dataSource
     self.collectionView.register(DFCalculatorCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: DFCalculatorCollectionViewCell.reuseIdentifier)
@@ -37,7 +39,7 @@ class DFCalculatorViewController: UIViewController {
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    self.collectionView?.frame = CGRect(x: 20, y: 50 , width: self.view.bounds.size.width, height: 200)
+    self.collectionView?.frame = CGRect(x: 0, y: 50 , width: self.view.bounds.size.width, height: 200)
   }
 }
 
