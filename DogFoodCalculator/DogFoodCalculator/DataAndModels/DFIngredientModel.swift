@@ -11,15 +11,25 @@ import UIKit
 class DFIngredientModel: NSObject {
     let ingredientName: String
     let supportedMeasurementUnits: [DFMeasurementUnit]
-    let ingredientAmount: CGFloat
+    let defaultMeasurementUnit: DFMeasurementUnit
+    var ingredientAmount: DFMeasurement
     
     required init(ingredientName: String,
                   supportedMeasurementUnits: [DFMeasurementUnit],
-                  ingredientAmount: CGFloat) {
+                  defaultMeasurementUnit: DFMeasurementUnit? = nil) {
         self.ingredientName = ingredientName
         self.supportedMeasurementUnits = supportedMeasurementUnits
-        self.ingredientAmount = ingredientAmount
+        self.defaultMeasurementUnit = defaultMeasurementUnit != nil ? defaultMeasurementUnit! : self.supportedMeasurementUnits[0]
+        self.ingredientAmount = DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
         
         super.init()
+    }
+    
+    func selectedMeasurementUnit() -> DFMeasurementUnit {
+        return self.ingredientAmount.measurementUnit
+    }
+    
+    func isSelected() -> Bool {
+        return self.ingredientAmount.measurementValue > 0
     }
 }
