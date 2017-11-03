@@ -21,7 +21,7 @@ class DFCalculatorViewController: UIViewController {
     super.loadView()
     self.view.backgroundColor = UIColor.white
     
-    self.dataSource = DFIngredientCollectionViewDataSource()
+    self.dataSource = DFIngredientCollectionViewDataSource.init()
     
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal

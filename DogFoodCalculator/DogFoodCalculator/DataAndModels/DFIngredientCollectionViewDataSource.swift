@@ -9,23 +9,43 @@
 import UIKit
 
 class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10;
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell: DFCalculatorCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DFCalculatorCollectionViewCell.reuseIdentifier, for: indexPath) as! DFCalculatorCollectionViewCell
-    cell.configureCellWithModel(self.generateRandomIngredient())
-    return cell
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 300, height: 150)
-  }
-
+    let numIngredients: Int = 10
+    var ingredients: [DFIngredientModel] = [DFIngredientModel]()
+    
+    override init() {
+        super.init()
+        
+        self.generateIngredients()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.numIngredients
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: DFCalculatorCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DFCalculatorCollectionViewCell.reuseIdentifier, for: indexPath) as! DFCalculatorCollectionViewCell
+        cell.configureCellWithModel(self.ingredients[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 300, height: 150)
+    }
+    
 }
 
+// MARK:
+
+// test data generation
+
 extension DFIngredientCollectionViewDataSource {
+    private func generateIngredients() {
+        for _ in 0..<self.numIngredients {
+            self.ingredients.append(self.generateRandomIngredient())
+        }
+        
+    }
+    
     private func generateRandomIngredient() -> DFIngredientModel {
         let randomInt: Int = Int(arc4random_uniform(3))
         switch randomInt {
