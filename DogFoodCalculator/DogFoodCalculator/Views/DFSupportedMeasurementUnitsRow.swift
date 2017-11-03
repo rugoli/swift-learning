@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol DFSupportedMeasurementsProtocol : class {
+    func didSelectMeasurement(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit)
+}
+
 class DFSupportedMeasurementUnitsRow: UIView {
     var supportedMeasurementUnits: [UIButton]
+    weak var delegate: DFSupportedMeasurementsProtocol?
 
     init() {
         self.supportedMeasurementUnits = [UIButton]()
@@ -42,10 +47,16 @@ class DFSupportedMeasurementUnitsRow: UIView {
         let button = UIButton(type: UIButtonType.system)
         button.setTitle(unit.rawValue, for: UIControlState.normal)
         button.setTitle(unit.rawValue, for: UIControlState.selected)
+        button.setTitleColor(UIColor.blue, for: UIControlState.normal)
         button.isHidden = false
         button.backgroundColor = UIColor.white
+        button.addTarget(self, action: #selector(self.tappedMeasurementButton(sender:)), for: UIControlEvents.touchUpInside)
         
         return button
+    }
+    
+    @objc private func tappedMeasurementButton(sender: UIButton) {
+        delegate?.didSelectMeasurement(measurementRow: self, selectedMeasurement: sender.measurementUnit)
     }
     
     override func layoutSubviews() {
@@ -84,5 +95,12 @@ class DFSupportedMeasurementUnitsRow: UIView {
         }
         NSLayoutConstraint.activate(constraints)
     }
+}
 
+extension UIButton {
+    var measurementUnit : DFMeasurementUnit {
+        get {
+            return DFMeasurementUnit(rawValue: (self.titleLabel?.text!)!)!
+        }
+    }
 }

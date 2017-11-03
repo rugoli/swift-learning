@@ -22,6 +22,7 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
         self.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        supportedUnitsRow.delegate = self
         
         self.addSubview(cellMainLabel)
         self.addSubview(supportedUnitsRow)
@@ -88,4 +89,12 @@ extension DFCalculatorCollectionViewCell {
     private func configureSupportedUnitsRow() {
         supportedUnitsRow.configureSupportedMeasurementUnits(ingredientModel.supportedMeasurementUnits)
     }
+}
+
+extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
+    func didSelectMeasurement(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
+        print(1)
+    }
+    
+    
 }
