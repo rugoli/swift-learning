@@ -11,7 +11,7 @@ import CoreGraphics
 
 class DFCalculatorViewController: UIViewController {
   private var collectionView: UICollectionView!
-  private var dataSource: DFCollectionViewDataSource!
+  private var dataSource: DFIngredientCollectionViewDataSource!
   
   required init(coder: NSCoder) {
     super.init(coder: coder)!
@@ -21,7 +21,7 @@ class DFCalculatorViewController: UIViewController {
     super.loadView()
     self.view.backgroundColor = UIColor.white
     
-    self.dataSource = DFCollectionViewDataSource()
+    self.dataSource = DFIngredientCollectionViewDataSource()
     
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal

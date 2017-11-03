@@ -31,38 +31,6 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
     required convenience init?(coder aDecoder: NSCoder) {
         self.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self.setMainLabelConstraints()
-        self.setSupportedUnitsRowConstraints()
-    }
-    
-    private func setMainLabelConstraints() {
-        let cellSize = self.bounds.size
-        let cellMargins = self.layoutMargins
-        let labelSize: CGSize = cellMainLabel.sizeThatFits(CGSize(width: cellSize.width - cellMargins.left - cellMargins.right, height: cellSize.height))
-        
-        cellMainLabel.translatesAutoresizingMaskIntoConstraints = false
-        let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: cellMainLabel, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
-        let topPadding = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.topMargin, relatedBy: NSLayoutRelation.equal, toItem: cellMainLabel, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 10)
-        let width = NSLayoutConstraint(item: cellMainLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.width)
-        let height = NSLayoutConstraint(item: cellMainLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.height)
-        NSLayoutConstraint.activate([centering, topPadding, width, height])
-    }
-    
-    private func setSupportedUnitsRowConstraints() {
-        let cellSize = self.bounds.size
-        let cellMargins = self.layoutMargins
-        let rowSize: CGSize = CGSize(width: cellSize.width - cellMargins.left - cellMargins.right, height: 40)
-        
-        supportedUnitsRow.translatesAutoresizingMaskIntoConstraints = false
-        let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: supportedUnitsRow, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
-        let topSpacing = NSLayoutConstraint(item: supportedUnitsRow, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: cellMainLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5)
-        let height = NSLayoutConstraint(item: supportedUnitsRow, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: rowSize.height)
-        NSLayoutConstraint.activate([centering, topSpacing, height])
-    }
 }
 
 // MARK:
@@ -73,8 +41,13 @@ extension DFCalculatorCollectionViewCell {
     
     func configureCellWithModel(_ ingredient: DFIngredientModel) {
         ingredientModel = ingredient
+        
         self.configureMainLabelProperties()
+        self.setMainLabelConstraints()
+        
         self.configureSupportedUnitsRow()
+        self.setSupportedUnitsRowConstraints()
+        
         self.setNeedsLayout()
     }
     
@@ -88,6 +61,41 @@ extension DFCalculatorCollectionViewCell {
     
     private func configureSupportedUnitsRow() {
         supportedUnitsRow.configureSupportedMeasurementUnits(ingredientModel.supportedMeasurementUnits)
+    }
+}
+
+// MARK:
+
+// autolayout constraints
+
+extension DFCalculatorCollectionViewCell {
+    private func setMainLabelConstraints() {
+        cellMainLabel.removeConstraints(cellMainLabel.constraints)
+        
+        let cellSize = self.bounds.size
+        let cellMargins = self.layoutMargins
+        let labelSize: CGSize = cellMainLabel.sizeThatFits(CGSize(width: cellSize.width - cellMargins.left - cellMargins.right, height: cellSize.height))
+        
+        cellMainLabel.translatesAutoresizingMaskIntoConstraints = false
+        let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: cellMainLabel, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
+        let topPadding = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.topMargin, relatedBy: NSLayoutRelation.equal, toItem: cellMainLabel, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 10)
+        let width = NSLayoutConstraint(item: cellMainLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.width)
+        let height = NSLayoutConstraint(item: cellMainLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.height)
+        NSLayoutConstraint.activate([centering, topPadding, width, height])
+    }
+    
+    private func setSupportedUnitsRowConstraints() {
+        supportedUnitsRow.removeConstraints(supportedUnitsRow.constraints)
+        
+        let cellSize = self.bounds.size
+        let cellMargins = self.layoutMargins
+        let rowSize: CGSize = CGSize(width: cellSize.width - cellMargins.left - cellMargins.right, height: 40)
+        
+        supportedUnitsRow.translatesAutoresizingMaskIntoConstraints = false
+        let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: supportedUnitsRow, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
+        let topSpacing = NSLayoutConstraint(item: supportedUnitsRow, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: cellMainLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5)
+        let height = NSLayoutConstraint(item: supportedUnitsRow, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: rowSize.height)
+        NSLayoutConstraint.activate([centering, topSpacing, height])
     }
 }
 

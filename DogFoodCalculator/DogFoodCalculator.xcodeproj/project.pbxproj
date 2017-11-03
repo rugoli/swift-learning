@@ -16,7 +16,7 @@
 		01C704BF1FAA617E0001BFBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C704BD1FAA617E0001BFBD /* Main.storyboard */; };
 		01C704C11FAA617E0001BFBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C704C01FAA617E0001BFBD /* Assets.xcassets */; };
 		01C704C41FAA617E0001BFBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C704C21FAA617E0001BFBD /* LaunchScreen.storyboard */; };
-		01C704D01FAA78910001BFBD /* DFCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704CF1FAA78910001BFBD /* DFCollectionViewDataSource.swift */; };
+		01C704D01FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704CF1FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift */; };
 		01C704D21FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704D11FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +44,7 @@
 		01C704C01FAA617E0001BFBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01C704C31FAA617E0001BFBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01C704C51FAA617E0001BFBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		01C704CF1FAA78910001BFBD /* DFCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		01C704CF1FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		01C704D11FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFCalculatorCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,7 +136,7 @@
 		01C704CE1FAA78600001BFBD /* DataAndModels */ = {
 			isa = PBXGroup;
 			children = (
-				01C704CF1FAA78910001BFBD /* DFCollectionViewDataSource.swift */,
+				01C704CF1FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift */,
 				01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */,
 				015119581FABC8DF005EEC71 /* DFIngredientModel.swift */,
 			);
@@ -260,7 +260,7 @@
 				0151195B1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift in Sources */,
 				01C704D21FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift in Sources */,
 				01850F6A1FAB9EDE00837AC6 /* DFMeasurement.swift in Sources */,
-				01C704D01FAA78910001BFBD /* DFCollectionViewDataSource.swift in Sources */,
+				01C704D01FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
