@@ -24,20 +24,7 @@ class DFIngredientModel: NSObject {
         
         super.init()
         
-        self.setDefaultAndReorderUnitsIfNecessary()
-    }
-    
-    func setDefaultAndReorderUnitsIfNecessary() {
-        if !self.supportedMeasurementUnits.contains(self.defaultMeasurementUnit) {  // default unit not supported, set to first unit
-            self.defaultMeasurementUnit = self.supportedMeasurementUnits[0]
-            self.ingredientAmount = DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
-        } else if self.supportedMeasurementUnits[0] != self.defaultMeasurementUnit {
-            let defaultIndex = self.supportedMeasurementUnits.index(of: self.defaultMeasurementUnit)
-            self.supportedMeasurementUnits.remove(at: defaultIndex!)
-            self.supportedMeasurementUnits.insert(self.defaultMeasurementUnit, at: 0)
-        }
-        
-        
+        self.validateSupportedAndDefaultUnits()
     }
     
     func selectedMeasurementUnit() -> DFMeasurementUnit {
@@ -54,6 +41,39 @@ class DFIngredientModel: NSObject {
             viewModels.append(DFMeasurementUnitViewModel(unit: unit, isSelected: unit == self.selectedMeasurementUnit()))
         }
         return viewModels
+    }
+}
+
+// MARK:
+
+// data validation
+
+extension DFIngredientModel {
+    private func validateSupportedAndDefaultUnits() {
+        self.removeDuplicateValues()
+        self.validateDefaultUnits()
+    }
+    
+    private func validateDefaultUnits() {
+        if !self.supportedMeasurementUnits.contains(self.defaultMeasurementUnit) {  // default unit not supported, set to first unit
+            self.defaultMeasurementUnit = self.supportedMeasurementUnits[0]
+            self.ingredientAmount = DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
+        } else if self.supportedMeasurementUnits[0] != self.defaultMeasurementUnit {  // default unit not listed first
+            let defaultIndex = self.supportedMeasurementUnits.index(of: self.defaultMeasurementUnit)
+            self.supportedMeasurementUnits.remove(at: defaultIndex!)
+            self.supportedMeasurementUnits.insert(self.defaultMeasurementUnit, at: 0)
+        }
+    }
+    
+    private func removeDuplicateValues() {
+        var i : Int = 0
+        while i < self.supportedMeasurementUnits.count {
+            if self.supportedMeasurementUnits[..<i].contains(self.supportedMeasurementUnits[i]) {
+                self.supportedMeasurementUnits.remove(at: i)
+            } else {
+                i += 1
+            }
+        }
     }
 }
 
