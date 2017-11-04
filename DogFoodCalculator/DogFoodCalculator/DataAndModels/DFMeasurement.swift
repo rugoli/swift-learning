@@ -48,6 +48,16 @@ enum DFMeasurementUnit: String {
     }
 }
 
+struct DFMeasurementUnitViewModel {
+    let measurementUnit: DFMeasurementUnit
+    let isSelected: Bool
+    
+    init(unit: DFMeasurementUnit, isSelected: Bool) {
+        self.measurementUnit = unit
+        self.isSelected = isSelected
+    }
+}
+
 struct DFMeasurement {
     var measurementUnit: DFMeasurementUnit
     var measurementValue: Float

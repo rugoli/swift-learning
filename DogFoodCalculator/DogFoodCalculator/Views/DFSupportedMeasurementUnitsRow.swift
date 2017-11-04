@@ -33,22 +33,23 @@ class DFSupportedMeasurementUnitsRow: UIView {
         self.supportedMeasurementUnits.removeAll()
     }
     
-    func configureSupportedMeasurementUnits(_ supportedUnits: [DFMeasurementUnit]) {
+    func configureSupportedMeasurementUnits(_ supportedUnits: [DFMeasurementUnitViewModel]) {
         self.resetAllButtons()
         
-        for unit: DFMeasurementUnit in supportedUnits {
-            let button: UIButton = self.buttonForMeasurementUnit(unit)
+        for unit: DFMeasurementUnitViewModel in supportedUnits {
+            let button: UIButton = self.buttonForViewModel(unit)
             self.supportedMeasurementUnits.append(button)
             self.addSubview(button)
         }
     }
     
-    private func buttonForMeasurementUnit(_ unit: DFMeasurementUnit) -> UIButton {
+    private func buttonForViewModel(_ viewModel: DFMeasurementUnitViewModel) -> UIButton {
         let button = UIButton(type: UIButtonType.system)
-        button.setTitle(unit.rawValue, for: UIControlState.normal)
-        button.setTitle(unit.rawValue, for: UIControlState.selected)
+        button.setTitle(viewModel.measurementUnit.rawValue, for: UIControlState.normal)
+        button.setTitle(viewModel.measurementUnit.rawValue, for: UIControlState.selected)
         button.setTitleColor(UIColor.blue, for: UIControlState.normal)
         button.isHidden = false
+        button.isSelected = viewModel.isSelected
         button.backgroundColor = UIColor.white
         button.addTarget(self, action: #selector(self.tappedMeasurementButton(sender:)), for: UIControlEvents.touchUpInside)
         

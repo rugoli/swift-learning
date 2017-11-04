@@ -60,7 +60,7 @@ extension DFCalculatorCollectionViewCell {
     }
     
     private func configureSupportedUnitsRow() {
-        supportedUnitsRow.configureSupportedMeasurementUnits(ingredientModel.supportedMeasurementUnits)
+        supportedUnitsRow.configureSupportedMeasurementUnits(ingredientModel.measurementUnitViewModels())
     }
 }
 
