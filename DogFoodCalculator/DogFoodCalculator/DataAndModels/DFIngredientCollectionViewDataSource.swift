@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol DFRecipeBuilder {
+  func addIngredient(_ ingredient: DFIngredientModel)
+  func removeIngredient(_ ingredient: DFIngredientModel)
+}
+
 class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     let numIngredients: Int = 10
     var ingredients: [DFIngredientModel] = [DFIngredientModel]()
+    private var recipe: DFRecipe = DFRecipe()
     
     override init() {
         super.init()
@@ -25,6 +31,7 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DFCalculatorCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DFCalculatorCollectionViewCell.reuseIdentifier, for: indexPath) as! DFCalculatorCollectionViewCell
         cell.configureCellWithModel(self.ingredients[indexPath.row])
+        cell.recipeBuilderDelegate = self
         return cell
     }
     
@@ -32,6 +39,22 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
         return CGSize(width: 300, height: 150)
     }
     
+}
+
+// MARK:
+
+// recipe builder
+
+extension DFIngredientCollectionViewDataSource : DFRecipeBuilder {
+  func addIngredient(_ ingredient: DFIngredientModel) {
+    self.recipe.addIngredient(ingredient)
+  }
+  
+  func removeIngredient(_ ingredient: DFIngredientModel) {
+    if self.recipe.ingredients.contains(ingredient) {
+      self.recipe.removeIngredient(ingredient)
+    }
+  }
 }
 
 // MARK:

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DFSupportedMeasurementsProtocol : class {
-    func didSelectMeasurement(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit)
+    func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit)
 }
 
 class DFSupportedMeasurementUnitsRow: UIView {
@@ -57,7 +57,7 @@ class DFSupportedMeasurementUnitsRow: UIView {
     }
     
     @objc private func tappedMeasurementButton(sender: UIButton) {
-        delegate?.didSelectMeasurement(measurementRow: self, selectedMeasurement: sender.measurementUnit)
+        delegate?.didSelectMeasurementUnit(measurementRow: self, selectedMeasurement: sender.measurementUnit)
     }
     
     override func layoutSubviews() {
