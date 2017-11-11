@@ -13,6 +13,7 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
   private let supportedUnitsRow: DFSupportedMeasurementUnitsRow
   private let removeIngredientButton : UIButton
   private var ingredientModel: DFIngredientModel!
+  var recipeBuilderDelegate: DFRecipeBuilder?
   
   static let reuseIdentifier: String = "calculator-cell"
   
@@ -55,7 +56,8 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
 
 extension DFCalculatorCollectionViewCell {
   @objc private func removeIngredient(sender: UIButton) {
-    
+    ingredientModel.isSelected = false
+    recipeBuilderDelegate?.removeIngredient(ingredientModel)
   }
 }
 
@@ -138,7 +140,11 @@ extension DFCalculatorCollectionViewCell {
 }
 
 extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
-  func didSelectMeasurement(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
-    print(1)
+  func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
+    if self.ingredientModel.ingredientAmount.measurementValue == 0 {
+      self.ingredientModel.ingredientAmount = DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0)!
+      self.recipeBuilderDelegate?.addIngredient(self.ingredientModel)
+      self.configureCellWithModel(self.ingredientModel)
+    }
   }
 }
