@@ -50,9 +50,7 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
   }
 }
 
-// MARK:
-
-// Building recipe
+// MARK: Building recipe
 
 extension DFCalculatorCollectionViewCell {
   @objc private func removeIngredient(sender: UIButton) {
@@ -62,9 +60,7 @@ extension DFCalculatorCollectionViewCell {
   }
 }
 
-// MARK:
-
-// Configuring views and models
+// MARK: Configuring views and models
 
 extension DFCalculatorCollectionViewCell {
   
@@ -92,9 +88,7 @@ extension DFCalculatorCollectionViewCell {
   }
 }
 
-// MARK:
-
-// autolayout constraints
+// MARK: Autolayout constraints
 
 extension DFCalculatorCollectionViewCell {
   private func setMainLabelConstraints() {

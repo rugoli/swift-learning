@@ -41,9 +41,7 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
     
 }
 
-// MARK:
-
-// recipe builder
+// MARK: Recipe builder
 
 extension DFIngredientCollectionViewDataSource : DFRecipeBuilder {
   func addIngredient(_ ingredient: DFIngredientModel) {
@@ -57,9 +55,7 @@ extension DFIngredientCollectionViewDataSource : DFRecipeBuilder {
   }
 }
 
-// MARK:
-
-// test data generation
+// MARK: Test data generation
 
 extension DFIngredientCollectionViewDataSource {
     private func generateIngredients() {
