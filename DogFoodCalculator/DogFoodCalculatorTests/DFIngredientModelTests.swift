@@ -20,12 +20,12 @@ class DFIngredientModelTests: XCTestCase {
     func testDefaultNotOrderedFirst() {
         let defaultUnit = DFMeasurementUnit.oz
         let testIngredient = DFIngredientModel(ingredientName: "Test", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.oz)
-        XCTAssertEqual(testIngredient.getSupportedMesaurementUnits()[0], defaultUnit)
+        XCTAssertEqual(testIngredient.getSupportedMeasurementUnits()[0], defaultUnit)
     }
     
     func testDuplicateElements() {
         let duplicateUnit = DFMeasurementUnit.cup
         let testIngredient = DFIngredientModel(ingredientName: "Test", supportedMeasurementUnits: [DFMeasurementUnit.lb, duplicateUnit, DFMeasurementUnit.tsp, duplicateUnit, DFMeasurementUnit.tbsp])
-        XCTAssertTrue(testIngredient.getSupportedMesaurementUnits().filter( {$0 == duplicateUnit} ).count == 1, "Duplicate element was not removed")
+        XCTAssertTrue(testIngredient.getSupportedMeasurementUnits().filter( {$0 == duplicateUnit} ).count == 1, "Duplicate element was not removed")
     }
 }
