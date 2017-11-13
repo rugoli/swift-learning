@@ -13,7 +13,8 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
   private let supportedUnitsRow: DFSupportedMeasurementUnitsRow
   private let removeIngredientButton : UIButton
   private var ingredientViewModel: DFIngredientCellViewModel!
-  var recipeBuilderDelegate: DFRecipeBuilder?
+  var indexPath: IndexPath!
+  weak var delegate: DFRecipeBuilder?
   
   static let reuseIdentifier: String = "calculator-cell"
   
@@ -52,10 +53,39 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
 
 // MARK: Building recipe
 
-extension DFCalculatorCollectionViewCell {
+extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
   @objc private func removeIngredient(sender: UIButton) {
-//    ingredientViewModel.isSelected = false
-    recipeBuilderDelegate?.removeIngredient(ingredientViewModel.ingredientModel)
+    delegate?.removeIngredient(ingredientViewModel.ingredientModel)
+    
+    let newModel = DFIngredientModelBuilder.init(fromModel: self.ingredientViewModel.ingredientModel).withIsSelected(false).build()
+    self.ingredientViewModel = DFIngredientCellViewModel.init(newModel)
+    delegate?.updateModel(model: self.ingredientViewModel, atIndexPath: self.indexPath)
+    
+    self.configureCellWithModel(self.ingredientViewModel)
+  }
+  
+  func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
+    if self.ingredientViewModel.getIngredientAmount().measurementValue == 0 {  // ingredient not previously added
+      self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0)!)
+    } else {
+      do {
+        let newMeasurementValue = try self.ingredientViewModel.getIngredientAmount().convertTo(newMeasurementUnit: selectedMeasurement)
+        self.addIngredientWithNewValue(newMeasurementValue)
+        
+      } catch {
+        self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0)!)
+      }
+    }
+  }
+  
+  private func addIngredientWithNewValue(_ newValue: DFMeasurement) {
+    let newModel: DFIngredientModel = DFIngredientModelBuilder
+      .init(fromModel: self.ingredientViewModel.ingredientModel)
+      .withIngredientAmount(newValue)
+      .withIsSelected(true)
+      .build()
+    self.ingredientViewModel = DFIngredientCellViewModel.init(newModel)
+    self.delegate?.addIngredient(self.ingredientViewModel.ingredientModel)
     self.configureCellWithModel(self.ingredientViewModel)
   }
 }
@@ -131,28 +161,5 @@ extension DFCalculatorCollectionViewCell {
     constraints.append(NSLayoutConstraint(item: removeIngredientButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.width))  // set width
     constraints.append(NSLayoutConstraint(item: removeIngredientButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.height)) // set height
     NSLayoutConstraint.activate(constraints)
-  }
-}
-
-extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
-  func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
-    if self.ingredientViewModel.getIngredientAmount().measurementValue == 0 {  // ingredient not previously added
-      self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0)!)
-    } else {
-      do {
-        let newMeasurementValue = try self.ingredientViewModel.getIngredientAmount().convertTo(newMeasurementUnit: selectedMeasurement)
-        self.addIngredientWithNewValue(newMeasurementValue)
-        
-      } catch {
-        self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0)!)
-      }
-    }
-  }
-  
-  private func addIngredientWithNewValue(_ newValue: DFMeasurement) {
-//    self.ingredientViewModel.ingredientAmount = newValue
-//    self.ingredientViewModel.isSelected = true
-    self.recipeBuilderDelegate?.addIngredient(self.ingredientViewModel.ingredientModel)
-    self.configureCellWithModel(self.ingredientViewModel)
   }
 }

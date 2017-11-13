@@ -10,66 +10,29 @@ import UIKit
 
 class DFIngredientModel: NSObject {
   let ingredientName: String
-  var ingredientAmount: DFMeasurement
-  var isSelected: Bool
-  private var defaultMeasurementUnit: DFMeasurementUnit
-  private var supportedMeasurementUnits: [DFMeasurementUnit]
+  let id: String
+  let ingredientAmount: DFMeasurement
+  let isSelected: Bool
+  let defaultMeasurementUnit: DFMeasurementUnit
+  let supportedMeasurementUnits: [DFMeasurementUnit]
   
   required init(ingredientName: String,
                 supportedMeasurementUnits: [DFMeasurementUnit],
                 defaultMeasurementUnit: DFMeasurementUnit? = nil,
-                isSelected: Bool = false) {
+                isSelected: Bool = false,
+                amount: DFMeasurement? = nil) {
     self.ingredientName = ingredientName
+    self.id = NSUUID.init().uuidString
     self.supportedMeasurementUnits = supportedMeasurementUnits
-    self.defaultMeasurementUnit = defaultMeasurementUnit != nil ? defaultMeasurementUnit! : self.supportedMeasurementUnits[0]
-    self.ingredientAmount = DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
+    self.defaultMeasurementUnit = defaultMeasurementUnit != nil
+      ? defaultMeasurementUnit!
+      : self.supportedMeasurementUnits[0]
     self.isSelected = isSelected
     
-    super.init()
+    self.ingredientAmount = amount != nil
+      ? amount!
+      : DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
     
-    self.validateSupportedAndDefaultUnits()
-  }
-}
-
-// MARK: Data validation
-
-extension DFIngredientModel {
-  private func validateSupportedAndDefaultUnits() {
-    self.removeDuplicateMeasurementUnits()
-    self.validateDefaultUnits()
-  }
-  
-  private func validateDefaultUnits() {
-    if !self.supportedMeasurementUnits.contains(self.defaultMeasurementUnit) {  // default unit not supported, set to first unit
-      self.defaultMeasurementUnit = self.supportedMeasurementUnits[0]
-      self.ingredientAmount = DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
-    } else if self.supportedMeasurementUnits[0] != self.defaultMeasurementUnit {  // default unit not listed first
-      let defaultIndex = self.supportedMeasurementUnits.index(of: self.defaultMeasurementUnit)
-      self.supportedMeasurementUnits.remove(at: defaultIndex!)
-      self.supportedMeasurementUnits.insert(self.defaultMeasurementUnit, at: 0)
-    }
-  }
-  
-  private func removeDuplicateMeasurementUnits() {
-    var i : Int = 0
-    while i < self.supportedMeasurementUnits.count {
-      if self.supportedMeasurementUnits[..<i].contains(self.supportedMeasurementUnits[i]) {
-        self.supportedMeasurementUnits.remove(at: i)
-      } else {
-        i += 1
-      }
-    }
-  }
-}
-
-// MARK: Private var getters
-
-extension DFIngredientModel {
-  func getDefaultMeasurementUnit() -> DFMeasurementUnit {
-    return self.defaultMeasurementUnit
-  }
-  
-  func getSupportedMeasurementUnits() -> [DFMeasurementUnit] {
-    return self.supportedMeasurementUnits
+    super.init()
   }
 }

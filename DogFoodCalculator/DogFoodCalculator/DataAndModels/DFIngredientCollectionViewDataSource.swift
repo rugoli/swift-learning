@@ -8,7 +8,8 @@
 
 import UIKit
 
-protocol DFRecipeBuilder {
+protocol DFRecipeBuilder : class { // use class specifier to allow weak references
+  func updateModel(model: DFIngredientCellViewModel, atIndexPath indexPath: IndexPath)
   func addIngredient(_ ingredient: DFIngredientModel)
   func removeIngredient(_ ingredient: DFIngredientModel)
 }
@@ -31,7 +32,8 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DFCalculatorCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DFCalculatorCollectionViewCell.reuseIdentifier, for: indexPath) as! DFCalculatorCollectionViewCell
         cell.configureCellWithModel(self.ingredients[indexPath.row])
-        cell.recipeBuilderDelegate = self
+        cell.delegate = self
+        cell.indexPath = indexPath
         return cell
     }
     
@@ -52,6 +54,10 @@ extension DFIngredientCollectionViewDataSource : DFRecipeBuilder {
     if self.recipe.ingredients.contains(ingredient) {
       self.recipe.removeIngredient(ingredient)
     }
+  }
+  
+  func updateModel(model: DFIngredientCellViewModel, atIndexPath indexPath: IndexPath) {
+    self.ingredients[indexPath.row] = model
   }
 }
 

@@ -21,8 +21,8 @@ class DFIngredientCellViewModel : NSObject {
     self.ingredientName = ingredientModel.ingredientName
     self.ingredientAmount = ingredientModel.ingredientAmount
     self.isSelected = ingredientModel.isSelected
-    self.defaultMeasurementUnit = ingredientModel.getDefaultMeasurementUnit()
-    self.supportedMeasurementUnits = ingredientModel.getSupportedMeasurementUnits()
+    self.defaultMeasurementUnit = ingredientModel.defaultMeasurementUnit
+    self.supportedMeasurementUnits = ingredientModel.supportedMeasurementUnits
     self.ingredientModel = ingredientModel
     
     super.init()
