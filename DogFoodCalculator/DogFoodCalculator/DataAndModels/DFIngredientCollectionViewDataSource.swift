@@ -15,7 +15,7 @@ protocol DFRecipeBuilder {
 
 class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     let numIngredients: Int = 10
-    var ingredients: [DFIngredientModel] = [DFIngredientModel]()
+    var ingredients: [DFIngredientCellViewModel] = [DFIngredientCellViewModel]()
     private var recipe: DFRecipe = DFRecipe()
     
     override init() {
@@ -65,17 +65,17 @@ extension DFIngredientCollectionViewDataSource {
         
     }
     
-    private func generateRandomIngredient() -> DFIngredientModel {
+    private func generateRandomIngredient() -> DFIngredientCellViewModel {
         let randomInt: Int = Int(arc4random_uniform(3))
         switch randomInt {
             case 0:
-                return DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb)
+                return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb))
             case 1:
-                return DFIngredientModel(ingredientName: "Canned pumpkin", supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp, DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.tbsp)
+                return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Canned pumpkin", supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp, DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.tbsp))
             case 2:
-                return DFIngredientModel(ingredientName: "White rice", supportedMeasurementUnits: [DFMeasurementUnit.cup])
+                return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "White rice", supportedMeasurementUnits: [DFMeasurementUnit.cup]))
             default:
-                return DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb)
+                return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb))
         }
         
     }

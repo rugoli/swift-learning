@@ -29,18 +29,6 @@ class DFIngredientModel: NSObject {
     
     self.validateSupportedAndDefaultUnits()
   }
-  
-  func selectedMeasurementUnit() -> DFMeasurementUnit {
-    return self.ingredientAmount.measurementUnit
-  }
-  
-  func measurementUnitViewModels() -> [DFMeasurementUnitViewModel] {
-    var viewModels = [DFMeasurementUnitViewModel]()
-    for unit: DFMeasurementUnit in self.supportedMeasurementUnits {
-      viewModels.append(DFMeasurementUnitViewModel(unit: unit, isSelected: unit == self.selectedMeasurementUnit()))
-    }
-    return viewModels
-  }
 }
 
 // MARK: Data validation

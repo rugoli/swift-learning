@@ -11,21 +11,35 @@ import UIKit
 class DFIngredientCellViewModel : NSObject {
   let ingredientName: String
   let isSelected: Bool
+  let ingredientModel: DFIngredientModel
   private var ingredientAmount: DFMeasurement
   private var defaultMeasurementUnit: DFMeasurementUnit
   private var supportedMeasurementUnits: [DFMeasurementUnit]
   
-  required init(ingredientModel: DFIngredientModel) {
+  required init(_ ingredientModel: DFIngredientModel) {
     
     self.ingredientName = ingredientModel.ingredientName
     self.ingredientAmount = ingredientModel.ingredientAmount
     self.isSelected = ingredientModel.isSelected
     self.defaultMeasurementUnit = ingredientModel.getDefaultMeasurementUnit()
     self.supportedMeasurementUnits = ingredientModel.getSupportedMeasurementUnits()
+    self.ingredientModel = ingredientModel
     
     super.init()
     
     self.validateSupportedAndDefaultUnits()
+  }
+  
+  func measurementUnitViewModels() -> [DFMeasurementUnitViewModel] {
+    var viewModels = [DFMeasurementUnitViewModel]()
+    for unit: DFMeasurementUnit in self.supportedMeasurementUnits {
+      viewModels.append(DFMeasurementUnitViewModel(unit: unit, isSelected: unit == self.selectedMeasurementUnit()))
+    }
+    return viewModels
+  }
+  
+  func selectedMeasurementUnit() -> DFMeasurementUnit {
+    return self.ingredientAmount.measurementUnit
   }
 }
 

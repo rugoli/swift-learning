@@ -12,7 +12,7 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
   private let cellMainLabel: UILabel
   private let supportedUnitsRow: DFSupportedMeasurementUnitsRow
   private let removeIngredientButton : UIButton
-  private var ingredientModel: DFIngredientModel!
+  private var ingredientViewModel: DFIngredientCellViewModel!
   var recipeBuilderDelegate: DFRecipeBuilder?
   
   static let reuseIdentifier: String = "calculator-cell"
@@ -54,9 +54,9 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
 
 extension DFCalculatorCollectionViewCell {
   @objc private func removeIngredient(sender: UIButton) {
-    ingredientModel.isSelected = false
-    recipeBuilderDelegate?.removeIngredient(ingredientModel)
-    self.configureCellWithModel(self.ingredientModel)
+//    ingredientViewModel.isSelected = false
+    recipeBuilderDelegate?.removeIngredient(ingredientViewModel.ingredientModel)
+    self.configureCellWithModel(self.ingredientViewModel)
   }
 }
 
@@ -64,8 +64,8 @@ extension DFCalculatorCollectionViewCell {
 
 extension DFCalculatorCollectionViewCell {
   
-  func configureCellWithModel(_ ingredient: DFIngredientModel) {
-    ingredientModel = ingredient
+  func configureCellWithModel(_ ingredient: DFIngredientCellViewModel) {
+    ingredientViewModel = ingredient
     
     self.configureMainLabelProperties()
     self.setMainLabelConstraints()
@@ -80,11 +80,11 @@ extension DFCalculatorCollectionViewCell {
   }
   
   private func configureMainLabelProperties() {
-    cellMainLabel.text = ingredientModel.ingredientName
+    cellMainLabel.text = self.ingredientViewModel.ingredientName
   }
   
   private func configureSupportedUnitsRow() {
-    supportedUnitsRow.configureSupportedMeasurementUnits(ingredientModel.measurementUnitViewModels())
+    supportedUnitsRow.configureSupportedMeasurementUnits(self.ingredientViewModel.measurementUnitViewModels())
   }
 }
 
@@ -136,11 +136,11 @@ extension DFCalculatorCollectionViewCell {
 
 extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
   func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
-    if self.ingredientModel.ingredientAmount.measurementValue == 0 {  // ingredient not previously added
+    if self.ingredientViewModel.getIngredientAmount().measurementValue == 0 {  // ingredient not previously added
       self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0)!)
     } else {
       do {
-        let newMeasurementValue = try self.ingredientModel.ingredientAmount.convertTo(newMeasurementUnit: selectedMeasurement)
+        let newMeasurementValue = try self.ingredientViewModel.getIngredientAmount().convertTo(newMeasurementUnit: selectedMeasurement)
         self.addIngredientWithNewValue(newMeasurementValue)
         
       } catch {
@@ -150,9 +150,9 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
   }
   
   private func addIngredientWithNewValue(_ newValue: DFMeasurement) {
-    self.ingredientModel.ingredientAmount = newValue
-    self.ingredientModel.isSelected = true
-    self.recipeBuilderDelegate?.addIngredient(self.ingredientModel)
-    self.configureCellWithModel(self.ingredientModel)
+//    self.ingredientViewModel.ingredientAmount = newValue
+//    self.ingredientViewModel.isSelected = true
+    self.recipeBuilderDelegate?.addIngredient(self.ingredientViewModel.ingredientModel)
+    self.configureCellWithModel(self.ingredientViewModel)
   }
 }
