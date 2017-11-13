@@ -11,17 +11,19 @@ import UIKit
 class DFIngredientModel: NSObject {
   let ingredientName: String
   var ingredientAmount: DFMeasurement
-  var isSelected: Bool = false
+  var isSelected: Bool
   private var defaultMeasurementUnit: DFMeasurementUnit
   private var supportedMeasurementUnits: [DFMeasurementUnit]
   
   required init(ingredientName: String,
                 supportedMeasurementUnits: [DFMeasurementUnit],
-                defaultMeasurementUnit: DFMeasurementUnit? = nil) {
+                defaultMeasurementUnit: DFMeasurementUnit? = nil,
+                isSelected: Bool = false) {
     self.ingredientName = ingredientName
     self.supportedMeasurementUnits = supportedMeasurementUnits
     self.defaultMeasurementUnit = defaultMeasurementUnit != nil ? defaultMeasurementUnit! : self.supportedMeasurementUnits[0]
     self.ingredientAmount = DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
+    self.isSelected = isSelected
     
     super.init()
     
@@ -41,9 +43,7 @@ class DFIngredientModel: NSObject {
   }
 }
 
-// MARK:
-
-// data validation
+// MARK: Data validation
 
 extension DFIngredientModel {
   private func validateSupportedAndDefaultUnits() {
@@ -74,9 +74,7 @@ extension DFIngredientModel {
   }
 }
 
-// MARK:
-
-// private var getters
+// MARK: Private var getters
 
 extension DFIngredientModel {
   func getDefaultMeasurementUnit() -> DFMeasurementUnit {
