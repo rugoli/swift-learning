@@ -11,7 +11,9 @@ import UIKit
 class DFCalculatorCollectionViewCell: UICollectionViewCell {
   private let cellMainLabel: UILabel
   private let supportedUnitsRow: DFSupportedMeasurementUnitsRow
+  private let amountTextField: UITextField
   private let removeIngredientButton : UIButton
+    
   private var ingredientViewModel: DFIngredientCellViewModel!
   var indexPath: IndexPath!
   weak var delegate: (DFRecipeBuilder & DFDataSourceAdapterProtocol)?
@@ -27,6 +29,11 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
     
     supportedUnitsRow = DFSupportedMeasurementUnitsRow()
     
+    amountTextField = UITextField()
+    amountTextField.text = "0"
+    amountTextField.font = amountTextField.font?.withSize(24)
+    amountTextField.isHidden = false
+    
     removeIngredientButton = UIButton(type: UIButtonType.system)
     removeIngredientButton.setTitle("Remove", for: UIControlState.normal)
     removeIngredientButton.setTitleColor(UIColor.blue, for: UIControlState.normal)
@@ -39,11 +46,13 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
     self.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     
     supportedUnitsRow.delegate = self
+    amountTextField.delegate = self
     removeIngredientButton.addTarget(self, action: #selector(self.removeIngredient(sender:)), for: UIControlEvents.touchUpInside)
     
-    self.addSubview(removeIngredientButton)
     self.addSubview(cellMainLabel)
     self.addSubview(supportedUnitsRow)
+    self.addSubview(amountTextField)
+    self.addSubview(removeIngredientButton)
   }
   
   required convenience init?(coder aDecoder: NSCoder) {
@@ -59,8 +68,9 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
     
     let newModel = DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
       .withIsSelected(false)
+      .withNewIngredientAmount(0)
       .build()
-    self.ingredientViewModel = DFIngredientCellViewModel.init(newModel)
+    self.ingredientViewModel = DFIngredientCellViewModel(newModel)
     delegate?.updateModel(model: self.ingredientViewModel, atIndexPath: self.indexPath)
     
     self.configureCellWithModel(self.ingredientViewModel)
@@ -68,14 +78,14 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
   
   func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
     if self.ingredientViewModel.getIngredientAmount().measurementValue == 0 {  // ingredient not previously added
-      self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0)!)
+      self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0))
     } else {
       do {
         let newMeasurementValue = try self.ingredientViewModel.getIngredientAmount().convertTo(newMeasurementUnit: selectedMeasurement)
         self.changeIngredientAmount(newMeasurementValue)
         
       } catch {
-        self.changeIngredientAmount(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0)!)
+        self.changeIngredientAmount(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0))
       }
     }
   }
@@ -83,23 +93,34 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
   private func changeIngredientAmount(_ newValue: DFMeasurement) {
     let newModel: DFIngredientModel =
       DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
-        .withIngredientAmount(newValue)
+        .withIngredientMeasurement(newValue)
         .build()
     self.delegate?.updateIngredient(oldIngredient: self.ingredientViewModel.ingredientModel, withNewIngredient: newModel)
-    self.ingredientViewModel = DFIngredientCellViewModel(newModel)
-    self.configureCellWithModel(self.ingredientViewModel)
+    self.updateDataSourceAndCell(withNewViewModel: DFIngredientCellViewModel(newModel))
   }
   
   private func addIngredientWithNewValue(_ newValue: DFMeasurement) {
     let newModel: DFIngredientModel =
       DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
-      .withIngredientAmount(newValue)
+      .withIngredientMeasurement(newValue)
       .withIsSelected(true)
       .build()
-    self.ingredientViewModel = DFIngredientCellViewModel(newModel)
+    self.updateDataSourceAndCell(withNewViewModel: DFIngredientCellViewModel(newModel))
     self.delegate?.addIngredient(self.ingredientViewModel.ingredientModel)
+  }
+  
+  private func updateDataSourceAndCell(withNewViewModel newModel: DFIngredientCellViewModel) {
+    self.ingredientViewModel = newModel
     self.delegate?.updateModel(model: self.ingredientViewModel, atIndexPath: self.indexPath)
     self.configureCellWithModel(self.ingredientViewModel)
+  }
+}
+
+// MARK: Text field delegate
+
+extension DFCalculatorCollectionViewCell : UITextFieldDelegate {
+  public func textFieldDidEndEditing(_ textField: UITextField) {
+    // no-op
   }
 }
 
@@ -116,6 +137,9 @@ extension DFCalculatorCollectionViewCell {
     self.configureSupportedUnitsRow()
     self.setSupportedUnitsRowConstraints()
     
+    self.configureAmountTextFieldProperties()
+    self.setAmountTextFieldConstraints()
+    
     self.removeIngredientButton.isHidden = !ingredient.isSelected
     self.setRemoveIngredientButtonConstraints()
     
@@ -128,6 +152,16 @@ extension DFCalculatorCollectionViewCell {
   
   private func configureSupportedUnitsRow() {
     supportedUnitsRow.configureSupportedMeasurementUnits(self.ingredientViewModel.measurementUnitViewModels())
+  }
+  
+  private func configureAmountTextFieldProperties() {
+    let amountValue = self.ingredientViewModel.getIngredientAmount().measurementValue
+    if amountValue > 0 {
+      self.amountTextField.text = "\(amountValue)"
+      self.amountTextField.isHidden = false
+    } else {
+      self.amountTextField.isHidden = true
+    }
   }
 }
 
@@ -163,6 +197,18 @@ extension DFCalculatorCollectionViewCell {
     NSLayoutConstraint.activate([centering, topSpacing, height])
   }
   
+  private func setAmountTextFieldConstraints() {
+    amountTextField.removeConstraints(amountTextField.constraints)
+    let textFieldSize = amountTextField.sizeThatFits(CGSize(width: self.bounds.size.width, height: self.bounds.size.height))
+    
+    amountTextField.translatesAutoresizingMaskIntoConstraints = false
+    let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: amountTextField, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
+    let topSpacing = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: supportedUnitsRow, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5)
+    let width = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: textFieldSize.width)
+    let height = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: textFieldSize.height)
+    NSLayoutConstraint.activate([centering, topSpacing, height, width])
+  }
+  
   private func setRemoveIngredientButtonConstraints() {
     removeIngredientButton.removeConstraints(removeIngredientButton.constraints)
     let buttonSize = removeIngredientButton.sizeThatFits(self.bounds.size)
@@ -170,7 +216,7 @@ extension DFCalculatorCollectionViewCell {
     removeIngredientButton.translatesAutoresizingMaskIntoConstraints = false
     var constraints: [NSLayoutConstraint] = [NSLayoutConstraint]()
     constraints.append(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: removeIngredientButton, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0))  // center horizontally with cell
-    constraints.append(NSLayoutConstraint(item: removeIngredientButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: supportedUnitsRow, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 20))  // 20 pts below supported units row
+    constraints.append(NSLayoutConstraint(item: removeIngredientButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: amountTextField, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 20))  // 20 pts below amount text field row
     constraints.append(NSLayoutConstraint(item: removeIngredientButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.width))  // set width
     constraints.append(NSLayoutConstraint(item: removeIngredientButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.height)) // set height
     NSLayoutConstraint.activate(constraints)

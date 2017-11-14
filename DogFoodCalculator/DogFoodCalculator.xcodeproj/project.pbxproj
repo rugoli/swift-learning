@@ -90,13 +90,6 @@
 			path = DogFoodCalculatorTests;
 			sourceTree = "<group>";
 		};
-		01850F6B1FAB9FE700837AC6 /* Other */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Other;
-			sourceTree = "<group>";
-		};
 		01C704AD1FAA617D0001BFBD = {
 			isa = PBXGroup;
 			children = (
@@ -122,7 +115,6 @@
 				01C704C01FAA617E0001BFBD /* Assets.xcassets */,
 				01C704C21FAA617E0001BFBD /* LaunchScreen.storyboard */,
 				01C704C51FAA617E0001BFBD /* Info.plist */,
-				01850F6B1FAB9FE700837AC6 /* Other */,
 				01C704CE1FAA78600001BFBD /* DataAndModels */,
 				01C704CD1FAA78570001BFBD /* Views */,
 				01C704CB1FAA78370001BFBD /* Controllers */,

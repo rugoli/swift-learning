@@ -17,11 +17,11 @@ class DFRecipeTests: XCTestCase {
                                               supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp],
                                               defaultMeasurementUnit: DFMeasurementUnit.tsp,
                                               isSelected: false,
-                                              amount: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 4.0)!)
+                                              amount: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 4.0))
     self.testRecipe.addIngredient(initialIngredient)
     
     let newAmount = DFIngredientModelBuilder(fromModel: initialIngredient)
-      .withIngredientAmount(DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 3.0)!)
+      .withIngredientMeasurement(DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 3.0))
       .build()
     self.testRecipe.updateIngredient(oldIngredient: initialIngredient, withNewIngredient: newAmount)
     XCTAssertFalse(self.testRecipe.getIngredients().contains(initialIngredient))

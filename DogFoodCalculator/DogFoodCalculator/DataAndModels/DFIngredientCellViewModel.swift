@@ -65,7 +65,7 @@ extension DFIngredientCellViewModel {
   private func validateDefaultUnits() {
     if !self.supportedMeasurementUnits.contains(self.defaultMeasurementUnit) {  // default unit not supported, set to first unit
       self.defaultMeasurementUnit = self.supportedMeasurementUnits[0]
-      self.ingredientAmount = DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
+      self.ingredientAmount = DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)
     } else if self.supportedMeasurementUnits[0] != self.defaultMeasurementUnit {  // default unit not listed first
       let defaultIndex = self.supportedMeasurementUnits.index(of: self.defaultMeasurementUnit)
       self.supportedMeasurementUnits.remove(at: defaultIndex!)
