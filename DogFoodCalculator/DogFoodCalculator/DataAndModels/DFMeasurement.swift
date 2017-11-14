@@ -75,7 +75,7 @@ struct DFMeasurement {
         if newMeasurementUnit == measurementUnit {
             return self
         } else if let conversion = measurementUnit.conversionRatios()[newMeasurementUnit] {
-            return DFMeasurement(measurementUnit: newMeasurementUnit, measurementValue: measurementValue * conversion)!
+            return DFMeasurement(measurementUnit: newMeasurementUnit, measurementValue: measurementValue / conversion)!
         }
         throw DFMeasurementConversionError.cannotConvertToUnit
     }
