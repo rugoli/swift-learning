@@ -85,7 +85,7 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
       DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
         .withIngredientAmount(newValue)
         .build()
-    self.delegate?.updateIngredient(oldID: self.ingredientViewModel.ingredientModel.id, newIngredient: newModel)
+    self.delegate?.updateIngredient(oldIngredient: self.ingredientViewModel.ingredientModel, withNewIngredient: newModel)
     self.ingredientViewModel = DFIngredientCellViewModel(newModel)
     self.configureCellWithModel(self.ingredientViewModel)
   }

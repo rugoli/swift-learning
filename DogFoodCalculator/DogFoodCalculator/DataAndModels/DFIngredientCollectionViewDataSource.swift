@@ -11,7 +11,7 @@ import UIKit
 // use class specifier to allow weak references
 protocol DFRecipeBuilder : class {
   func addIngredient(_ ingredient: DFIngredientModel)
-  func updateIngredient(oldID: String, newIngredient: DFIngredientModel)
+  func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel)
   func removeIngredient(_ ingredient: DFIngredientModel)
 }
 
@@ -56,22 +56,11 @@ extension DFIngredientCollectionViewDataSource : DFRecipeBuilder {
   }
   
   func removeIngredient(_ ingredient: DFIngredientModel) {
-    if self.recipe.ingredients.contains(ingredient) {
-      self.recipe.removeIngredient(ingredient)
-    }
+    self.recipe.removeIngredient(ingredient)
   }
   
-  func updateIngredient(oldID: String, newIngredient: DFIngredientModel) {
-    let ingredientIndex = self.recipe.ingredients.index { (ingredient) -> Bool in
-      ingredient.id == oldID
-    }
-    
-    switch ingredientIndex {
-      case nil:
-        self.addIngredient(newIngredient)
-      default:
-        self.recipe.ingredients[ingredientIndex!] = newIngredient
-    }
+  func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel) {
+    self.recipe.updateIngredient(oldIngredient: oldIngredient, withNewIngredient: newIngredient)
   }
 }
 
