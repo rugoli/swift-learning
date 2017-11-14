@@ -9,8 +9,8 @@
 import UIKit
 
 class DFIngredientModel: NSObject {
-  let ingredientName: String
   let id: String
+  let ingredientName: String
   let ingredientAmount: DFMeasurement
   let isSelected: Bool
   let defaultMeasurementUnit: DFMeasurementUnit
@@ -34,5 +34,13 @@ class DFIngredientModel: NSObject {
       : DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
     
     super.init()
+  }
+  
+  func isEffectivelyEqualTo(_ otherModel: DFIngredientModel) -> Bool {
+    return self.ingredientName == otherModel.ingredientName
+      && self.ingredientAmount == otherModel.ingredientAmount
+      && self.isSelected == otherModel.isSelected
+      && self.defaultMeasurementUnit == otherModel.defaultMeasurementUnit
+      && self.supportedMeasurementUnits == otherModel.supportedMeasurementUnits
   }
 }
