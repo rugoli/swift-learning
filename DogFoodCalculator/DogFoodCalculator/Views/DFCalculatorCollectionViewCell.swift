@@ -49,7 +49,9 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
     
     supportedUnitsRow.delegate = self
     amountTextField.delegate = self
-    removeIngredientButton.addTarget(self, action: #selector(self.tappedRemoveIngredient(sender:)), for: UIControlEvents.touchUpInside)
+    removeIngredientButton.addTarget(self, action: #selector(self.removeIngredient), for: UIControlEvents.touchUpInside)
+    
+    self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     
     self.addSubview(cellMainLabel)
     self.addSubview(supportedUnitsRow)
@@ -65,24 +67,6 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
 // MARK: Recipe building
 
 extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
-  // need to have this special @objc decorator and pass in sender for button to work
-  @objc private func tappedRemoveIngredient(sender : UIButton) {
-    self.removeIngredient()
-  }
-  
-  private func removeIngredient() {
-    delegate?.removeIngredient(ingredientViewModel.ingredientModel)
-    
-    let newModel = DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
-      .withIsSelected(false)
-      .withNewIngredientAmount(0)
-      .build()
-    self.ingredientViewModel = DFIngredientCellViewModel(newModel)
-    delegate?.updateModel(model: self.ingredientViewModel, atIndexPath: self.indexPath)
-    
-    self.configureCellWithModel(self.ingredientViewModel)
-  }
-  
   func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
     if self.ingredientViewModel.getIngredientAmount().measurementValue == 0 {  // ingredient not previously added
       self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0))
@@ -95,6 +79,17 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
         self.changeIngredientAmount(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0))
       }
     }
+  }
+  
+  @objc private func removeIngredient() {
+    delegate?.removeIngredient(ingredientViewModel.ingredientModel)
+    
+    let newModel = DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
+      .withIsSelected(false)
+      .withNewIngredientAmount(0)
+      .build()
+    
+    self.updateDataSourceAndCell(withNewViewModel: DFIngredientCellViewModel(newModel))
   }
   
   private func changeIngredientAmount(_ newValue: DFMeasurement) {
@@ -123,6 +118,14 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
   }
 }
 
+// MARK : Gesture recognizer
+
+extension DFCalculatorCollectionViewCell {
+  @objc private func dismissKeyboard() {
+    self.endEditing(true)
+  }
+}
+
 // MARK: Text field delegate
 
 extension DFCalculatorCollectionViewCell : UITextFieldDelegate {
@@ -148,12 +151,17 @@ extension DFCalculatorCollectionViewCell : UITextFieldDelegate {
       return
     }
     
-    let number = (input as NSString).floatValue
-    guard number > 0 else {
+    let newIngredientAmount = DFMeasurement(measurementUnit: self.ingredientViewModel.getIngredientAmount().measurementUnit, measurementValue: (input as NSString).floatValue)
+    guard newIngredientAmount.measurementValue > 0 else {  // remove ingredient if text is not greater than zero
       self.removeIngredient()
       return
     }
     
+    if self.ingredientViewModel.getIngredientAmount().measurementValue > 0 {
+      self.changeIngredientAmount(newIngredientAmount)
+    } else {
+      self.addIngredientWithNewValue(newIngredientAmount)
+    }
   }
 }
 
