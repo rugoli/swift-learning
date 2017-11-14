@@ -43,4 +43,15 @@ class DFIngredientModel: NSObject {
       && self.defaultMeasurementUnit == otherModel.defaultMeasurementUnit
       && self.supportedMeasurementUnits == otherModel.supportedMeasurementUnits
   }
+  
+  override var description : String {
+    return
+      """
+        Ingredient Name: \(self.ingredientName)\n
+        Ingredient Amount: \(self.ingredientAmount)\n
+        Is Selected: \(self.isSelected)\n
+        Default unit: \(self.defaultMeasurementUnit)\n
+        Supported Units: \(self.supportedMeasurementUnits)
+      """
+  }
 }
