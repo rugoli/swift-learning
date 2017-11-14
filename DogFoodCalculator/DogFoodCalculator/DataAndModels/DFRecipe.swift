@@ -9,7 +9,7 @@
 import UIKit
 
 class DFRecipe: NSObject {
-  var ingredients: [DFIngredientModel] = []
+  private var ingredients: [DFIngredientModel] = []
   
   func addIngredient(_ ingredient: DFIngredientModel) {
     self.ingredients.append(ingredient)
@@ -36,5 +36,9 @@ class DFRecipe: NSObject {
   
   func removeAllIngredients() {
     self.ingredients.removeAll()
+  }
+  
+  func getIngredients() -> [DFIngredientModel] {
+    return self.ingredients
   }
 }
