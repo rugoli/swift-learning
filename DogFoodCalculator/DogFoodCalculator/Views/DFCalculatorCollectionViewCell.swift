@@ -49,7 +49,7 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
     
     supportedUnitsRow.delegate = self
     amountTextField.delegate = self
-    removeIngredientButton.addTarget(self, action: #selector(self.removeIngredient(sender:)), for: UIControlEvents.touchUpInside)
+    removeIngredientButton.addTarget(self, action: #selector(self.tappedRemoveIngredient(sender:)), for: UIControlEvents.touchUpInside)
     
     self.addSubview(cellMainLabel)
     self.addSubview(supportedUnitsRow)
@@ -65,7 +65,12 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
 // MARK: Recipe building
 
 extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
-  @objc private func removeIngredient(sender: UIButton) {
+  // need to have this special @objc decorator and pass in sender for button to work
+  @objc private func tappedRemoveIngredient(sender : UIButton) {
+    self.removeIngredient()
+  }
+  
+  private func removeIngredient() {
     delegate?.removeIngredient(ingredientViewModel.ingredientModel)
     
     let newModel = DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
@@ -138,7 +143,17 @@ extension DFCalculatorCollectionViewCell : UITextFieldDelegate {
   }
   
   public func textFieldDidEndEditing(_ textField: UITextField) {
-    // no-op
+    guard let input = textField.text else {  // remove ingredient if text is nil
+      self.removeIngredient()
+      return
+    }
+    
+    let number = (input as NSString).floatValue
+    guard number > 0 else {
+      self.removeIngredient()
+      return
+    }
+    
   }
 }
 
