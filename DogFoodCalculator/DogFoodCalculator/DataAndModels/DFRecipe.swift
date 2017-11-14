@@ -15,6 +15,19 @@ class DFRecipe: NSObject {
     self.ingredients.append(ingredient)
   }
   
+  func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel) {
+    let ingredientIndex = self.ingredients.index { (ingredient) -> Bool in
+      ingredient.id == oldIngredient.id
+    }
+    
+    switch ingredientIndex {
+      case nil:
+        self.addIngredient(newIngredient)
+      default:
+        self.ingredients[ingredientIndex!] = newIngredient
+      }
+  }
+  
   func removeIngredient(_ ingredient: DFIngredientModel) {
     if self.ingredients.contains(ingredient) {
       self.ingredients = self.ingredients.filter{$0 != ingredient}
