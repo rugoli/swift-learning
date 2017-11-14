@@ -8,10 +8,15 @@
 
 import UIKit
 
-protocol DFRecipeBuilder : class { // use class specifier to allow weak references
-  func updateModel(model: DFIngredientCellViewModel, atIndexPath indexPath: IndexPath)
+// use class specifier to allow weak references
+protocol DFRecipeBuilder : class {
   func addIngredient(_ ingredient: DFIngredientModel)
+  func updateIngredient(oldID: String, newIngredient: DFIngredientModel)
   func removeIngredient(_ ingredient: DFIngredientModel)
+}
+
+protocol DFDataSourceAdapterProtocol : class {
+  func updateModel(model: DFIngredientCellViewModel, atIndexPath indexPath: IndexPath)
 }
 
 class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -56,33 +61,49 @@ extension DFIngredientCollectionViewDataSource : DFRecipeBuilder {
     }
   }
   
+  func updateIngredient(oldID: String, newIngredient: DFIngredientModel) {
+    let ingredientIndex = self.recipe.ingredients.index { (ingredient) -> Bool in
+      ingredient.id == oldID
+    }
+    
+    switch ingredientIndex {
+      case nil:
+        self.addIngredient(newIngredient)
+      default:
+        self.recipe.ingredients[ingredientIndex!] = newIngredient
+    }
+  }
+}
+
+extension DFIngredientCollectionViewDataSource : DFDataSourceAdapterProtocol {
   func updateModel(model: DFIngredientCellViewModel, atIndexPath indexPath: IndexPath) {
     self.ingredients[indexPath.row] = model
   }
 }
 
+
 // MARK: Test data generation
 
 extension DFIngredientCollectionViewDataSource {
-    private func generateIngredients() {
-        for _ in 0..<self.numIngredients {
-            self.ingredients.append(self.generateRandomIngredient())
-        }
-        
+  private func generateIngredients() {
+    for _ in 0..<self.numIngredients {
+      self.ingredients.append(self.generateRandomIngredient())
     }
     
-    private func generateRandomIngredient() -> DFIngredientCellViewModel {
-        let randomInt: Int = Int(arc4random_uniform(3))
-        switch randomInt {
-            case 0:
-                return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb))
-            case 1:
-                return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Canned pumpkin", supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp, DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.tbsp))
-            case 2:
-                return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "White rice", supportedMeasurementUnits: [DFMeasurementUnit.cup]))
-            default:
-                return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb))
-        }
-        
+  }
+  
+  private func generateRandomIngredient() -> DFIngredientCellViewModel {
+    let randomInt: Int = Int(arc4random_uniform(3))
+    switch randomInt {
+    case 0:
+      return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb))
+    case 1:
+      return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Canned pumpkin", supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp, DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.tbsp))
+    case 2:
+      return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "White rice", supportedMeasurementUnits: [DFMeasurementUnit.cup]))
+    default:
+      return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb))
     }
+    
+  }
 }
