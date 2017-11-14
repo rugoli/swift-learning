@@ -59,26 +59,22 @@ struct DFMeasurementUnitViewModel {
 }
 
 struct DFMeasurement {
-    var measurementUnit: DFMeasurementUnit
-    var measurementValue: Float
-    
-    init?(measurementUnit: DFMeasurementUnit, measurementValue: Float) {
-        self.measurementUnit = measurementUnit
-        
-        if measurementValue < 0 {
-            return nil
-        }
-        self.measurementValue = measurementValue
+  var measurementUnit: DFMeasurementUnit
+  var measurementValue: Float
+  
+  init(measurementUnit: DFMeasurementUnit, measurementValue: Float) {
+    self.measurementUnit = measurementUnit
+    self.measurementValue = measurementValue >= 0 ? measurementValue : 0
+  }
+  
+  func convertTo(newMeasurementUnit: DFMeasurementUnit) throws -> DFMeasurement {
+    if newMeasurementUnit == measurementUnit {
+      return self
+    } else if let conversion = measurementUnit.conversionRatios()[newMeasurementUnit] {
+      return DFMeasurement(measurementUnit: newMeasurementUnit, measurementValue: measurementValue / conversion)
     }
-    
-    func convertTo(newMeasurementUnit: DFMeasurementUnit) throws -> DFMeasurement {
-        if newMeasurementUnit == measurementUnit {
-            return self
-        } else if let conversion = measurementUnit.conversionRatios()[newMeasurementUnit] {
-            return DFMeasurement(measurementUnit: newMeasurementUnit, measurementValue: measurementValue / conversion)!
-        }
-        throw DFMeasurementConversionError.cannotConvertToUnit
-    }
+    throw DFMeasurementConversionError.cannotConvertToUnit
+  }
 }
 
 extension DFMeasurement : Equatable {

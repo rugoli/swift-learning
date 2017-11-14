@@ -31,7 +31,7 @@ class DFIngredientModel: NSObject {
     
     self.ingredientAmount = amount != nil
       ? amount!
-      : DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
+      : DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)
     
     super.init()
   }

@@ -30,8 +30,13 @@ class DFIngredientModelBuilder: NSObject {
     return self
   }
   
-  func withIngredientAmount(_ amount: DFMeasurement) -> DFIngredientModelBuilder {
-    self.ingredientAmount = amount
+  func withIngredientMeasurement(_ measurement: DFMeasurement) -> DFIngredientModelBuilder {
+    self.ingredientAmount = measurement
+    return self
+  }
+  
+  func withNewIngredientAmount(_ amount: Float) -> DFIngredientModelBuilder {
+    self.ingredientAmount = DFMeasurement(measurementUnit: self.ingredientAmount.measurementUnit, measurementValue: amount)
     return self
   }
   
