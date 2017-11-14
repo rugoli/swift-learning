@@ -32,6 +32,8 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
     amountTextField = UITextField()
     amountTextField.text = "0"
     amountTextField.font = amountTextField.font?.withSize(24)
+    amountTextField.textAlignment = NSTextAlignment.center
+    amountTextField.keyboardType = UIKeyboardType.decimalPad
     amountTextField.isHidden = false
     
     removeIngredientButton = UIButton(type: UIButtonType.system)
@@ -119,6 +121,22 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
 // MARK: Text field delegate
 
 extension DFCalculatorCollectionViewCell : UITextFieldDelegate {
+  public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    let allowableCharacterSet = NSCharacterSet(charactersIn: "0123456789.")
+    
+    guard allowableCharacterSet.isSuperset(of: NSCharacterSet(charactersIn: string) as CharacterSet) else {
+      return false
+    }
+    
+    if string.contains(".") {
+      guard !(textField.text?.contains("."))! else {
+        return false
+      }
+    }
+    
+    return true
+  }
+  
   public func textFieldDidEndEditing(_ textField: UITextField) {
     // no-op
   }
@@ -204,7 +222,7 @@ extension DFCalculatorCollectionViewCell {
     amountTextField.translatesAutoresizingMaskIntoConstraints = false
     let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: amountTextField, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
     let topSpacing = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: supportedUnitsRow, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5)
-    let width = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: textFieldSize.width)
+    let width = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: self.bounds.size.width - self.layoutMargins.left - self.layoutMargins.right)
     let height = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: textFieldSize.height)
     NSLayoutConstraint.activate([centering, topSpacing, height, width])
   }
