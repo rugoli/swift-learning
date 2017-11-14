@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0111B1661FBA334F003CBD9B /* DFIngredientCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0111B1651FBA334F003CBD9B /* DFIngredientCellViewModel.swift */; };
 		013BB1C81FB6C44B00768857 /* DFRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013BB1C71FB6C44B00768857 /* DFRecipe.swift */; };
 		013BB1CA1FB6C60400768857 /* DFRecipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013BB1C91FB6C60400768857 /* DFRecipeTests.swift */; };
 		014AB0DF1FABAC1D006ABF3E /* DFMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014AB0DE1FABAC1D006ABF3E /* DFMeasurementTests.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0111B1651FBA334F003CBD9B /* DFIngredientCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientCellViewModel.swift; sourceTree = "<group>"; };
 		013BB1C71FB6C44B00768857 /* DFRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipe.swift; sourceTree = "<group>"; };
 		013BB1C91FB6C60400768857 /* DFRecipeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipeTests.swift; sourceTree = "<group>"; };
 		014AB0DC1FABAC1D006ABF3E /* DogFoodCalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogFoodCalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +150,7 @@
 				01C704CF1FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift */,
 				01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */,
 				015119581FABC8DF005EEC71 /* DFIngredientModel.swift */,
+				0111B1651FBA334F003CBD9B /* DFIngredientCellViewModel.swift */,
 			);
 			path = DataAndModels;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				01C704BA1FAA617E0001BFBD /* AppDelegate.swift in Sources */,
 				013BB1C81FB6C44B00768857 /* DFRecipe.swift in Sources */,
 				0151195B1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift in Sources */,
+				0111B1661FBA334F003CBD9B /* DFIngredientCellViewModel.swift in Sources */,
 				01C704D21FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift in Sources */,
 				01850F6A1FAB9EDE00837AC6 /* DFMeasurement.swift in Sources */,
 				01C704D01FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift in Sources */,

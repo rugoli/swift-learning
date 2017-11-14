@@ -1,51 +1,37 @@
 //
-//  DFIngredientModel.swift
+//  DFIngredientCellViewModel.swift
 //  DogFoodCalculator
 //
-//  Created by Roshan on 11/2/17.
+//  Created by Roshan Goli on 11/13/17.
 //  Copyright © 2017 Roshan Goli. All rights reserved.
 //
 
 import UIKit
 
-class DFIngredientModel: NSObject {
+class DFIngredientCellViewModel : NSObject {
   let ingredientName: String
-  var ingredientAmount: DFMeasurement
-  var isSelected: Bool
+  let isSelected: Bool
+  private var ingredientAmount: DFMeasurement
   private var defaultMeasurementUnit: DFMeasurementUnit
   private var supportedMeasurementUnits: [DFMeasurementUnit]
   
-  required init(ingredientName: String,
-                supportedMeasurementUnits: [DFMeasurementUnit],
-                defaultMeasurementUnit: DFMeasurementUnit? = nil,
-                isSelected: Bool = false) {
-    self.ingredientName = ingredientName
-    self.supportedMeasurementUnits = supportedMeasurementUnits
-    self.defaultMeasurementUnit = defaultMeasurementUnit != nil ? defaultMeasurementUnit! : self.supportedMeasurementUnits[0]
-    self.ingredientAmount = DFMeasurement(measurementUnit: self.defaultMeasurementUnit, measurementValue: 0)!
-    self.isSelected = isSelected
+  required init(ingredientModel: DFIngredientModel) {
+    
+    self.ingredientName = ingredientModel.ingredientName
+    self.ingredientAmount = ingredientModel.ingredientAmount
+    self.isSelected = ingredientModel.isSelected
+    self.defaultMeasurementUnit = ingredientModel.getDefaultMeasurementUnit()
+    self.supportedMeasurementUnits = ingredientModel.getSupportedMeasurementUnits()
     
     super.init()
     
     self.validateSupportedAndDefaultUnits()
   }
-  
-  func selectedMeasurementUnit() -> DFMeasurementUnit {
-    return self.ingredientAmount.measurementUnit
-  }
-  
-  func measurementUnitViewModels() -> [DFMeasurementUnitViewModel] {
-    var viewModels = [DFMeasurementUnitViewModel]()
-    for unit: DFMeasurementUnit in self.supportedMeasurementUnits {
-      viewModels.append(DFMeasurementUnitViewModel(unit: unit, isSelected: unit == self.selectedMeasurementUnit()))
-    }
-    return viewModels
-  }
 }
 
 // MARK: Data validation
 
-extension DFIngredientModel {
+extension DFIngredientCellViewModel {
   private func validateSupportedAndDefaultUnits() {
     self.removeDuplicateMeasurementUnits()
     self.validateDefaultUnits()
@@ -76,7 +62,7 @@ extension DFIngredientModel {
 
 // MARK: Private var getters
 
-extension DFIngredientModel {
+extension DFIngredientCellViewModel {
   func getDefaultMeasurementUnit() -> DFMeasurementUnit {
     return self.defaultMeasurementUnit
   }
@@ -84,4 +70,9 @@ extension DFIngredientModel {
   func getSupportedMeasurementUnits() -> [DFMeasurementUnit] {
     return self.supportedMeasurementUnits
   }
+  
+  func getIngredientAmount() -> DFMeasurement {
+    return self.ingredientAmount
+  }
 }
+
