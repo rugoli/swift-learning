@@ -20,5 +20,5 @@ class DFRecipeUpdateModel : NSObject {
 }
 
 @objc protocol DFRecipeUpdateListener : class {
-  @objc func observeRecipeUpdate(updateModel: DFRecipeUpdateModel)
+  @objc func observeRecipeUpdate(notification: NSNotification)
 }

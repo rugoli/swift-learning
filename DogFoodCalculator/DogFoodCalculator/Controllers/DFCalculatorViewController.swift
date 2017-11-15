@@ -24,6 +24,7 @@ class DFCalculatorViewController: UIViewController {
     
     super.init(coder: coder)!
     
+    self.recipe.addRecipeUpdateObserver(observer: self)
     self.ingredientDataSource.recipeBuilder = self
   }
   
@@ -79,7 +80,6 @@ class DFCalculatorViewController: UIViewController {
 extension DFCalculatorViewController : DFRecipeBuilder {
   func addIngredient(_ ingredient: DFIngredientModel) {
     self.recipe.addIngredient(ingredient)
-    self.recipeCollectionView.reloadData()
   }
   
   func removeIngredient(_ ingredient: DFIngredientModel) {
@@ -88,6 +88,15 @@ extension DFCalculatorViewController : DFRecipeBuilder {
   
   func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel) {
     self.recipe.updateIngredient(oldIngredient: oldIngredient, withNewIngredient: newIngredient)
+  }
+}
+
+extension DFCalculatorViewController : DFRecipeUpdateListener {
+  func observeRecipeUpdate(notification: NSNotification) {
+    
+    let updateModel = notification.object as! DFRecipeUpdateModel
+    
+    self.recipeCollectionView.insertItems(at: [IndexPath(item: updateModel.indexPathRow, section: 0)])
   }
 }
 
