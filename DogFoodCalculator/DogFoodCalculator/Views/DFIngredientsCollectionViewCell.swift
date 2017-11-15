@@ -1,5 +1,5 @@
 //
-//  DFCalculatorCollectionViewCell.swift
+//  DFIngredientsCollectionViewCell.swift
 //  DogFoodCalculator
 //
 //  Created by Roshan Goli on 11/1/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DFCalculatorCollectionViewCell: UICollectionViewCell {
+class DFIngredientsCollectionViewCell: UICollectionViewCell {
   private let cellMainLabel: UILabel
   private let supportedUnitsRow: DFSupportedMeasurementUnitsRow
   private let amountTextField: UITextField
@@ -19,7 +19,7 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
   weak var delegate: DFDataSourceAdapterProtocol?
   weak var recipeBuilder: DFRecipeBuilder?
   
-  static let reuseIdentifier: String = "calculator-cell"
+  static let reuseIdentifier: String = "ingredient-cell"
   
   override init(frame: CGRect) {
     cellMainLabel = UILabel()
@@ -53,6 +53,9 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
     amountTextField.delegate = self
     removeIngredientButton.addTarget(self, action: #selector(self.removeIngredient), for: UIControlEvents.touchUpInside)
     
+    self.layer.borderWidth = 1
+    self.layer.borderColor = UIColor.blue.cgColor
+    
     self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     
     self.addSubview(cellMainLabel)
@@ -68,7 +71,7 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
 
 // MARK: Recipe building
 
-extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
+extension DFIngredientsCollectionViewCell : DFSupportedMeasurementsProtocol {
   func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
     if self.ingredientViewModel.getIngredientAmount().measurementValue == 0 {  // ingredient not previously added
       self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0))
@@ -122,7 +125,7 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
 
 // MARK : Gesture recognizer
 
-extension DFCalculatorCollectionViewCell {
+extension DFIngredientsCollectionViewCell {
   @objc private func dismissKeyboard() {
     self.endEditing(true)
   }
@@ -130,7 +133,7 @@ extension DFCalculatorCollectionViewCell {
 
 // MARK: Text field delegate
 
-extension DFCalculatorCollectionViewCell : UITextFieldDelegate {
+extension DFIngredientsCollectionViewCell : UITextFieldDelegate {
   public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     let allowableCharacterSet = NSCharacterSet(charactersIn: "0123456789.")
     
@@ -170,7 +173,7 @@ extension DFCalculatorCollectionViewCell : UITextFieldDelegate {
 
 // MARK: Configuring views and models
 
-extension DFCalculatorCollectionViewCell {
+extension DFIngredientsCollectionViewCell {
   
   func configureCellWithModel(_ ingredient: DFIngredientCellViewModel) {
     ingredientViewModel = ingredient
@@ -206,7 +209,7 @@ extension DFCalculatorCollectionViewCell {
 
 // MARK: Autolayout constraints
 
-extension DFCalculatorCollectionViewCell {
+extension DFIngredientsCollectionViewCell {
   private func setMainLabelConstraints() {
     cellMainLabel.removeConstraints(cellMainLabel.constraints)
     

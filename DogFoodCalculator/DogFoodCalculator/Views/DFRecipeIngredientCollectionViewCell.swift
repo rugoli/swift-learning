@@ -11,6 +11,7 @@ import UIKit
 class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   private let ingredientNameLabel: UILabel
   private var ingredientViewModel: DFIngredientCellViewModel!
+  static let reuseIdentifier: String = "recipe-ingredient-cell"
   
   override init(frame: CGRect) {
     ingredientNameLabel = UILabel()
@@ -22,6 +23,8 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
     super.init(frame: frame)
     self.backgroundColor = UIColor.blue
     self.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    
+    self.addSubview(ingredientNameLabel)
   }
   
   required convenience init?(coder aDecoder: NSCoder) {
