@@ -8,13 +8,19 @@
 
 import UIKit
 
+enum DFRecipeUpdateType : String {
+  case add
+  case update
+  case remove
+}
+
 class DFRecipeUpdateModel : NSObject {
-  let model: DFIngredientModel
+  let updateType: DFRecipeUpdateType
   let indexPathRow: Int
   static let notificationName: NSNotification.Name = NSNotification.Name("recipe-update")
   
-  init(model: DFIngredientModel, indexPath: Int) {
-    self.model = model
+  init(updateType: DFRecipeUpdateType, indexPath: Int) {
+    self.updateType = updateType
     self.indexPathRow = indexPath
   }
 }

@@ -13,25 +13,25 @@ class DFRecipe: NSObject {
   
   func addIngredient(_ ingredient: DFIngredientModel) {
     self.ingredients.append(ingredient)
-    self.postNotificationForUpdate(update: DFRecipeUpdateModel(model: self.ingredients.last!, indexPath: self.ingredients.count - 1))
+    self.postNotificationForUpdate(update: DFRecipeUpdateModel(updateType: DFRecipeUpdateType.add, indexPath: self.ingredients.count - 1))
   }
   
   func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel) {
-    let ingredientIndex = self.ingredients.index { (ingredient) -> Bool in
-      ingredient.id == oldIngredient.id
-    }
+    let ingredientIndex = self.getIndexForIngredient(oldIngredient)
     
     switch ingredientIndex {
       case nil:
         self.addIngredient(newIngredient)
       default:
         self.ingredients[ingredientIndex!] = newIngredient
+        self.postNotificationForUpdate(update: DFRecipeUpdateModel(updateType: DFRecipeUpdateType.update, indexPath: ingredientIndex!))
     }
   }
   
   func removeIngredient(_ ingredient: DFIngredientModel) {
-    if self.ingredients.contains(ingredient) {
-      self.ingredients = self.ingredients.filter{$0 != ingredient}
+    if let ingredientIndex = self.getIndexForIngredient(ingredient) {
+      self.ingredients.remove(at: ingredientIndex)
+      self.postNotificationForUpdate(update: DFRecipeUpdateModel(updateType: DFRecipeUpdateType.remove, indexPath: ingredientIndex))
     }
   }
   
@@ -41,6 +41,12 @@ class DFRecipe: NSObject {
   
   func getIngredients() -> [DFIngredientModel] {
     return self.ingredients
+  }
+  
+  private func getIndexForIngredient(_ targetIngredient: DFIngredientModel) -> Int? {
+    return self.ingredients.index { (ingredient) -> Bool in
+      ingredient.id == targetIngredient.id
+    }
   }
 }
 
