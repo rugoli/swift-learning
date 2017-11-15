@@ -17,6 +17,7 @@
 		0151195B1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151195A1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift */; };
 		0151195F1FAD4B2C005EEC71 /* DFIngredientViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151195E1FAD4B2C005EEC71 /* DFIngredientViewModelTests.swift */; };
 		01850F6A1FAB9EDE00837AC6 /* DFMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */; };
+		01AD5CD31FBBBEC400AFF066 /* DFRecipeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AD5CD21FBBBEC400AFF066 /* DFRecipeBuilder.swift */; };
 		01C704BA1FAA617E0001BFBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704B91FAA617E0001BFBD /* AppDelegate.swift */; };
 		01C704BC1FAA617E0001BFBD /* DFCalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704BB1FAA617E0001BFBD /* DFCalculatorViewController.swift */; };
 		01C704BF1FAA617E0001BFBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C704BD1FAA617E0001BFBD /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		0151195A1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFSupportedMeasurementUnitsRow.swift; sourceTree = "<group>"; };
 		0151195E1FAD4B2C005EEC71 /* DFIngredientViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientViewModelTests.swift; sourceTree = "<group>"; };
 		01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DFMeasurement.swift; path = DogFoodCalculator/DataAndModels/DFMeasurement.swift; sourceTree = SOURCE_ROOT; };
+		01AD5CD21FBBBEC400AFF066 /* DFRecipeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipeBuilder.swift; sourceTree = "<group>"; };
 		01C704B61FAA617E0001BFBD /* DogFoodCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogFoodCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01C704B91FAA617E0001BFBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01C704BB1FAA617E0001BFBD /* DFCalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFCalculatorViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		01C704CB1FAA78370001BFBD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				01AD5CD21FBBBEC400AFF066 /* DFRecipeBuilder.swift */,
 				01C704B91FAA617E0001BFBD /* AppDelegate.swift */,
 				01C704BB1FAA617E0001BFBD /* DFCalculatorViewController.swift */,
 			);
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01AD5CD31FBBBEC400AFF066 /* DFRecipeBuilder.swift in Sources */,
 				015119591FABC8DF005EEC71 /* DFIngredientModel.swift in Sources */,
 				01C704BC1FAA617E0001BFBD /* DFCalculatorViewController.swift in Sources */,
 				01C704BA1FAA617E0001BFBD /* AppDelegate.swift in Sources */,

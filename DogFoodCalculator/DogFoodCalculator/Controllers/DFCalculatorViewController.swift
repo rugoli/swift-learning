@@ -12,8 +12,11 @@ import CoreGraphics
 class DFCalculatorViewController: UIViewController {
   private var collectionView: UICollectionView!
   private var dataSource: DFIngredientCollectionViewDataSource!
+  private var recipe: DFRecipe
   
   required init(coder: NSCoder) {
+    self.recipe = DFRecipe()
+    
     super.init(coder: coder)!
   }
   
@@ -21,7 +24,7 @@ class DFCalculatorViewController: UIViewController {
     super.loadView()
     self.view.backgroundColor = UIColor.white
     
-    self.dataSource = DFIngredientCollectionViewDataSource.init()
+    self.dataSource = DFIngredientCollectionViewDataSource(withRecipeBuilderDelegate: self)
     
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
@@ -37,9 +40,25 @@ class DFCalculatorViewController: UIViewController {
     self.view.addSubview(self.collectionView)
   }
   
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
     self.collectionView?.frame = CGRect(x: 0, y: 50 , width: self.view.bounds.size.width, height: 200)
+  }
+}
+
+// MARK: Recipe builder
+
+extension DFCalculatorViewController : DFRecipeBuilder {
+  func addIngredient(_ ingredient: DFIngredientModel) {
+    self.recipe.addIngredient(ingredient)
+  }
+  
+  func removeIngredient(_ ingredient: DFIngredientModel) {
+    self.recipe.removeIngredient(ingredient)
+  }
+  
+  func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel) {
+    self.recipe.updateIngredient(oldIngredient: oldIngredient, withNewIngredient: newIngredient)
   }
 }
 
