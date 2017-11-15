@@ -45,6 +45,10 @@ class DFCalculatorViewController: UIViewController {
     self.recipeCollectionView?.frame = CGRect(x: 0, y: 260 , width: self.view.bounds.size.width, height: self.view.bounds.size.height - 260)
   }
   
+  deinit {
+    self.recipe.removeObserver(observer: self)
+  }
+  
   private func configureIngredientListCollectionView() {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
@@ -94,7 +98,7 @@ extension DFCalculatorViewController : DFRecipeBuilder {
 extension DFCalculatorViewController : DFRecipeUpdateListener {
   func observeRecipeUpdate(notification: NSNotification) {
     
-    let updateModel = notification.object as! DFRecipeUpdateModel
+    let updateModel = notification.userInfo![DFRecipe.notificationUpdateKey] as! DFRecipeUpdateModel
     let indexPaths = [IndexPath(item: updateModel.indexPathRow, section: 0)]
     
     switch updateModel.updateType {
