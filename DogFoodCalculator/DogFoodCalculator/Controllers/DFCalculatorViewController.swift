@@ -24,7 +24,7 @@ class DFCalculatorViewController: UIViewController {
     
     super.init(coder: coder)!
     
-    self.recipe.addRecipeUpdateObserver(observer: self)
+    self.recipe.addRecipeUpdateObserver(self)
     self.ingredientDataSource.recipeBuilder = self
   }
   
@@ -46,7 +46,7 @@ class DFCalculatorViewController: UIViewController {
   }
   
   deinit {
-    self.recipe.removeObserver(observer: self)
+    self.recipe.removeObserver(self)
   }
   
   private func configureIngredientListCollectionView() {

@@ -14,7 +14,7 @@ class DFRecipe: NSObject {
   
   func addIngredient(_ ingredient: DFIngredientModel) {
     self.ingredients.append(ingredient)
-    self.postNotificationForUpdate(update: DFRecipeUpdateModel(updateType: DFRecipeUpdateType.add, indexPath: self.ingredients.count - 1))
+    self.postNotificationForUpdate(DFRecipeUpdateModel(updateType: DFRecipeUpdateType.add, indexPath: self.ingredients.count - 1))
   }
   
   func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel) {
@@ -25,14 +25,14 @@ class DFRecipe: NSObject {
         self.addIngredient(newIngredient)
       default:
         self.ingredients[ingredientIndex!] = newIngredient
-        self.postNotificationForUpdate(update: DFRecipeUpdateModel(updateType: DFRecipeUpdateType.update, indexPath: ingredientIndex!))
+        self.postNotificationForUpdate(DFRecipeUpdateModel(updateType: DFRecipeUpdateType.update, indexPath: ingredientIndex!))
     }
   }
   
   func removeIngredient(_ ingredient: DFIngredientModel) {
     if let ingredientIndex = self.getIndexForIngredient(ingredient) {
       self.ingredients.remove(at: ingredientIndex)
-      self.postNotificationForUpdate(update: DFRecipeUpdateModel(updateType: DFRecipeUpdateType.remove, indexPath: ingredientIndex))
+      self.postNotificationForUpdate(DFRecipeUpdateModel(updateType: DFRecipeUpdateType.remove, indexPath: ingredientIndex))
     }
   }
   
@@ -54,15 +54,15 @@ class DFRecipe: NSObject {
 // MARK: Update observers
 
 extension DFRecipe {
-  func addRecipeUpdateObserver(observer: DFRecipeUpdateListener) {
+  func addRecipeUpdateObserver(_ observer: DFRecipeUpdateListener) {
     NotificationCenter.default.addObserver(observer, selector: #selector(DFRecipeUpdateListener.observeRecipeUpdate(notification:)), name: DFRecipeUpdateModel.notificationName, object: self)
   }
   
-  func removeObserver(observer: DFRecipeUpdateListener) {
+  func removeObserver(_ observer: DFRecipeUpdateListener) {
     NotificationCenter.default.removeObserver(observer, name: DFRecipeUpdateModel.notificationName, object: self)
   }
   
-  func postNotificationForUpdate(update: DFRecipeUpdateModel) {
+  func postNotificationForUpdate(_ update: DFRecipeUpdateModel) {
     NotificationCenter.default.post(name: DFRecipeUpdateModel.notificationName, object: self, userInfo: [DFRecipe.notificationUpdateKey : update])
   }
 }
