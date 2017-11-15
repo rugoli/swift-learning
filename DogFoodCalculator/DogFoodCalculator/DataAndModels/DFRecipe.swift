@@ -13,6 +13,7 @@ class DFRecipe: NSObject {
   
   func addIngredient(_ ingredient: DFIngredientModel) {
     self.ingredients.append(ingredient)
+    self.postNotificationForUpdate(update: DFRecipeUpdateModel(model: self.ingredients.last!, indexPath: self.ingredients.count - 1))
   }
   
   func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel) {
@@ -47,7 +48,7 @@ class DFRecipe: NSObject {
 
 extension DFRecipe {
   func addRecipeUpdateObserver(observer: DFRecipeUpdateListener) {
-    NotificationCenter.default.addObserver(observer, selector: #selector(DFRecipeUpdateListener.observeRecipeUpdate(updateModel:)), name: DFRecipeUpdateModel.notificationName, object: nil)
+    NotificationCenter.default.addObserver(observer, selector: #selector(DFRecipeUpdateListener.observeRecipeUpdate(notification:)), name: DFRecipeUpdateModel.notificationName, object: nil)
   }
   
   func removeObserver(observer: DFRecipeUpdateListener) {
