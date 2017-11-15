@@ -25,7 +25,7 @@ class DFRecipe: NSObject {
         self.addIngredient(newIngredient)
       default:
         self.ingredients[ingredientIndex!] = newIngredient
-      }
+    }
   }
   
   func removeIngredient(_ ingredient: DFIngredientModel) {

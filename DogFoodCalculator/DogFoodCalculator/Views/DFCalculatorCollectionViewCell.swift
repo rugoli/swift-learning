@@ -32,6 +32,7 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
     amountTextField = UITextField()
     amountTextField.text = "0"
     amountTextField.font = amountTextField.font?.withSize(24)
+    amountTextField.clearsOnBeginEditing = true
     amountTextField.textAlignment = NSTextAlignment.center
     amountTextField.keyboardType = UIKeyboardType.decimalPad
     amountTextField.isHidden = false
@@ -197,12 +198,7 @@ extension DFCalculatorCollectionViewCell {
   
   private func configureAmountTextFieldProperties() {
     let amountValue = self.ingredientViewModel.getIngredientAmount().measurementValue
-    if amountValue > 0 {
-      self.amountTextField.text = "\(amountValue)"
-      self.amountTextField.isHidden = false
-    } else {
-      self.amountTextField.isHidden = true
-    }
+    self.amountTextField.text = "\(amountValue)"
   }
 }
 
