@@ -8,59 +8,38 @@
 
 import UIKit
 
-// use class specifier to allow weak references
-protocol DFRecipeBuilder : class {
-  func addIngredient(_ ingredient: DFIngredientModel)
-  func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel)
-  func removeIngredient(_ ingredient: DFIngredientModel)
-}
-
 protocol DFDataSourceAdapterProtocol : class {
   func updateModel(model: DFIngredientCellViewModel, atIndexPath indexPath: IndexPath)
 }
 
 class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    let numIngredients: Int = 10
-    var ingredients: [DFIngredientCellViewModel] = [DFIngredientCellViewModel]()
-    private var recipe: DFRecipe = DFRecipe()
+  let numIngredients: Int = 10
+  weak var recipeBuilder: DFRecipeBuilder?
+  var ingredients: [DFIngredientCellViewModel] = [DFIngredientCellViewModel]()
+  
+  init(withRecipeBuilderDelegate delegate: DFRecipeBuilder) {
+    self.recipeBuilder = delegate
     
-    override init() {
-        super.init()
-        
-        self.generateIngredients()
-    }
+    super.init()
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.numIngredients
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: DFCalculatorCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DFCalculatorCollectionViewCell.reuseIdentifier, for: indexPath) as! DFCalculatorCollectionViewCell
-        cell.configureCellWithModel(self.ingredients[indexPath.row])
-        cell.delegate = self
-        cell.indexPath = indexPath
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 300, height: 180)
-    }
-    
-}
-
-// MARK: Recipe builder
-
-extension DFIngredientCollectionViewDataSource : DFRecipeBuilder {
-  func addIngredient(_ ingredient: DFIngredientModel) {
-    self.recipe.addIngredient(ingredient)
+    self.generateIngredients()
   }
   
-  func removeIngredient(_ ingredient: DFIngredientModel) {
-    self.recipe.removeIngredient(ingredient)
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return self.numIngredients
   }
   
-  func updateIngredient(oldIngredient: DFIngredientModel, withNewIngredient newIngredient: DFIngredientModel) {
-    self.recipe.updateIngredient(oldIngredient: oldIngredient, withNewIngredient: newIngredient)
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell: DFCalculatorCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DFCalculatorCollectionViewCell.reuseIdentifier, for: indexPath) as! DFCalculatorCollectionViewCell
+    cell.configureCellWithModel(self.ingredients[indexPath.row])
+    cell.delegate = self
+    cell.recipeBuilder = self.recipeBuilder
+    cell.indexPath = indexPath
+    return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: 300, height: 180)
   }
 }
 

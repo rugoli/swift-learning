@@ -16,7 +16,8 @@ class DFCalculatorCollectionViewCell: UICollectionViewCell {
     
   private var ingredientViewModel: DFIngredientCellViewModel!
   var indexPath: IndexPath!
-  weak var delegate: (DFRecipeBuilder & DFDataSourceAdapterProtocol)?
+  weak var delegate: DFDataSourceAdapterProtocol?
+  weak var recipeBuilder: DFRecipeBuilder?
   
   static let reuseIdentifier: String = "calculator-cell"
   
@@ -83,7 +84,7 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
   }
   
   @objc private func removeIngredient() {
-    delegate?.removeIngredient(ingredientViewModel.ingredientModel)
+    self.recipeBuilder?.removeIngredient(ingredientViewModel.ingredientModel)
     
     let newModel = DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
       .withIsSelected(false)
@@ -98,7 +99,7 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
       DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
         .withIngredientMeasurement(newValue)
         .build()
-    self.delegate?.updateIngredient(oldIngredient: self.ingredientViewModel.ingredientModel, withNewIngredient: newModel)
+    self.recipeBuilder?.updateIngredient(oldIngredient: self.ingredientViewModel.ingredientModel, withNewIngredient: newModel)
     self.updateDataSourceAndCell(withNewViewModel: DFIngredientCellViewModel(newModel))
   }
   
@@ -109,7 +110,7 @@ extension DFCalculatorCollectionViewCell : DFSupportedMeasurementsProtocol {
       .withIsSelected(true)
       .build()
     self.updateDataSourceAndCell(withNewViewModel: DFIngredientCellViewModel(newModel))
-    self.delegate?.addIngredient(self.ingredientViewModel.ingredientModel)
+    self.recipeBuilder?.addIngredient(self.ingredientViewModel.ingredientModel)
   }
   
   private func updateDataSourceAndCell(withNewViewModel newModel: DFIngredientCellViewModel) {
@@ -152,7 +153,8 @@ extension DFCalculatorCollectionViewCell : UITextFieldDelegate {
       return
     }
     
-    let newIngredientAmount = DFMeasurement(measurementUnit: self.ingredientViewModel.getIngredientAmount().measurementUnit, measurementValue: (input as NSString).floatValue)
+    let newIngredientAmount = DFMeasurement(measurementUnit: self.ingredientViewModel.getIngredientAmount().measurementUnit,
+                                            measurementValue: (input as NSString).floatValue)
     guard newIngredientAmount.measurementValue > 0 else {  // remove ingredient if text is not greater than zero
       self.removeIngredient()
       return
