@@ -17,9 +17,7 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
   weak var recipeBuilder: DFRecipeBuilder?
   var ingredients: [DFIngredientCellViewModel] = [DFIngredientCellViewModel]()
   
-  init(withRecipeBuilderDelegate delegate: DFRecipeBuilder) {
-    self.recipeBuilder = delegate
-    
+  override init() {    
     super.init()
     
     self.generateIngredients()
