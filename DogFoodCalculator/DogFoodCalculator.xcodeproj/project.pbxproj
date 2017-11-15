@@ -26,6 +26,7 @@
 		01C704D01FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704CF1FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift */; };
 		01C704D21FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704D11FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift */; };
 		01F9D8661FBC07A6001F9F69 /* DFRecipeCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F9D8651FBC07A6001F9F69 /* DFRecipeCollectionViewDataSource.swift */; };
+		01F9D8681FBC0AB5001F9F69 /* DFRecipeIngredientCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F9D8671FBC0AB4001F9F69 /* DFRecipeIngredientCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		01C704CF1FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		01C704D11FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFCalculatorCollectionViewCell.swift; sourceTree = "<group>"; };
 		01F9D8651FBC07A6001F9F69 /* DFRecipeCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipeCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		01F9D8671FBC0AB4001F9F69 /* DFRecipeIngredientCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipeIngredientCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 		01C704CD1FAA78570001BFBD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				01F9D8671FBC0AB4001F9F69 /* DFRecipeIngredientCollectionViewCell.swift */,
 				0151195A1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift */,
 				01C704D11FAA7C2B0001BFBD /* DFCalculatorCollectionViewCell.swift */,
 			);
@@ -274,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01AD5CD31FBBBEC400AFF066 /* DFRecipeBuilder.swift in Sources */,
+				01F9D8681FBC0AB5001F9F69 /* DFRecipeIngredientCollectionViewCell.swift in Sources */,
 				015119591FABC8DF005EEC71 /* DFIngredientModel.swift in Sources */,
 				01C704BC1FAA617E0001BFBD /* DFCalculatorViewController.swift in Sources */,
 				01C704BA1FAA617E0001BFBD /* AppDelegate.swift in Sources */,
