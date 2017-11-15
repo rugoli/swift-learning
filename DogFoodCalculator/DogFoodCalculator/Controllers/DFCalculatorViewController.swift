@@ -51,11 +51,11 @@ class DFCalculatorViewController: UIViewController {
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 20)
     
     self.ingredientListCollectionView = UICollectionView(frame: CGRect(x: 0, y:0 , width: 0, height: 0), collectionViewLayout: flowLayout)
-    self.ingredientListCollectionView.backgroundColor = UIColor.black
+    self.ingredientListCollectionView.backgroundColor = UIColor.white
     self.ingredientListCollectionView.showsHorizontalScrollIndicator = false
     self.ingredientListCollectionView.dataSource = self.ingredientDataSource
     self.ingredientListCollectionView.delegate = self.ingredientDataSource
-    self.ingredientListCollectionView.register(DFCalculatorCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: DFCalculatorCollectionViewCell.reuseIdentifier)
+    self.ingredientListCollectionView.register(DFIngredientsCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: DFIngredientsCollectionViewCell.reuseIdentifier)
   }
   
   private func configureRecipeCollectionView() {    
@@ -66,11 +66,11 @@ class DFCalculatorViewController: UIViewController {
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 20)
     
     self.recipeCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
-    self.recipeCollectionView.backgroundColor = UIColor.black
+    self.recipeCollectionView.backgroundColor = UIColor.white
     self.recipeCollectionView.showsHorizontalScrollIndicator = false
     self.recipeCollectionView.dataSource = self.recipeDataSource
     self.recipeCollectionView.delegate = self.recipeDataSource
-    self.recipeCollectionView.register(DFCalculatorCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: DFCalculatorCollectionViewCell.reuseIdentifier)
+    self.recipeCollectionView.register(DFRecipeIngredientCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: DFRecipeIngredientCollectionViewCell.reuseIdentifier)
   }
 }
 
@@ -79,6 +79,7 @@ class DFCalculatorViewController: UIViewController {
 extension DFCalculatorViewController : DFRecipeBuilder {
   func addIngredient(_ ingredient: DFIngredientModel) {
     self.recipe.addIngredient(ingredient)
+    self.recipeCollectionView.reloadData()
   }
   
   func removeIngredient(_ ingredient: DFIngredientModel) {
