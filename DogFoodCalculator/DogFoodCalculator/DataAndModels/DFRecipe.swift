@@ -42,3 +42,19 @@ class DFRecipe: NSObject {
     return self.ingredients
   }
 }
+
+// MARK: Update observers
+
+extension DFRecipe {
+  func addRecipeUpdateObserver(observer: DFRecipeUpdateListener) {
+    NotificationCenter.default.addObserver(observer, selector: #selector(DFRecipeUpdateListener.observeRecipeUpdate(updateModel:)), name: DFRecipeUpdateModel.notificationName, object: nil)
+  }
+  
+  func removeObserver(observer: DFRecipeUpdateListener) {
+    NotificationCenter.default.removeObserver(observer)
+  }
+  
+  func postNotificationForUpdate(update: DFRecipeUpdateModel) {
+    NotificationCenter.default.post(name: DFRecipeUpdateModel.notificationName, object: update)
+  }
+}
