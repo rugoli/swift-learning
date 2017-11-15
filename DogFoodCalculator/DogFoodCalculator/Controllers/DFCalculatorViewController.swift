@@ -95,8 +95,16 @@ extension DFCalculatorViewController : DFRecipeUpdateListener {
   func observeRecipeUpdate(notification: NSNotification) {
     
     let updateModel = notification.object as! DFRecipeUpdateModel
+    let indexPaths = [IndexPath(item: updateModel.indexPathRow, section: 0)]
     
-    self.recipeCollectionView.insertItems(at: [IndexPath(item: updateModel.indexPathRow, section: 0)])
+    switch updateModel.updateType {
+      case .add:
+        self.recipeCollectionView.insertItems(at: indexPaths)
+      case .remove:
+        self.recipeCollectionView.deleteItems(at: indexPaths)
+      case .update:
+        self.recipeCollectionView.reloadItems(at: indexPaths)
+    }
   }
 }
 
