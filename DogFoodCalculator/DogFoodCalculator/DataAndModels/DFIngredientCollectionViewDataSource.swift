@@ -23,6 +23,17 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
     self.generateIngredients()
   }
   
+  func getIndexPathForIngredientModel(_ model: DFIngredientModel) -> IndexPath? {
+    let modelIndex: Int? = self.ingredients.index { (viewModel) -> Bool in
+      viewModel.ingredientModel == model
+    }
+    
+    if modelIndex != nil {
+      return IndexPath(row: modelIndex!, section: 0)
+    }
+    return nil
+  }
+  
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return self.numIngredients
   }

@@ -7,9 +7,14 @@
 //
 
 import UIKit
+
+protocol DFRecipeCollectionViewDelegate : class {
+  func didTapRecipeIngredient(collectionView: UICollectionView, ingredientModel: DFIngredientModel)
+}
   
 class DFRecipeCollectionViewDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   var recipe: DFRecipe
+  weak var delegate: DFRecipeCollectionViewDelegate?
   
   init(withRecipe recipe: DFRecipe) {
     self.recipe = recipe
@@ -30,6 +35,10 @@ class DFRecipeCollectionViewDataSource: NSObject, UICollectionViewDataSource, UI
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
     return CGSize(width: (collectionView.bounds.size.width - flowLayout.sectionInset.left - flowLayout.sectionInset.right - flowLayout.minimumInteritemSpacing) / 2.0, height: 100)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    self.delegate?.didTapRecipeIngredient(collectionView: collectionView, ingredientModel: self.recipe.getIngredients()[indexPath.row])
   }
 }
 
