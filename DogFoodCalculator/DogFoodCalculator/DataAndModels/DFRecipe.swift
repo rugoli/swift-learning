@@ -9,6 +9,7 @@
 import UIKit
 
 class DFRecipe: NSObject {
+  public static let notificationUpdateKey: String = "updateModel"
   private var ingredients: [DFIngredientModel] = []
   
   func addIngredient(_ ingredient: DFIngredientModel) {
@@ -54,14 +55,14 @@ class DFRecipe: NSObject {
 
 extension DFRecipe {
   func addRecipeUpdateObserver(observer: DFRecipeUpdateListener) {
-    NotificationCenter.default.addObserver(observer, selector: #selector(DFRecipeUpdateListener.observeRecipeUpdate(notification:)), name: DFRecipeUpdateModel.notificationName, object: nil)
+    NotificationCenter.default.addObserver(observer, selector: #selector(DFRecipeUpdateListener.observeRecipeUpdate(notification:)), name: DFRecipeUpdateModel.notificationName, object: self)
   }
   
   func removeObserver(observer: DFRecipeUpdateListener) {
-    NotificationCenter.default.removeObserver(observer)
+    NotificationCenter.default.removeObserver(observer, name: DFRecipeUpdateModel.notificationName, object: self)
   }
   
   func postNotificationForUpdate(update: DFRecipeUpdateModel) {
-    NotificationCenter.default.post(name: DFRecipeUpdateModel.notificationName, object: update)
+    NotificationCenter.default.post(name: DFRecipeUpdateModel.notificationName, object: self, userInfo: [DFRecipe.notificationUpdateKey : update])
   }
 }
