@@ -75,6 +75,15 @@ struct DFMeasurement {
     }
     throw DFMeasurementConversionError.cannotConvertToUnit
   }
+  
+  func prettyPrint() -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = NumberFormatter.Style.decimal
+    formatter.minimumFractionDigits = 2
+    formatter.maximumFractionDigits = 2
+    
+    return "\(formatter.string(from: NSNumber.init(value: self.measurementValue))!) \(self.measurementUnit)"
+  }
 }
 
 extension DFMeasurement : Equatable {

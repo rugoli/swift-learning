@@ -97,7 +97,6 @@ extension DFCalculatorViewController : DFRecipeBuilder {
 
 extension DFCalculatorViewController : DFRecipeUpdateListener {
   func observeRecipeUpdate(notification: NSNotification) {
-    
     let updateModel = notification.userInfo![DFRecipe.notificationUpdateKey] as! DFRecipeUpdateModel
     let indexPaths = [IndexPath(item: updateModel.indexPathRow, section: 0)]
     
