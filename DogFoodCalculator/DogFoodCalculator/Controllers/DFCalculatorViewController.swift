@@ -26,6 +26,7 @@ class DFCalculatorViewController: UIViewController {
     
     self.recipe.addRecipeUpdateObserver(self)
     self.ingredientDataSource.recipeBuilder = self
+    self.recipeDataSource.delegate = self
   }
   
   override func loadView() {
@@ -95,6 +96,8 @@ extension DFCalculatorViewController : DFRecipeBuilder {
   }
 }
 
+// MARK: Recipe update listener
+
 extension DFCalculatorViewController : DFRecipeUpdateListener {
   func observeRecipeUpdate(notification: NSNotification) {
     let updateModel = notification.userInfo![DFRecipe.notificationUpdateKey] as! DFRecipeUpdateModel
@@ -110,4 +113,15 @@ extension DFCalculatorViewController : DFRecipeUpdateListener {
     }
   }
 }
+
+// MARK: Recipe collection view delegate
+
+extension DFCalculatorViewController : DFRecipeCollectionViewDelegate {
+  func didTapRecipeIngredient(collectionView: UICollectionView, ingredientModel: DFIngredientModel) {
+    if let ingredientIndexPath: IndexPath = self.ingredientDataSource.getIndexPathForIngredientModel(ingredientModel) {
+      self.ingredientListCollectionView.scrollToItem(at: ingredientIndexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
+    }
+  }
+}
+
 
