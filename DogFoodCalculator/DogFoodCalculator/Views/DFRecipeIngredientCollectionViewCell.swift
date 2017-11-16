@@ -10,6 +10,7 @@ import UIKit
 
 class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   private let ingredientNameLabel: UILabel
+  private let ingredientValueLabel: UILabel
   private var ingredientViewModel: DFIngredientCellViewModel!
   static let reuseIdentifier: String = "recipe-ingredient-cell"
   
@@ -20,11 +21,18 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
     ingredientNameLabel.textAlignment = NSTextAlignment.center
     ingredientNameLabel.font = ingredientNameLabel.font.withSize(18)
     
+    ingredientValueLabel = UILabel()
+    ingredientValueLabel.textColor = UIColor.white
+    ingredientValueLabel.numberOfLines = 1
+    ingredientValueLabel.textAlignment = NSTextAlignment.center
+    ingredientValueLabel.font = ingredientValueLabel.font.withSize(16)
+    
     super.init(frame: frame)
     self.backgroundColor = UIColor.blue
     self.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     
     self.addSubview(ingredientNameLabel)
+    self.addSubview(ingredientValueLabel)
   }
   
   required convenience init?(coder aDecoder: NSCoder) {
@@ -42,10 +50,17 @@ extension DFRecipeIngredientCollectionViewCell {
     
     self.configureIngredientLabel()
     self.setIngredientNameLabelConstraints()
+    
+    self.configureIngredientValueLabel()
+    self.setIngredientValueLabelConstraints()
   }
   
   func configureIngredientLabel() {
     self.ingredientNameLabel.text = self.ingredientViewModel.ingredientName
+  }
+  
+  func configureIngredientValueLabel() {
+    self.ingredientValueLabel.text = self.ingredientViewModel.getIngredientAmount().prettyPrint()
   }
 }
 
@@ -65,5 +80,20 @@ extension DFRecipeIngredientCollectionViewCell {
     let width = NSLayoutConstraint(item: ingredientNameLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.width)
     let height = NSLayoutConstraint(item: ingredientNameLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.height)
     NSLayoutConstraint.activate([centering, topPadding, width, height])
+  }
+  
+  private func setIngredientValueLabelConstraints() {
+    ingredientValueLabel.removeConstraints(ingredientValueLabel.constraints)
+    
+    let cellSize = self.bounds.size
+    let cellMargins = self.layoutMargins
+    let labelSize: CGSize = ingredientValueLabel.sizeThatFits(CGSize(width: cellSize.width - cellMargins.left - cellMargins.right, height: cellSize.height))
+    
+    ingredientValueLabel.translatesAutoresizingMaskIntoConstraints = false
+    let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: ingredientValueLabel, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
+    let topSpacing = NSLayoutConstraint(item: ingredientValueLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: ingredientNameLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 10)
+    let width = NSLayoutConstraint(item: ingredientValueLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.width)
+    let height = NSLayoutConstraint(item: ingredientValueLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.height)
+    NSLayoutConstraint.activate([centering, topSpacing, width, height])
   }
 }
