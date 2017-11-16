@@ -11,6 +11,8 @@ import XCTest
 
 class DFRecipeTests: XCTestCase {
   private var testRecipe: DFRecipe = DFRecipe()
+  private var wasNotificationObserved: Bool = false
+  private var notificationTestingBlock: ((DFRecipeUpdateModel) -> Void)?
   
   func testUpdateIngredient() {
     let initialIngredient = DFIngredientModel(ingredientName: "Test",
@@ -56,7 +58,67 @@ class DFRecipeTests: XCTestCase {
     XCTAssertTrue(self.testRecipe.getIngredients().count == 0)
   }
   
+  func testNotificationPosting() {
+    self.testRecipe.addRecipeUpdateObserver(self)
+    
+    // Testing adding recipe ingredient notification
+    let initialIngredient = DFIngredientModel(ingredientName: "Test",
+                                              supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp],
+                                              defaultMeasurementUnit: DFMeasurementUnit.tsp,
+                                              isSelected: false,
+                                              amount: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 4.0))
+    self.notificationTestingBlock = self.notifTestingBlockForUpdateType(DFRecipeUpdateType.add)
+    self.testRecipe.addIngredient(initialIngredient)
+    XCTAssertTrue(self.wasNotificationObserved, "Notification was not observed")
+    self.wasNotificationObserved = false
+    
+    // Testing updating recipe ingredient notification
+    let newAmount = DFIngredientModelBuilder(fromModel: initialIngredient)
+      .withIngredientMeasurement(DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 3.0))
+      .build()
+    self.notificationTestingBlock = self.notifTestingBlockForUpdateType(DFRecipeUpdateType.update)
+    self.testRecipe.updateIngredient(oldIngredient: initialIngredient, withNewIngredient: newAmount)
+    XCTAssertTrue(self.wasNotificationObserved, "Notification was not observed")
+    self.wasNotificationObserved = false
+    
+    // Testing removing recipe ingredient notification
+    self.notificationTestingBlock = self.notifTestingBlockForUpdateType(DFRecipeUpdateType.remove)
+    self.testRecipe.removeIngredient(newAmount)
+    XCTAssertTrue(self.wasNotificationObserved, "Notification was not observed")
+  }
+  
   private class func testIngredient() -> DFIngredientModel {
     return DFIngredientModel(ingredientName: "Test: \(arc4random_uniform(100))", supportedMeasurementUnits: [DFMeasurementUnit.cup, DFMeasurementUnit.tsp])
   }
+  
+  private func notifTestingBlockForUpdateType(_ updateType: DFRecipeUpdateType) -> ((DFRecipeUpdateModel) -> Void) {
+    return {
+      (updateModel: DFRecipeUpdateModel) -> Void in
+      XCTAssert(updateModel.updateType == updateType)
+    }
+  }
+  
+  override func tearDown() {
+    self.testRecipe.removeObserver(self)
+  }
+}
+
+extension DFRecipeTests : DFRecipeUpdateListener {
+  func observeRecipeUpdate(notification: NSNotification) {
+    self.wasNotificationObserved = true
+    guard let updateModel = notification.userInfo?[DFRecipe.notificationUpdateKey] as! DFRecipeUpdateModel! else {
+      XCTFail("Update model not received in notification")
+      return
+    }
+    
+    guard let notifBlock = self.notificationTestingBlock else {
+      XCTFail("Notif block not set")
+      return
+    }
+    
+    notifBlock(updateModel)
+    self.notificationTestingBlock = nil
+  }
+  
+  
 }
