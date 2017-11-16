@@ -38,6 +38,12 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   required convenience init?(coder aDecoder: NSCoder) {
     self.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   }
+  
+  override var isHighlighted: Bool {
+    willSet {
+      self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 1.0, alpha: newValue ? 0.5 : 1.0)
+    }
+  }
     
 }
 
