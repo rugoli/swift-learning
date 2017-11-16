@@ -40,5 +40,11 @@ class DFRecipeCollectionViewDataSource: NSObject, UICollectionViewDataSource, UI
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     self.delegate?.didTapRecipeIngredient(collectionView: collectionView, ingredientModel: self.recipe.getIngredients()[indexPath.row])
   }
+  
+  func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+    return true
+  }
+  
+  
 }
 
