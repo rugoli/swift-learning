@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DFRecipeCollectionViewDelegate : class {
+protocol DFRecipeCollectionViewDelegate : class, DFRecipeIngredientCellDelegate {
   func didTapRecipeIngredient(collectionView: UICollectionView, ingredientModel: DFIngredientModel)
 }
   
@@ -29,6 +29,7 @@ class DFRecipeCollectionViewDataSource: NSObject, UICollectionViewDataSource, UI
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DFRecipeIngredientCollectionViewCell.reuseIdentifier, for: indexPath) as! DFRecipeIngredientCollectionViewCell
     cell.configureCellWithViewModel(DFIngredientCellViewModel(self.recipe.getIngredients()[indexPath.row]))
+    cell.delegate = self.delegate
     return cell
   }
   
