@@ -11,6 +11,7 @@ import UIKit
 class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   private let ingredientNameLabel: UILabel
   private let ingredientValueLabel: UILabel
+  private let xOutButton: UIButton
   private var ingredientViewModel: DFIngredientCellViewModel!
   static let reuseIdentifier: String = "recipe-ingredient-cell"
   
@@ -27,12 +28,23 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
     ingredientValueLabel.textAlignment = NSTextAlignment.center
     ingredientValueLabel.font = ingredientValueLabel.font.withSize(16)
     
+    xOutButton = UIButton(type: UIButtonType.custom)
+    xOutButton.setTitle("x", for: UIControlState.normal)
+    xOutButton.setTitle("x", for: UIControlState.selected)
+    xOutButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+    xOutButton.isHidden = false
+    xOutButton.backgroundColor = UIColor.blue
+    
     super.init(frame: frame)
     self.backgroundColor = UIColor.blue
     self.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    xOutButton.addTarget(self, action: #selector(self.tappedRemoveIngredient(sender:)), for: UIControlEvents.touchUpInside)
     
     self.addSubview(ingredientNameLabel)
     self.addSubview(ingredientValueLabel)
+    
+    self.addSubview(xOutButton)
+    self.setXOutButtonConstraints()
   }
   
   required convenience init?(coder aDecoder: NSCoder) {
@@ -41,8 +53,14 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   
   override var isHighlighted: Bool {
     willSet {
-      self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 1.0, alpha: newValue ? 0.5 : 1.0)
+      let cellBackgroundColor = UIColor.init(red: 0, green: 0, blue: 1.0, alpha: newValue ? 0.5 : 1.0)
+      self.backgroundColor = cellBackgroundColor
+      self.xOutButton.backgroundColor = cellBackgroundColor
     }
+  }
+  
+  @objc func tappedRemoveIngredient(sender: UIButton) {
+    print("test")
   }
     
 }
@@ -101,5 +119,14 @@ extension DFRecipeIngredientCollectionViewCell {
     let width = NSLayoutConstraint(item: ingredientValueLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.width)
     let height = NSLayoutConstraint(item: ingredientValueLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.height)
     NSLayoutConstraint.activate([centering, topSpacing, width, height])
+  }
+  
+  private func setXOutButtonConstraints() {
+    xOutButton.translatesAutoresizingMaskIntoConstraints = false
+    let topAnchor = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: xOutButton, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0)
+    let rightAnchor = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: xOutButton, attribute: NSLayoutAttribute.right, multiplier: 1.0, constant: 0)
+    let width = NSLayoutConstraint(item: xOutButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
+    let height = NSLayoutConstraint(item: xOutButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
+    NSLayoutConstraint.activate([topAnchor, rightAnchor, width, height])
   }
 }
