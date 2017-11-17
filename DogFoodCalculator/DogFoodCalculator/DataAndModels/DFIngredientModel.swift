@@ -20,9 +20,10 @@ class DFIngredientModel: NSObject {
                 supportedMeasurementUnits: [DFMeasurementUnit],
                 defaultMeasurementUnit: DFMeasurementUnit? = nil,
                 isSelected: Bool = false,
-                amount: DFMeasurement? = nil) {
+                amount: DFMeasurement? = nil,
+                id: String = NSUUID.init().uuidString) {
     self.ingredientName = ingredientName
-    self.id = NSUUID.init().uuidString
+    self.id = id
     self.supportedMeasurementUnits = supportedMeasurementUnits
     self.defaultMeasurementUnit = defaultMeasurementUnit != nil
       ? defaultMeasurementUnit!

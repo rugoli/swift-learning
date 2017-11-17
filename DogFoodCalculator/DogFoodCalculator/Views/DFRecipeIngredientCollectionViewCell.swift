@@ -8,12 +8,17 @@
 
 import UIKit
 
+protocol DFRecipeIngredientCellDelegate : class {
+  func removedIngredientFromRecipe(cell: DFRecipeIngredientCollectionViewCell, ingredient: DFIngredientModel)
+}
+
 class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   private let ingredientNameLabel: UILabel
   private let ingredientValueLabel: UILabel
   private let xOutButton: UIButton
   private var ingredientViewModel: DFIngredientCellViewModel!
   static let reuseIdentifier: String = "recipe-ingredient-cell"
+  weak var delegate: DFRecipeIngredientCellDelegate?
   
   override init(frame: CGRect) {
     ingredientNameLabel = UILabel()
@@ -33,7 +38,7 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
     xOutButton.setTitle("x", for: UIControlState.selected)
     xOutButton.setTitleColor(UIColor.white, for: UIControlState.normal)
     xOutButton.isHidden = false
-    xOutButton.backgroundColor = UIColor.blue
+    xOutButton.backgroundColor = UIColor.clear
     
     super.init(frame: frame)
     self.backgroundColor = UIColor.blue
@@ -55,12 +60,11 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
     willSet {
       let cellBackgroundColor = UIColor.init(red: 0, green: 0, blue: 1.0, alpha: newValue ? 0.5 : 1.0)
       self.backgroundColor = cellBackgroundColor
-      self.xOutButton.backgroundColor = cellBackgroundColor
     }
   }
   
   @objc func tappedRemoveIngredient(sender: UIButton) {
-    print("test")
+    self.delegate?.removedIngredientFromRecipe(cell: self, ingredient: self.ingredientViewModel.ingredientModel)
   }
     
 }
@@ -96,11 +100,11 @@ extension DFRecipeIngredientCollectionViewCell {
     
     let cellSize = self.bounds.size
     let cellMargins = self.layoutMargins
-    let labelSize: CGSize = ingredientNameLabel.sizeThatFits(CGSize(width: cellSize.width - cellMargins.left - cellMargins.right, height: cellSize.height))
+    let labelSize: CGSize = ingredientNameLabel.sizeThatFits(CGSize(width: cellSize.width - max(cellMargins.right, xOutButton.bounds.width) - cellMargins.left, height: cellSize.height))
     
     ingredientNameLabel.translatesAutoresizingMaskIntoConstraints = false
     let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: ingredientNameLabel, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
-    let topPadding = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.topMargin, relatedBy: NSLayoutRelation.equal, toItem: ingredientNameLabel, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 10)
+    let topPadding = NSLayoutConstraint(item: xOutButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: ingredientNameLabel, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 10)
     let width = NSLayoutConstraint(item: ingredientNameLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.width)
     let height = NSLayoutConstraint(item: ingredientNameLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.height)
     NSLayoutConstraint.activate([centering, topPadding, width, height])

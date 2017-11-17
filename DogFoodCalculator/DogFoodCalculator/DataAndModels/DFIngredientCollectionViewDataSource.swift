@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol DFDataSourceAdapterProtocol : class {
-  func updateModel(model: DFIngredientCellViewModel, atIndexPath indexPath: IndexPath)
+protocol DFIngredientDataSourceAdapterProtocol : class {
+  func updateModel(model: DFIngredientModel, atIndexPath indexPath: IndexPath)
 }
 
 class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   let numIngredients: Int = 10
   weak var recipeBuilder: DFRecipeBuilder?
-  var ingredients: [DFIngredientCellViewModel] = [DFIngredientCellViewModel]()
+  private var ingredients: [DFIngredientModel] = [DFIngredientModel]()
   
   override init() {    
     super.init()
@@ -23,9 +23,18 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
     self.generateIngredients()
   }
   
-  func getIndexPathForIngredientModel(_ model: DFIngredientModel) -> IndexPath? {
-    let modelIndex: Int? = self.ingredients.index { (viewModel) -> Bool in
-      viewModel.ingredientModel == model
+  // returns the index path of the model that was updated
+  func updateIngredientModel(_ model: DFIngredientModel) -> IndexPath? {
+    if let modelIndex = self.getIndexPathForIngredientModel(model) {
+      self.ingredients[modelIndex.row] = model
+      return modelIndex
+    }
+    return nil
+  }
+  
+  func getIndexPathForIngredientModel(_ targetModel: DFIngredientModel) -> IndexPath? {
+    let modelIndex: Int? = self.ingredients.index { (model) -> Bool in
+      targetModel.id == model.id
     }
     
     if modelIndex != nil {
@@ -40,7 +49,7 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: DFIngredientsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DFIngredientsCollectionViewCell.reuseIdentifier, for: indexPath) as! DFIngredientsCollectionViewCell
-    cell.configureCellWithModel(self.ingredients[indexPath.row])
+    cell.configureCellWithModel(DFIngredientCellViewModel(self.ingredients[indexPath.row]))
     cell.delegate = self
     cell.recipeBuilder = self.recipeBuilder
     cell.indexPath = indexPath
@@ -52,8 +61,8 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
   }
 }
 
-extension DFIngredientCollectionViewDataSource : DFDataSourceAdapterProtocol {
-  func updateModel(model: DFIngredientCellViewModel, atIndexPath indexPath: IndexPath) {
+extension DFIngredientCollectionViewDataSource : DFIngredientDataSourceAdapterProtocol {
+  func updateModel(model: DFIngredientModel, atIndexPath indexPath: IndexPath) {
     self.ingredients[indexPath.row] = model
   }
 }
@@ -69,17 +78,17 @@ extension DFIngredientCollectionViewDataSource {
     
   }
   
-  private func generateRandomIngredient() -> DFIngredientCellViewModel {
+  private func generateRandomIngredient() -> DFIngredientModel {
     let randomInt: Int = Int(arc4random_uniform(3))
     switch randomInt {
     case 0:
-      return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb))
+      return DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb)
     case 1:
-      return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Canned pumpkin", supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp, DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.tbsp))
+      return DFIngredientModel(ingredientName: "Canned pumpkin", supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp, DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.tbsp)
     case 2:
-      return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "White rice", supportedMeasurementUnits: [DFMeasurementUnit.cup]))
+      return DFIngredientModel(ingredientName: "White rice", supportedMeasurementUnits: [DFMeasurementUnit.cup])
     default:
-      return DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb))
+      return DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.lb)
     }
     
   }

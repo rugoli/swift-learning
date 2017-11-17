@@ -16,7 +16,7 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
     
   private var ingredientViewModel: DFIngredientCellViewModel!
   var indexPath: IndexPath!
-  weak var delegate: DFDataSourceAdapterProtocol?
+  weak var delegate: DFIngredientDataSourceAdapterProtocol?
   weak var recipeBuilder: DFRecipeBuilder?
   
   static let reuseIdentifier: String = "ingredient-cell"
@@ -90,8 +90,7 @@ extension DFIngredientsCollectionViewCell : DFSupportedMeasurementsProtocol {
     self.recipeBuilder?.removeIngredient(ingredientViewModel.ingredientModel)
     
     let newModel = DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
-      .withIsSelected(false)
-      .withNewIngredientAmount(0)
+      .withResetIngredientValues()
       .build()
     
     self.updateDataSourceAndCell(withNewViewModel: DFIngredientCellViewModel(newModel))
@@ -118,7 +117,7 @@ extension DFIngredientsCollectionViewCell : DFSupportedMeasurementsProtocol {
   
   private func updateDataSourceAndCell(withNewViewModel newModel: DFIngredientCellViewModel) {
     self.ingredientViewModel = newModel
-    self.delegate?.updateModel(model: self.ingredientViewModel, atIndexPath: self.indexPath)
+    self.delegate?.updateModel(model: self.ingredientViewModel.ingredientModel, atIndexPath: self.indexPath)
     self.configureCellWithModel(self.ingredientViewModel)
   }
 }

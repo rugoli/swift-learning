@@ -117,6 +117,16 @@ extension DFCalculatorViewController : DFRecipeUpdateListener {
 // MARK: Recipe collection view delegate
 
 extension DFCalculatorViewController : DFRecipeCollectionViewDelegate {
+  func removedIngredientFromRecipe(cell: DFRecipeIngredientCollectionViewCell,
+                                   ingredient: DFIngredientModel)
+  {
+    self.recipe.removeIngredient(ingredient)
+    let newModel = DFIngredientModelBuilder(fromModel: ingredient).withResetIngredientValues().build()
+    if let updatedIndexPath = self.ingredientDataSource.updateIngredientModel(newModel) {
+      self.ingredientListCollectionView.reloadItems(at: [updatedIndexPath])
+    }
+}
+  
   func didTapRecipeIngredient(collectionView: UICollectionView, ingredientModel: DFIngredientModel) {
     if let ingredientIndexPath: IndexPath = self.ingredientDataSource.getIndexPathForIngredientModel(ingredientModel) {
       self.ingredientListCollectionView.scrollToItem(at: ingredientIndexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
