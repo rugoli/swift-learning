@@ -29,7 +29,7 @@ struct DFMacroNutrient {
   let grams: Float
   
   func calories() -> Float {
-    return grams * macroType.caloriesPerGram()
+    return max(grams, 0.0) * macroType.caloriesPerGram()
   }
 }
 
@@ -52,7 +52,17 @@ struct DFNutritionalInfo {
     self.fiber = DFMacroNutrient(macroType: DFMacroNutrientTypes.fiber, grams: fiber)
   }
   
-  func calculateTotalCalories() -> Float {
+  private func caloriesForDefaultUnit() -> Float {
     return self.fat.calories() + self.protein.calories() + self.carbs.calories() + self.fiber.calories()
+  }
+  
+  func calculateCaloriesForMeasurement(measurement: DFMeasurement) throws -> Float {
+    do {
+      let newMeasurement = try measurement.convertTo(newMeasurementUnit: self.measurementUnit)
+      return newMeasurement.measurementValue * self.caloriesForDefaultUnit()
+    } catch {
+      throw error
+    }
+    
   }
 }
