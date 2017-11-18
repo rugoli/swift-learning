@@ -70,7 +70,6 @@ struct DFNutritionalInfo {
     } catch {
       throw error
     }
-    
   }
 }
 

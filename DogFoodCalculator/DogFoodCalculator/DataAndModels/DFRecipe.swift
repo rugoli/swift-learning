@@ -66,3 +66,15 @@ extension DFRecipe {
     NotificationCenter.default.post(name: DFRecipeUpdateModel.notificationName, object: self, userInfo: [DFRecipe.notificationUpdateKey : update])
   }
 }
+
+// MARK: Calorie calculations
+
+extension DFRecipe {
+  func recipeCalorieCount() -> Float {
+    var calories: Float = 0
+    for anIngredient : DFIngredientModel in self.ingredients {
+      calories += anIngredient.ingredientCalories()
+    }
+    return calories
+  }
+}
