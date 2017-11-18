@@ -11,7 +11,6 @@ import UIKit
 class DFIngredientCellViewModel : NSObject {
   let ingredientName: String
   let isSelected: Bool
-  let ingredientModel: DFIngredientModel
   private var ingredientAmount: DFMeasurement
   private var defaultMeasurementUnit: DFMeasurementUnit
   private var supportedMeasurementUnits: [DFMeasurementUnit]
@@ -23,7 +22,6 @@ class DFIngredientCellViewModel : NSObject {
     self.isSelected = ingredientModel.isSelected
     self.defaultMeasurementUnit = ingredientModel.defaultMeasurementUnit
     self.supportedMeasurementUnits = ingredientModel.supportedMeasurementUnits
-    self.ingredientModel = ingredientModel
     
     super.init()
     

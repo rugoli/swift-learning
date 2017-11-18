@@ -49,7 +49,7 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell: DFIngredientsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DFIngredientsCollectionViewCell.reuseIdentifier, for: indexPath) as! DFIngredientsCollectionViewCell
-    cell.configureCellWithModel(DFIngredientCellViewModel(self.ingredients[indexPath.row]))
+    cell.configureCellWithModel(self.ingredients[indexPath.row])
     cell.delegate = self
     cell.recipeBuilder = self.recipeBuilder
     cell.indexPath = indexPath

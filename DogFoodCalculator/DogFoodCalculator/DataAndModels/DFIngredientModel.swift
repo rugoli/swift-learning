@@ -15,6 +15,7 @@ class DFIngredientModel: NSObject {
   let isSelected: Bool
   let defaultMeasurementUnit: DFMeasurementUnit
   let supportedMeasurementUnits: [DFMeasurementUnit]
+  lazy private var viewModel: DFIngredientCellViewModel = self.generateViewModel()
   
   required init(ingredientName: String,
                 supportedMeasurementUnits: [DFMeasurementUnit],
@@ -43,6 +44,14 @@ class DFIngredientModel: NSObject {
       && self.isSelected == otherModel.isSelected
       && self.defaultMeasurementUnit == otherModel.defaultMeasurementUnit
       && self.supportedMeasurementUnits == otherModel.supportedMeasurementUnits
+  }
+  
+  private func generateViewModel() -> DFIngredientCellViewModel {
+    return DFIngredientCellViewModel(self)
+  }
+  
+  func getViewModel() -> DFIngredientCellViewModel {
+    return self.viewModel
   }
   
   override var description : String {
