@@ -10,6 +10,8 @@ import UIKit
 import CoreGraphics
 
 class DFCalculatorViewController: UIViewController {
+  private var homeScreenView: DFHomescreenView?
+  
   private var ingredientListCollectionView: UICollectionView!
   private var ingredientDataSource: DFIngredientCollectionViewDataSource
   
@@ -34,16 +36,26 @@ class DFCalculatorViewController: UIViewController {
     self.view.backgroundColor = UIColor.white
     
     self.configureIngredientListCollectionView()
-    self.view.addSubview(self.ingredientListCollectionView)
-    
     self.configureRecipeCollectionView()
-    self.view.addSubview(self.recipeCollectionView)
+    
+    self.homeScreenView = DFHomescreenView(ingredientCollectionView: self.ingredientListCollectionView, recipeCollectionView: self.recipeCollectionView)
+    self.view.addSubview(self.homeScreenView!)
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    self.homeScreenView?.setAllConstraints()
   }
   
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
-    self.ingredientListCollectionView?.frame = CGRect(x: 0, y: 50 , width: self.view.bounds.size.width, height: 200)
-    self.recipeCollectionView?.frame = CGRect(x: 0, y: 260 , width: self.view.bounds.size.width, height: self.view.bounds.size.height - 260)
+    
+    self.homeScreenView?.frame = CGRect(x: 0, y: 50, width: self.view.bounds.size.width, height: self.view.bounds.size.height - 50)
+    
+    
+//    self.ingredientListCollectionView?.frame = CGRect(x: 0, y: 50 , width: self.view.bounds.size.width, height: 200)
+//    self.recipeCollectionView?.frame = CGRect(x: 0, y: 260 , width: self.view.bounds.size.width, height: self.view.bounds.size.height - 260)
   }
   
   deinit {
