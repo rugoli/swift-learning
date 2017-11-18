@@ -51,11 +51,8 @@ class DFCalculatorViewController: UIViewController {
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     
-    self.homeScreenView?.frame = CGRect(x: 0, y: 50, width: self.view.bounds.size.width, height: self.view.bounds.size.height - 50)
-    
-    
-//    self.ingredientListCollectionView?.frame = CGRect(x: 0, y: 50 , width: self.view.bounds.size.width, height: 200)
-//    self.recipeCollectionView?.frame = CGRect(x: 0, y: 260 , width: self.view.bounds.size.width, height: self.view.bounds.size.height - 260)
+    let topPadding: CGFloat = 50.0
+    self.homeScreenView?.frame = CGRect(x: 0, y: topPadding, width: self.view.bounds.size.width, height: self.view.bounds.size.height - topPadding)
   }
   
   deinit {
@@ -123,6 +120,7 @@ extension DFCalculatorViewController : DFRecipeUpdateListener {
       case .update:
         self.recipeCollectionView.reloadItems(at: indexPaths)
     }
+    self.homeScreenView?.updateCalorieCounterLabel(calories: self.recipe.recipeCalorieCount())
   }
 }
 

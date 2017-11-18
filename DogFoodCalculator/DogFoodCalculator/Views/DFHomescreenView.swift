@@ -22,7 +22,7 @@ class DFHomescreenView: UIView {
     self.calorieCounter.numberOfLines = 1
     self.calorieCounter.textAlignment = NSTextAlignment.center
     self.calorieCounter.font = self.calorieCounter.font.withSize(18)
-    self.calorieCounter.text = "Test"
+    self.calorieCounter.text = "0 calories"
     
     super.init(frame: CGRect.zero)
     
@@ -33,6 +33,10 @@ class DFHomescreenView: UIView {
   
   required convenience init?(coder aDecoder: NSCoder) {
     self.init()
+  }
+  
+  func updateCalorieCounterLabel(calories: Float) {
+    self.calorieCounter.text = "\(calories) calories"
   }
 }
 

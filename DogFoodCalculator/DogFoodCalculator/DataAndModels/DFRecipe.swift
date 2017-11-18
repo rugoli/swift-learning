@@ -73,7 +73,7 @@ extension DFRecipe {
   func recipeCalorieCount() -> Float {
     var calories: Float = 0
     for anIngredient : DFIngredientModel in self.ingredients {
-      calories += anIngredient.ingredientCalories()
+      calories = calories + anIngredient.ingredientCalories()
     }
     return calories
   }
