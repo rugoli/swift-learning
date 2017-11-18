@@ -15,6 +15,7 @@ class DFIngredientModelBuilder: NSObject {
   private var isSelected: Bool
   private var defaultMeasurementUnit: DFMeasurementUnit
   private var supportedMeasurementUnits: [DFMeasurementUnit]
+  private var nutritionalInfo: DFNutritionalInfo
   
   required init(fromModel model: DFIngredientModel) {
     self.id = model.id
@@ -23,6 +24,7 @@ class DFIngredientModelBuilder: NSObject {
     self.isSelected = model.isSelected
     self.defaultMeasurementUnit = model.defaultMeasurementUnit
     self.supportedMeasurementUnits = model.supportedMeasurementUnits
+    self.nutritionalInfo = model.nutritionalInfo
     
     super.init()
   }
