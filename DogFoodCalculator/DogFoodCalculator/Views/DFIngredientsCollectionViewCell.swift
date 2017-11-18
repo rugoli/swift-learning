@@ -14,7 +14,7 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
   private let amountTextField: UITextField
   private let removeIngredientButton : UIButton
     
-  private var ingredientViewModel: DFIngredientCellViewModel!
+  private var ingredientModel: DFIngredientModel!
   var indexPath: IndexPath!
   weak var delegate: DFIngredientDataSourceAdapterProtocol?
   weak var recipeBuilder: DFRecipeBuilder?
@@ -73,11 +73,11 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
 
 extension DFIngredientsCollectionViewCell : DFSupportedMeasurementsProtocol {
   func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
-    if self.ingredientViewModel.getIngredientAmount().measurementValue == 0 {  // ingredient not previously added
+    if self.ingredientModel.getViewModel().getIngredientAmount().measurementValue == 0 {  // ingredient not previously added
       self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0))
     } else {
       do {
-        let newMeasurementValue = try self.ingredientViewModel.getIngredientAmount().convertTo(newMeasurementUnit: selectedMeasurement)
+        let newMeasurementValue = try self.ingredientModel.getViewModel().getIngredientAmount().convertTo(newMeasurementUnit: selectedMeasurement)
         self.changeIngredientAmount(newMeasurementValue)
         
       } catch {
@@ -87,38 +87,38 @@ extension DFIngredientsCollectionViewCell : DFSupportedMeasurementsProtocol {
   }
   
   @objc private func removeIngredient() {
-    self.recipeBuilder?.removeIngredient(ingredientViewModel.ingredientModel)
+    self.recipeBuilder?.removeIngredient(self.ingredientModel)
     
-    let newModel = DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
+    let newModel = DFIngredientModelBuilder(fromModel: self.ingredientModel)
       .withResetIngredientValues()
       .build()
     
-    self.updateDataSourceAndCell(withNewViewModel: DFIngredientCellViewModel(newModel))
+    self.updateDataSourceAndCell(withNewModel: newModel)
   }
   
   private func changeIngredientAmount(_ newValue: DFMeasurement) {
     let newModel: DFIngredientModel =
-      DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
+      DFIngredientModelBuilder(fromModel: self.ingredientModel)
         .withIngredientMeasurement(newValue)
         .build()
-    self.recipeBuilder?.updateIngredient(oldIngredient: self.ingredientViewModel.ingredientModel, withNewIngredient: newModel)
-    self.updateDataSourceAndCell(withNewViewModel: DFIngredientCellViewModel(newModel))
+    self.recipeBuilder?.updateIngredient(oldIngredient: self.ingredientModel, withNewIngredient: newModel)
+    self.updateDataSourceAndCell(withNewModel: newModel)
   }
   
   private func addIngredientWithNewValue(_ newValue: DFMeasurement) {
     let newModel: DFIngredientModel =
-      DFIngredientModelBuilder(fromModel: self.ingredientViewModel.ingredientModel)
+      DFIngredientModelBuilder(fromModel: self.ingredientModel)
       .withIngredientMeasurement(newValue)
       .withIsSelected(true)
       .build()
-    self.updateDataSourceAndCell(withNewViewModel: DFIngredientCellViewModel(newModel))
-    self.recipeBuilder?.addIngredient(self.ingredientViewModel.ingredientModel)
+    self.updateDataSourceAndCell(withNewModel: newModel)
+    self.recipeBuilder?.addIngredient(self.ingredientModel)
   }
   
-  private func updateDataSourceAndCell(withNewViewModel newModel: DFIngredientCellViewModel) {
-    self.ingredientViewModel = newModel
-    self.delegate?.updateModel(model: self.ingredientViewModel.ingredientModel, atIndexPath: self.indexPath)
-    self.configureCellWithModel(self.ingredientViewModel)
+  private func updateDataSourceAndCell(withNewModel newModel: DFIngredientModel) {
+    self.ingredientModel = newModel
+    self.delegate?.updateModel(model: self.ingredientModel, atIndexPath: self.indexPath)
+    self.configureCellWithModel(self.ingredientModel)
   }
 }
 
@@ -155,14 +155,14 @@ extension DFIngredientsCollectionViewCell : UITextFieldDelegate {
       return
     }
     
-    let newIngredientAmount = DFMeasurement(measurementUnit: self.ingredientViewModel.getIngredientAmount().measurementUnit,
+    let newIngredientAmount = DFMeasurement(measurementUnit: self.ingredientModel.getViewModel().getIngredientAmount().measurementUnit,
                                             measurementValue: (input as NSString).floatValue)
     guard newIngredientAmount.measurementValue > 0 else {  // remove ingredient if text is not greater than zero
       self.removeIngredient()
       return
     }
     
-    if self.ingredientViewModel.getIngredientAmount().measurementValue > 0 {
+    if self.ingredientModel.getViewModel().getIngredientAmount().measurementValue > 0 {
       self.changeIngredientAmount(newIngredientAmount)
     } else {
       self.addIngredientWithNewValue(newIngredientAmount)
@@ -174,8 +174,8 @@ extension DFIngredientsCollectionViewCell : UITextFieldDelegate {
 
 extension DFIngredientsCollectionViewCell {
   
-  func configureCellWithModel(_ ingredient: DFIngredientCellViewModel) {
-    ingredientViewModel = ingredient
+  func configureCellWithModel(_ ingredient: DFIngredientModel) {
+    self.ingredientModel = ingredient
     
     self.configureMainLabelProperties()
     self.setMainLabelConstraints()
@@ -193,15 +193,15 @@ extension DFIngredientsCollectionViewCell {
   }
   
   private func configureMainLabelProperties() {
-    cellMainLabel.text = self.ingredientViewModel.ingredientName
+    cellMainLabel.text = self.ingredientModel.getViewModel().ingredientName
   }
   
   private func configureSupportedUnitsRow() {
-    supportedUnitsRow.configureSupportedMeasurementUnits(self.ingredientViewModel.measurementUnitViewModels())
+    supportedUnitsRow.configureSupportedMeasurementUnits(self.ingredientModel.getViewModel().measurementUnitViewModels())
   }
   
   private func configureAmountTextFieldProperties() {
-    let amountValue = self.ingredientViewModel.getIngredientAmount().measurementValue
+    let amountValue = self.ingredientModel.getViewModel().getIngredientAmount().measurementValue
     self.amountTextField.text = "\(amountValue)"
   }
 }

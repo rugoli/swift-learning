@@ -16,7 +16,7 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   private let ingredientNameLabel: UILabel
   private let ingredientValueLabel: UILabel
   private let xOutButton: UIButton
-  private var ingredientViewModel: DFIngredientCellViewModel!
+  private var ingredientModel: DFIngredientModel!
   static let reuseIdentifier: String = "recipe-ingredient-cell"
   weak var delegate: DFRecipeIngredientCellDelegate?
   
@@ -64,7 +64,7 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   }
   
   @objc func tappedRemoveIngredient(sender: UIButton) {
-    self.delegate?.removedIngredientFromRecipe(cell: self, ingredient: self.ingredientViewModel.ingredientModel)
+    self.delegate?.removedIngredientFromRecipe(cell: self, ingredient: self.ingredientModel)
   }
     
 }
@@ -73,8 +73,8 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
 
 extension DFRecipeIngredientCollectionViewCell {
   
-  func configureCellWithViewModel(_ viewModel: DFIngredientCellViewModel) {
-    self.ingredientViewModel = viewModel
+  func configureCellWithModel(_ model: DFIngredientModel) {
+    self.ingredientModel = model
     
     self.configureIngredientLabel()
     self.setIngredientNameLabelConstraints()
@@ -84,11 +84,11 @@ extension DFRecipeIngredientCollectionViewCell {
   }
   
   func configureIngredientLabel() {
-    self.ingredientNameLabel.text = self.ingredientViewModel.ingredientName
+    self.ingredientNameLabel.text = self.ingredientModel.getViewModel().ingredientName
   }
   
   func configureIngredientValueLabel() {
-    self.ingredientValueLabel.text = self.ingredientViewModel.getIngredientAmount().prettyPrint()
+    self.ingredientValueLabel.text = self.ingredientModel.getViewModel().getIngredientAmount().prettyPrint()
   }
 }
 
