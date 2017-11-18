@@ -33,6 +33,13 @@ struct DFMacroNutrient {
   }
 }
 
+extension DFMacroNutrient : Equatable {
+  static func ==(lhs: DFMacroNutrient, rhs: DFMacroNutrient) -> Bool {
+    return lhs.macroType == rhs.macroType
+      && lhs.grams == rhs.grams
+  }
+}
+
 struct DFNutritionalInfo {
   let measurementUnit: DFMeasurementUnit
   let fat: DFMacroNutrient
@@ -64,5 +71,15 @@ struct DFNutritionalInfo {
       throw error
     }
     
+  }
+}
+
+extension DFNutritionalInfo : Equatable {
+  static func ==(lhs: DFNutritionalInfo, rhs: DFNutritionalInfo) -> Bool {
+    return lhs.measurementUnit == rhs.measurementUnit
+      && lhs.fat == rhs.fat
+      && lhs.protein == rhs.protein
+      && lhs.carbs == rhs.carbs
+      && lhs.fiber == rhs.fiber
   }
 }

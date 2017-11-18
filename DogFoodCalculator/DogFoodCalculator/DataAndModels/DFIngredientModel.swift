@@ -15,6 +15,7 @@ class DFIngredientModel: NSObject {
   let isSelected: Bool
   let defaultMeasurementUnit: DFMeasurementUnit
   let supportedMeasurementUnits: [DFMeasurementUnit]
+  let nutritionalInfo: DFNutritionalInfo
   lazy private var viewModel: DFIngredientCellViewModel = self.generateViewModel()
   
   required init(ingredientName: String,
@@ -22,6 +23,7 @@ class DFIngredientModel: NSObject {
                 defaultMeasurementUnit: DFMeasurementUnit? = nil,
                 isSelected: Bool = false,
                 amount: DFMeasurement? = nil,
+                nutritionalInfo: DFNutritionalInfo = DFNutritionalInfo(unit: DFMeasurementUnit.lb, fat: 2.0, protein: 2.0, carbs: 1.0, fiber: 1.0),
                 id: String = NSUUID.init().uuidString) {
     self.ingredientName = ingredientName
     self.id = id
@@ -30,6 +32,7 @@ class DFIngredientModel: NSObject {
       ? defaultMeasurementUnit!
       : self.supportedMeasurementUnits[0]
     self.isSelected = isSelected
+    self.nutritionalInfo = nutritionalInfo
     
     self.ingredientAmount = amount != nil
       ? amount!
@@ -44,6 +47,7 @@ class DFIngredientModel: NSObject {
       && self.isSelected == otherModel.isSelected
       && self.defaultMeasurementUnit == otherModel.defaultMeasurementUnit
       && self.supportedMeasurementUnits == otherModel.supportedMeasurementUnits
+      && self.nutritionalInfo == otherModel.nutritionalInfo
   }
   
   private func generateViewModel() -> DFIngredientCellViewModel {
