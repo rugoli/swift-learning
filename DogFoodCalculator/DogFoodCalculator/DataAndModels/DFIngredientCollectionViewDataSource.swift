@@ -82,13 +82,29 @@ extension DFIngredientCollectionViewDataSource {
     let randomInt: Int = Int(arc4random_uniform(3))
     switch randomInt {
     case 0:
-      return DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz, DFMeasurementUnit.g], defaultMeasurementUnit: DFMeasurementUnit.lb)
+      return DFIngredientModel(ingredientName: "Ground Turkey 99% Lean",
+                               supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz, DFMeasurementUnit.g],
+                               nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.g, measurementValue: 112.0),
+                                                                  fat: 1.5, protein: 26, carbs: 0, fiber: 0),
+                               defaultMeasurementUnit: DFMeasurementUnit.lb
+                               )
     case 1:
-      return DFIngredientModel(ingredientName: "Canned pumpkin", supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp, DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.tbsp)
+      return DFIngredientModel(ingredientName: "Canned pumpkin",
+                               supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp, DFMeasurementUnit.cup],
+                               nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.tbsp, measurementValue: 8.0), fat: 0, protein: 2, carbs: 11, fiber: 3),
+                               defaultMeasurementUnit: DFMeasurementUnit.tbsp
+                               )
     case 2:
-      return DFIngredientModel(ingredientName: "White rice", supportedMeasurementUnits: [DFMeasurementUnit.cup])
+      return DFIngredientModel(ingredientName: "White rice",
+                               supportedMeasurementUnits: [DFMeasurementUnit.cup],
+                               nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.cup, measurementValue: 0.25), fat: 0, protein: 3, carbs: 33, fiber: 0))
     default:
-      return DFIngredientModel(ingredientName: "Ground Turkey 99% Lean", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz, DFMeasurementUnit.g], defaultMeasurementUnit: DFMeasurementUnit.lb)
+      return DFIngredientModel(ingredientName: "Ground Turkey 99% Lean",
+                               supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz, DFMeasurementUnit.g],
+                               nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.g, measurementValue:112.0),
+                                                                  fat: 1.5, protein: 26, carbs: 0, fiber: 0),
+                               defaultMeasurementUnit: DFMeasurementUnit.lb
+                               )
     }
     
   }

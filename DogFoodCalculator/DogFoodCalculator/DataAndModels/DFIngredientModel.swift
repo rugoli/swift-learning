@@ -20,10 +20,10 @@ class DFIngredientModel: NSObject {
   
   required init(ingredientName: String,
                 supportedMeasurementUnits: [DFMeasurementUnit],
+                nutritionalInfo: DFNutritionalInfo,
                 defaultMeasurementUnit: DFMeasurementUnit? = nil,
                 isSelected: Bool = false,
                 amount: DFMeasurement? = nil,
-                nutritionalInfo: DFNutritionalInfo = DFNutritionalInfo(unit: DFMeasurementUnit.lb, fat: 2.0, protein: 2.0, carbs: 1.0, fiber: 1.0),
                 id: String = NSUUID.init().uuidString) {
     self.ingredientName = ingredientName
     self.id = id
