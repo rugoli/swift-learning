@@ -13,19 +13,27 @@ class DFIngredientViewModelTests: XCTestCase {
     
     func testDefaultNotSupported() {
         let firstSupported = DFMeasurementUnit.lb
-        let testViewModel = DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Test", supportedMeasurementUnits: [firstSupported, DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.oz))
+        let testViewModel = DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Test",
+                                                                        supportedMeasurementUnits: [firstSupported, DFMeasurementUnit.cup],
+                                                                        nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.lb, measurementValue: 1.0)),
+                                                                        defaultMeasurementUnit: DFMeasurementUnit.oz))
         XCTAssertEqual(testViewModel.getDefaultMeasurementUnit(), firstSupported)
     }
     
     func testDefaultNotOrderedFirst() {
         let defaultUnit = DFMeasurementUnit.oz
-        let testViewModel = DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Test", supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz], defaultMeasurementUnit: DFMeasurementUnit.oz))
+        let testViewModel = DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Test",
+                                                                        supportedMeasurementUnits: [DFMeasurementUnit.lb, DFMeasurementUnit.oz],
+                                                                        nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.lb, measurementValue: 1.0)),
+                                                                        defaultMeasurementUnit: DFMeasurementUnit.oz))
         XCTAssertEqual(testViewModel.getSupportedMeasurementUnits()[0], defaultUnit)
     }
     
     func testDuplicateElements() {
         let duplicateUnit = DFMeasurementUnit.cup
-        let testViewModel = DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Test", supportedMeasurementUnits: [DFMeasurementUnit.lb, duplicateUnit, DFMeasurementUnit.tsp, duplicateUnit, DFMeasurementUnit.tbsp]))
+        let testViewModel = DFIngredientCellViewModel(DFIngredientModel(ingredientName: "Test",
+                                                                        supportedMeasurementUnits: [DFMeasurementUnit.lb, duplicateUnit, DFMeasurementUnit.tsp, duplicateUnit, DFMeasurementUnit.tbsp],
+                                                                        nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.lb, measurementValue: 1.0))))
         XCTAssertTrue(testViewModel.getSupportedMeasurementUnits().filter( {$0 == duplicateUnit} ).count == 1, "Duplicate element was not removed")
     }
 }

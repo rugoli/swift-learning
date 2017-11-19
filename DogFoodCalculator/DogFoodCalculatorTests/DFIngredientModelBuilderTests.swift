@@ -12,7 +12,10 @@ import XCTest
 class DFIngredientModelBuilderTests: XCTestCase {
     
   func testModelChange() {
-    let testModel = DFIngredientModel(ingredientName: "Test", supportedMeasurementUnits: [DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.oz)
+    let testModel = DFIngredientModel(ingredientName: "Test",
+                                      supportedMeasurementUnits: [DFMeasurementUnit.cup],
+                                      nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.lb, measurementValue: 1.0)),
+                                      defaultMeasurementUnit: DFMeasurementUnit.oz)
     
     let newIngredientName = "Test 3"
     let newModel = DFIngredientModelBuilder(fromModel: testModel)
@@ -25,7 +28,10 @@ class DFIngredientModelBuilderTests: XCTestCase {
   }
   
   func testNoModelChange() {
-    let testModel = DFIngredientModel(ingredientName: "Test", supportedMeasurementUnits: [DFMeasurementUnit.cup], defaultMeasurementUnit: DFMeasurementUnit.oz)
+    let testModel = DFIngredientModel(ingredientName: "Test",
+                                      supportedMeasurementUnits: [DFMeasurementUnit.cup],
+                                      nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.cup, measurementValue: 1.0)),
+                                      defaultMeasurementUnit: DFMeasurementUnit.oz)
     let newModel = DFIngredientModelBuilder(fromModel: testModel).build()
     XCTAssertTrue(testModel.isEffectivelyEqualTo(newModel))
   }

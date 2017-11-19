@@ -17,6 +17,7 @@ class DFRecipeTests: XCTestCase {
   func testUpdateIngredient() {
     let initialIngredient = DFIngredientModel(ingredientName: "Test",
                                               supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp],
+                                              nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.lb, measurementValue: 1.0)),
                                               defaultMeasurementUnit: DFMeasurementUnit.tsp,
                                               isSelected: false,
                                               amount: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 4.0))
@@ -64,6 +65,7 @@ class DFRecipeTests: XCTestCase {
     // Testing adding recipe ingredient notification
     let initialIngredient = DFIngredientModel(ingredientName: "Test",
                                               supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp],
+                                              nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.lb, measurementValue: 1.0)),
                                               defaultMeasurementUnit: DFMeasurementUnit.tsp,
                                               isSelected: false,
                                               amount: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 4.0))
@@ -88,7 +90,9 @@ class DFRecipeTests: XCTestCase {
   }
   
   private class func testIngredient() -> DFIngredientModel {
-    return DFIngredientModel(ingredientName: "Test: \(arc4random_uniform(100))", supportedMeasurementUnits: [DFMeasurementUnit.cup, DFMeasurementUnit.tsp])
+    return DFIngredientModel(ingredientName: "Test: \(arc4random_uniform(100))",
+      supportedMeasurementUnits: [DFMeasurementUnit.cup, DFMeasurementUnit.tsp],
+      nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.lb, measurementValue: 1.0)))
   }
   
   private func notifTestingBlockForUpdateType(_ updateType: DFRecipeUpdateType) -> ((DFRecipeUpdateModel) -> Void) {
