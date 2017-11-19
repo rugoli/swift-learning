@@ -55,13 +55,14 @@ class DFIngredientModelBuilder: NSObject {
   }
   
   func build() -> DFIngredientModel {
-    let model: DFIngredientModel = DFIngredientModel(
-      ingredientName: ingredientName, supportedMeasurementUnits: supportedMeasurementUnits,
+    return DFIngredientModel(
+      ingredientName: ingredientName,
+      supportedMeasurementUnits: supportedMeasurementUnits,
+      nutritionalInfo: nutritionalInfo,
       defaultMeasurementUnit: defaultMeasurementUnit,
       isSelected: isSelected,
       amount:ingredientAmount,
       id: id)
-    return model
   }
 }
 

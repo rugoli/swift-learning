@@ -41,32 +41,32 @@ extension DFMacroNutrient : Equatable {
 }
 
 struct DFNutritionalInfo {
-  let measurementUnit: DFMeasurementUnit
+  let servingSize: DFMeasurement
   let fat: DFMacroNutrient
   let protein: DFMacroNutrient
   let carbs: DFMacroNutrient
   let fiber: DFMacroNutrient
   
-  init(unit: DFMeasurementUnit,
+  init(servingSize: DFMeasurement,
        fat: Float = 0.0,
        protein: Float = 0.0,
        carbs: Float = 0.0,
        fiber: Float = 0.0) {
-    self.measurementUnit = unit
+    self.servingSize = servingSize
     self.fat = DFMacroNutrient(macroType: DFMacroNutrientTypes.fat, grams: fat)
     self.protein = DFMacroNutrient(macroType: DFMacroNutrientTypes.protein, grams: protein)
     self.carbs = DFMacroNutrient(macroType: DFMacroNutrientTypes.carbs, grams: carbs)
     self.fiber = DFMacroNutrient(macroType: DFMacroNutrientTypes.fiber, grams: fiber)
   }
   
-  private func caloriesForDefaultUnit() -> Float {
+  private func caloriesForServingSize() -> Float {
     return self.fat.calories() + self.protein.calories() + self.carbs.calories() + self.fiber.calories()
   }
   
   func calculateCaloriesForMeasurement(measurement: DFMeasurement) throws -> Float {
     do {
-      let newMeasurement = try measurement.convertTo(newMeasurementUnit: self.measurementUnit)
-      return newMeasurement.measurementValue * self.caloriesForDefaultUnit()
+      let newMeasurement = try measurement.convertTo(newMeasurementUnit: self.servingSize.measurementUnit)
+      return (newMeasurement.measurementValue / self.servingSize.measurementValue) * self.caloriesForServingSize()
     } catch {
       throw error
     }
@@ -75,7 +75,7 @@ struct DFNutritionalInfo {
 
 extension DFNutritionalInfo : Equatable {
   static func ==(lhs: DFNutritionalInfo, rhs: DFNutritionalInfo) -> Bool {
-    return lhs.measurementUnit == rhs.measurementUnit
+    return lhs.servingSize == rhs.servingSize
       && lhs.fat == rhs.fat
       && lhs.protein == rhs.protein
       && lhs.carbs == rhs.carbs
