@@ -64,6 +64,16 @@ class DFMeasurementTests: XCTestCase {
     }
   }
   
+  // test that the supported conversions for all measurement units have each defined the reverse conversion
+  func testReciprocallyDefinedConversions() {
+    for unit: DFMeasurementUnit in DFMeasurementUnit.allUnits() {
+      for supportedConversion: DFMeasurementUnit in unit.conversionRatios().keys {
+        XCTAssertTrue(supportedConversion.conversionRatios().keys.contains(unit),
+                      "\(unit) supports conversion to \(supportedConversion), but \(supportedConversion) does not support conversion back to \(unit)")
+      }
+    }
+  }
+  
   /*
    * Make sure to update this test and the allUnits function in the enum
    * whenever a new enum is added to DFMeasurementUnit.
@@ -72,7 +82,7 @@ class DFMeasurementTests: XCTestCase {
   func testUpdateAllUnitsFunction() {
     let testUnit = DFMeasurementUnit.cup
     switch testUnit {
-    case .cup, .lb, .oz, .tbsp, .tsp:
+    case .cup, .lb, .oz, .tbsp, .tsp, .g:
       XCTAssertTrue(true)
     }
   }
