@@ -23,12 +23,12 @@ class DFRecipeCollectionViewDataSource: NSObject, UICollectionViewDataSource, UI
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return self.recipe.getIngredients().count
+    return self.recipe.ingredients.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DFRecipeIngredientCollectionViewCell.reuseIdentifier, for: indexPath) as! DFRecipeIngredientCollectionViewCell
-    cell.configureCellWithModel(self.recipe.getIngredients()[indexPath.row])
+    cell.configureCellWithModel(self.recipe.ingredients[indexPath.row])
     cell.delegate = self.delegate
     return cell
   }
@@ -39,7 +39,7 @@ class DFRecipeCollectionViewDataSource: NSObject, UICollectionViewDataSource, UI
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    self.delegate?.didTapRecipeIngredient(collectionView: collectionView, ingredientModel: self.recipe.getIngredients()[indexPath.row])
+    self.delegate?.didTapRecipeIngredient(collectionView: collectionView, ingredientModel: self.recipe.ingredients[indexPath.row])
   }
   
   func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {

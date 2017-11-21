@@ -10,7 +10,7 @@ import UIKit
 
 class DFRecipe: NSObject {
   public static let notificationUpdateKey: String = "updateModel"
-  private var ingredients: [DFIngredientModel] = []
+  public private(set) var ingredients: [DFIngredientModel] = []
   
   func addIngredient(_ ingredient: DFIngredientModel) {
     self.ingredients.append(ingredient)
@@ -38,10 +38,6 @@ class DFRecipe: NSObject {
   
   func removeAllIngredients() {
     self.ingredients.removeAll()
-  }
-  
-  func getIngredients() -> [DFIngredientModel] {
-    return self.ingredients
   }
   
   private func getIndexForIngredient(_ targetIngredient: DFIngredientModel) -> Int? {

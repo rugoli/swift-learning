@@ -73,11 +73,11 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
 
 extension DFIngredientsCollectionViewCell : DFSupportedMeasurementsProtocol {
   func didSelectMeasurementUnit(measurementRow: DFSupportedMeasurementUnitsRow, selectedMeasurement: DFMeasurementUnit) {
-    if self.ingredientModel.getViewModel().getIngredientAmount().measurementValue == 0 {  // ingredient not previously added
+    if self.ingredientModel.viewModel.ingredientAmount.measurementValue == 0 {  // ingredient not previously added
       self.addIngredientWithNewValue(DFMeasurement(measurementUnit: selectedMeasurement, measurementValue: 1.0))
     } else {
       do {
-        let newMeasurementValue = try self.ingredientModel.getViewModel().getIngredientAmount().convertTo(newMeasurementUnit: selectedMeasurement)
+        let newMeasurementValue = try self.ingredientModel.viewModel.ingredientAmount.convertTo(newMeasurementUnit: selectedMeasurement)
         self.changeIngredientAmount(newMeasurementValue)
         
       } catch {
@@ -155,14 +155,14 @@ extension DFIngredientsCollectionViewCell : UITextFieldDelegate {
       return
     }
     
-    let newIngredientAmount = DFMeasurement(measurementUnit: self.ingredientModel.getViewModel().getIngredientAmount().measurementUnit,
+    let newIngredientAmount = DFMeasurement(measurementUnit: self.ingredientModel.viewModel.ingredientAmount.measurementUnit,
                                             measurementValue: (input as NSString).floatValue)
     guard newIngredientAmount.measurementValue > 0 else {  // remove ingredient if text is not greater than zero
       self.removeIngredient()
       return
     }
     
-    if self.ingredientModel.getViewModel().getIngredientAmount().measurementValue > 0 {
+    if self.ingredientModel.viewModel.ingredientAmount.measurementValue > 0 {
       self.changeIngredientAmount(newIngredientAmount)
     } else {
       self.addIngredientWithNewValue(newIngredientAmount)
@@ -193,15 +193,15 @@ extension DFIngredientsCollectionViewCell {
   }
   
   private func configureMainLabelProperties() {
-    cellMainLabel.text = self.ingredientModel.getViewModel().ingredientName
+    cellMainLabel.text = self.ingredientModel.viewModel.ingredientName
   }
   
   private func configureSupportedUnitsRow() {
-    supportedUnitsRow.configureSupportedMeasurementUnits(self.ingredientModel.getViewModel().measurementUnitViewModels())
+    supportedUnitsRow.configureSupportedMeasurementUnits(self.ingredientModel.viewModel.measurementUnitViewModels())
   }
   
   private func configureAmountTextFieldProperties() {
-    let amountValue = self.ingredientModel.getViewModel().getIngredientAmount().measurementValue
+    let amountValue = self.ingredientModel.viewModel.ingredientAmount.measurementValue
     self.amountTextField.text = "\(amountValue)"
   }
 }
@@ -245,7 +245,7 @@ extension DFIngredientsCollectionViewCell {
     amountTextField.translatesAutoresizingMaskIntoConstraints = false
     let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: amountTextField, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
     let topSpacing = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: supportedUnitsRow, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5)
-    let width = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: self.bounds.size.width - self.layoutMargins.left - self.layoutMargins.right)
+    let width = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: textFieldSize.width)
     let height = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: textFieldSize.height)
     NSLayoutConstraint.activate([centering, topSpacing, height, width])
   }

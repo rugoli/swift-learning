@@ -70,7 +70,7 @@ class DFCalculatorViewController: UIViewController {
     self.ingredientListCollectionView.showsHorizontalScrollIndicator = false
     self.ingredientListCollectionView.dataSource = self.ingredientDataSource
     self.ingredientListCollectionView.delegate = self.ingredientDataSource
-    self.ingredientListCollectionView.register(DFIngredientsCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: DFIngredientsCollectionViewCell.reuseIdentifier)
+    self.ingredientListCollectionView.register(DFIngredientsCollectionViewCell.self, forCellWithReuseIdentifier: DFIngredientsCollectionViewCell.reuseIdentifier)
   }
   
   private func configureRecipeCollectionView() {    
@@ -85,7 +85,7 @@ class DFCalculatorViewController: UIViewController {
     self.recipeCollectionView.showsHorizontalScrollIndicator = false
     self.recipeCollectionView.dataSource = self.recipeDataSource
     self.recipeCollectionView.delegate = self.recipeDataSource
-    self.recipeCollectionView.register(DFRecipeIngredientCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: DFRecipeIngredientCollectionViewCell.reuseIdentifier)
+    self.recipeCollectionView.register(DFRecipeIngredientCollectionViewCell.self, forCellWithReuseIdentifier: DFRecipeIngredientCollectionViewCell.reuseIdentifier)
   }
 }
 
