@@ -11,9 +11,9 @@ import UIKit
 class DFIngredientCellViewModel : NSObject {
   let ingredientName: String
   let isSelected: Bool
-  private var ingredientAmount: DFMeasurement
-  private var defaultMeasurementUnit: DFMeasurementUnit
-  private var supportedMeasurementUnits: [DFMeasurementUnit]
+  public private(set) var ingredientAmount: DFMeasurement
+  public private(set) var defaultMeasurementUnit: DFMeasurementUnit
+  public private(set) var supportedMeasurementUnits: [DFMeasurementUnit]
   
   required init(_ ingredientModel: DFIngredientModel) {
     
@@ -82,20 +82,3 @@ extension DFIngredientCellViewModel {
     }
   }
 }
-
-// MARK: Private var getters
-
-extension DFIngredientCellViewModel {
-  func getDefaultMeasurementUnit() -> DFMeasurementUnit {
-    return self.defaultMeasurementUnit
-  }
-  
-  func getSupportedMeasurementUnits() -> [DFMeasurementUnit] {
-    return self.supportedMeasurementUnits
-  }
-  
-  func getIngredientAmount() -> DFMeasurement {
-    return self.ingredientAmount
-  }
-}
-

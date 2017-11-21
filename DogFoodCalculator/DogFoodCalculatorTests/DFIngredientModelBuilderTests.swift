@@ -24,7 +24,7 @@ class DFIngredientModelBuilderTests: XCTestCase {
     XCTAssertFalse(testModel == newModel) // models are no longer the same
     XCTAssertTrue(newModel.ingredientName == newIngredientName) // name has changed
     XCTAssertTrue(testModel.defaultMeasurementUnit == newModel.defaultMeasurementUnit) // another property did not change by accident
-    XCTAssertNotNil(testModel.getViewModel())  // lazy view model var gets generated
+    XCTAssertNotNil(testModel.viewModel)  // lazy view model var gets generated
   }
   
   func testNoModelChange() {

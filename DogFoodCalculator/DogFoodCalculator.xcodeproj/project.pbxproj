@@ -166,10 +166,10 @@
 				01C704CF1FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift */,
 				0111B1671FBA3A21003CBD9B /* DFIngredientModelBuilder.swift */,
 				015119581FABC8DF005EEC71 /* DFIngredientModel.swift */,
+				0111B1651FBA334F003CBD9B /* DFIngredientCellViewModel.swift */,
 				013BB1C71FB6C44B00768857 /* DFRecipe.swift */,
 				0155E50B1FBEB0D500D6ED4E /* DFNutritionalInfo.swift */,
 				01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */,
-				0111B1651FBA334F003CBD9B /* DFIngredientCellViewModel.swift */,
 			);
 			path = DataAndModels;
 			sourceTree = "<group>";

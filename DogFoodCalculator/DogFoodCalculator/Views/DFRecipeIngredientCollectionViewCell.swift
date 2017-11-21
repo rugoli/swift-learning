@@ -84,11 +84,11 @@ extension DFRecipeIngredientCollectionViewCell {
   }
   
   func configureIngredientLabel() {
-    self.ingredientNameLabel.text = self.ingredientModel.getViewModel().ingredientName
+    self.ingredientNameLabel.text = self.ingredientModel.viewModel.ingredientName
   }
   
   func configureIngredientValueLabel() {
-    self.ingredientValueLabel.text = self.ingredientModel.getViewModel().getIngredientAmount().prettyPrint()
+    self.ingredientValueLabel.text = self.ingredientModel.viewModel.ingredientAmount.prettyPrint()
   }
 }
 

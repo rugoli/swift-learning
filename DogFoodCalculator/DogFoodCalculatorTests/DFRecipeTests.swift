@@ -27,14 +27,14 @@ class DFRecipeTests: XCTestCase {
       .withIngredientMeasurement(DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 3.0))
       .build()
     self.testRecipe.updateIngredient(oldIngredient: initialIngredient, withNewIngredient: newAmount)
-    XCTAssertFalse(self.testRecipe.getIngredients().contains(initialIngredient))
-    XCTAssertTrue(self.testRecipe.getIngredients().contains(newAmount))
+    XCTAssertFalse(self.testRecipe.ingredients.contains(initialIngredient))
+    XCTAssertTrue(self.testRecipe.ingredients.contains(newAmount))
   }
   
   func testAddIngredient() {
-    XCTAssertTrue(self.testRecipe.getIngredients().count == 0)
+    XCTAssertTrue(self.testRecipe.ingredients.count == 0)
     self.testRecipe.addIngredient(DFRecipeTests.testIngredient())
-    XCTAssertTrue(self.testRecipe.getIngredients().count == 1)
+    XCTAssertTrue(self.testRecipe.ingredients.count == 1)
   }
   
   func testRemoveIngredient() {
@@ -42,21 +42,21 @@ class DFRecipeTests: XCTestCase {
     
     let ingredientToRemove = DFRecipeTests.testIngredient()
     self.testRecipe.addIngredient(ingredientToRemove)
-    XCTAssertTrue(self.testRecipe.getIngredients().count == 2)
-    XCTAssertTrue(self.testRecipe.getIngredients().contains(ingredientToRemove))
+    XCTAssertTrue(self.testRecipe.ingredients.count == 2)
+    XCTAssertTrue(self.testRecipe.ingredients.contains(ingredientToRemove))
     
     self.testRecipe.removeIngredient(ingredientToRemove)
-    XCTAssertTrue(self.testRecipe.getIngredients().count == 1)
-    XCTAssertFalse(self.testRecipe.getIngredients().contains(ingredientToRemove))
+    XCTAssertTrue(self.testRecipe.ingredients.count == 1)
+    XCTAssertFalse(self.testRecipe.ingredients.contains(ingredientToRemove))
   }
   
   func testRemoveAllIngredients() {
     self.testRecipe.addIngredient(DFRecipeTests.testIngredient())
     self.testRecipe.addIngredient(DFRecipeTests.testIngredient())
-    XCTAssertTrue(self.testRecipe.getIngredients().count == 2)
+    XCTAssertTrue(self.testRecipe.ingredients.count == 2)
     
     self.testRecipe.removeAllIngredients()
-    XCTAssertTrue(self.testRecipe.getIngredients().count == 0)
+    XCTAssertTrue(self.testRecipe.ingredients.count == 0)
   }
   
   func testNotificationPosting() {

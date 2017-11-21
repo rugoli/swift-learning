@@ -16,7 +16,7 @@ class DFIngredientModel: NSObject {
   let defaultMeasurementUnit: DFMeasurementUnit
   let supportedMeasurementUnits: [DFMeasurementUnit]
   let nutritionalInfo: DFNutritionalInfo
-  lazy private var viewModel: DFIngredientCellViewModel = self.generateViewModel()
+  lazy public private(set) var viewModel: DFIngredientCellViewModel = self.generateViewModel()
   
   required init(ingredientName: String,
                 supportedMeasurementUnits: [DFMeasurementUnit],
@@ -52,10 +52,6 @@ class DFIngredientModel: NSObject {
   
   private func generateViewModel() -> DFIngredientCellViewModel {
     return DFIngredientCellViewModel(self)
-  }
-  
-  func getViewModel() -> DFIngredientCellViewModel {
-    return self.viewModel
   }
   
   func ingredientCalories() -> Float {
