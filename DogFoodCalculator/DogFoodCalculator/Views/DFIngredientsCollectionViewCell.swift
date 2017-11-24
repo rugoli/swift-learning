@@ -23,16 +23,16 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
   
   override init(frame: CGRect) {
     cellMainLabel = UILabel()
-    cellMainLabel.textColor = DFColorPalette.colorForType(.textColor)
+    cellMainLabel.textColor = DFColorPalette.colorForType(.ingredientCellTextColor)
     cellMainLabel.numberOfLines = 0
     cellMainLabel.textAlignment = NSTextAlignment.center
-    cellMainLabel.font = cellMainLabel.font.withSize(18)
+    cellMainLabel.font = UIFont.boldSystemFont(ofSize: 18)
     
     supportedUnitsRow = DFSupportedMeasurementUnitsRow()
     
     amountTextField = UITextField()
     amountTextField.text = "0"
-    amountTextField.textColor = DFColorPalette.colorForType(.textColor)
+    amountTextField.textColor = DFColorPalette.colorForType(.ingredientCellTextColor)
     amountTextField.font = amountTextField.font?.withSize(24)
     amountTextField.clearsOnBeginEditing = true
     amountTextField.textAlignment = NSTextAlignment.center
@@ -41,7 +41,7 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
     
     removeIngredientButton = UIButton(type: UIButtonType.system)
     removeIngredientButton.setTitle("Remove", for: UIControlState.normal)
-    removeIngredientButton.setTitleColor(DFColorPalette.colorForType(.textColor), for: UIControlState.normal)
+    removeIngredientButton.setTitleColor(DFColorPalette.colorForType(.ingredientCellTextColor), for: UIControlState.normal)
     removeIngredientButton.isSelected = false
     removeIngredientButton.isHidden = true
     removeIngredientButton.backgroundColor = UIColor.clear
@@ -54,9 +54,7 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
     amountTextField.delegate = self
     removeIngredientButton.addTarget(self, action: #selector(self.removeIngredient), for: UIControlEvents.touchUpInside)
     
-    self.layer.borderWidth = 1
-    self.layer.borderColor = DFColorPalette.colorForType(.borderColor).cgColor
-    self.layer.cornerRadius = 10
+    self.layer.cornerRadius = 5
     
     self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     

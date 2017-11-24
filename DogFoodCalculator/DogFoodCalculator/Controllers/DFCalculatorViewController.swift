@@ -10,6 +10,8 @@ import UIKit
 import CoreGraphics
 
 class DFCalculatorViewController: UIViewController {
+  private let kSideMargins: CGFloat = 10
+  
   private var homeScreenView: DFHomescreenView?
   
   private var ingredientListCollectionView: UICollectionView!
@@ -62,8 +64,8 @@ class DFCalculatorViewController: UIViewController {
   private func configureIngredientListCollectionView() {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
-    flowLayout.minimumInteritemSpacing = 10
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 20)
+    flowLayout.minimumInteritemSpacing = 5
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, kSideMargins, 0, kSideMargins)
     
     self.ingredientListCollectionView = UICollectionView(frame: CGRect(x: 0, y:0 , width: 0, height: 0), collectionViewLayout: flowLayout)
     self.ingredientListCollectionView.backgroundColor = DFColorPalette.colorForType(.backgroundColor)
@@ -76,9 +78,9 @@ class DFCalculatorViewController: UIViewController {
   private func configureRecipeCollectionView() {    
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = UICollectionViewScrollDirection.vertical
-    flowLayout.minimumInteritemSpacing = 10
+    flowLayout.minimumInteritemSpacing = 5
     flowLayout.minimumLineSpacing = 10
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 20)
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, kSideMargins, 0, kSideMargins)
     
     self.recipeCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
     self.recipeCollectionView.backgroundColor = DFColorPalette.colorForType(.backgroundColor)

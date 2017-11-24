@@ -22,8 +22,8 @@ class DFMeasurementUnitButtonView: UIView {
     button = DFMeasurementUnitButton(frame: .zero)
     self.buttonAction = targetAction
     
-    button.setTitleColor(DFColorPalette.colorForType(.textColor), for: .normal)
     button.setTitleColor(.white, for: .selected)
+    button.setTitleColor(.black, for: .normal)
     button.setTitleColor(.black, for: .highlighted)
     
     button.contentEdgeInsets = UIEdgeInsetsMake(5, 10, 5, 10)
@@ -35,8 +35,6 @@ class DFMeasurementUnitButtonView: UIView {
     
     self.backgroundColor = .white
     self.layer.cornerRadius = 5
-    self.layer.borderWidth = 1
-    self.layer.borderColor = DFColorPalette.colorForType(.borderColor).cgColor
     
     button.addTarget(self, action: #selector(self.tappedMeasurementButton(sender:)), for: UIControlEvents.touchUpInside)
     button.delegate = self

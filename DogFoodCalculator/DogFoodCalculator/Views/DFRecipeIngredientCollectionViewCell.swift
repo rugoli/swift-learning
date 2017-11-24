@@ -22,13 +22,13 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   
   override init(frame: CGRect) {
     ingredientNameLabel = UILabel()
-    ingredientNameLabel.textColor = UIColor.white
+    ingredientNameLabel.textColor = DFColorPalette.colorForType(.recipeCellText)
     ingredientNameLabel.numberOfLines = 0
     ingredientNameLabel.textAlignment = NSTextAlignment.center
     ingredientNameLabel.font = ingredientNameLabel.font.withSize(18)
     
     ingredientValueLabel = UILabel()
-    ingredientValueLabel.textColor = UIColor.white
+    ingredientValueLabel.textColor = DFColorPalette.colorForType(.recipeCellText)
     ingredientValueLabel.numberOfLines = 1
     ingredientValueLabel.textAlignment = NSTextAlignment.center
     ingredientValueLabel.font = ingredientValueLabel.font.withSize(16)
@@ -36,12 +36,12 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
     xOutButton = UIButton(type: UIButtonType.custom)
     xOutButton.setTitle("x", for: UIControlState.normal)
     xOutButton.setTitle("x", for: UIControlState.selected)
-    xOutButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+    xOutButton.setTitleColor(DFColorPalette.colorForType(.recipeCellText), for: UIControlState.normal)
     xOutButton.isHidden = false
     xOutButton.backgroundColor = UIColor.clear
     
     super.init(frame: frame)
-    self.backgroundColor = UIColor.blue
+    self.backgroundColor = DFColorPalette.colorForType(.recipeCellBackground)
     self.layer.cornerRadius = 5
     self.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     xOutButton.addTarget(self, action: #selector(self.tappedRemoveIngredient(sender:)), for: UIControlEvents.touchUpInside)
@@ -59,8 +59,7 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   
   override var isHighlighted: Bool {
     willSet {
-      let cellBackgroundColor = UIColor.init(red: 0, green: 0, blue: 1.0, alpha: newValue ? 0.5 : 1.0)
-      self.backgroundColor = cellBackgroundColor
+      self.backgroundColor = newValue ? DFColorPalette.colorForType(.recipeCellHighlighted) : DFColorPalette.colorForType(.recipeCellBackground)
     }
   }
   
