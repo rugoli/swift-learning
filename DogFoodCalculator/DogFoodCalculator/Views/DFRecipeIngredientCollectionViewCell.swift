@@ -42,6 +42,7 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
     
     super.init(frame: frame)
     self.backgroundColor = UIColor.blue
+    self.layer.cornerRadius = 5
     self.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     xOutButton.addTarget(self, action: #selector(self.tappedRemoveIngredient(sender:)), for: UIControlEvents.touchUpInside)
     

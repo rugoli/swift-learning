@@ -66,7 +66,7 @@ class DFCalculatorViewController: UIViewController {
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 20)
     
     self.ingredientListCollectionView = UICollectionView(frame: CGRect(x: 0, y:0 , width: 0, height: 0), collectionViewLayout: flowLayout)
-    self.ingredientListCollectionView.backgroundColor = UIColor.white
+    self.ingredientListCollectionView.backgroundColor = DFColorPalette.colorForType(.backgroundColor)
     self.ingredientListCollectionView.showsHorizontalScrollIndicator = false
     self.ingredientListCollectionView.dataSource = self.ingredientDataSource
     self.ingredientListCollectionView.delegate = self.ingredientDataSource
@@ -81,7 +81,7 @@ class DFCalculatorViewController: UIViewController {
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 20)
     
     self.recipeCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
-    self.recipeCollectionView.backgroundColor = UIColor.white
+    self.recipeCollectionView.backgroundColor = DFColorPalette.colorForType(.backgroundColor)
     self.recipeCollectionView.showsHorizontalScrollIndicator = false
     self.recipeCollectionView.dataSource = self.recipeDataSource
     self.recipeCollectionView.delegate = self.recipeDataSource
