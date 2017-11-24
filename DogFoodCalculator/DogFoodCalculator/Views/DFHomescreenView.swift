@@ -58,7 +58,7 @@ extension DFHomescreenView {
     let leftAnchor = NSLayoutConstraint(item: ingredientCollectionView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1.0, constant: 0)
     let rightAnchor = NSLayoutConstraint(item: ingredientCollectionView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1.0, constant: 0)
     let width = NSLayoutConstraint(item: ingredientCollectionView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
-    let height = NSLayoutConstraint(item: ingredientCollectionView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 200)
+    let height = ingredientCollectionView.heightConstraint(forHeight: 200)
     NSLayoutConstraint.activate([topAnchor, width, height, leftAnchor, rightAnchor])
   }
   
@@ -81,7 +81,7 @@ extension DFHomescreenView {
     let bottomPadding = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: calorieCounter, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 20)
     let centerX = NSLayoutConstraint(item: calorieCounter, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
     let width = NSLayoutConstraint(item: calorieCounter, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
-    let height = NSLayoutConstraint(item: calorieCounter, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 30)
+    let height = calorieCounter.heightConstraint(forHeight: 30)
     NSLayoutConstraint.activate([topPadding, bottomPadding, centerX, width, height])
   }
 }
