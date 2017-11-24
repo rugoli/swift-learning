@@ -23,7 +23,7 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
   
   override init(frame: CGRect) {
     cellMainLabel = UILabel()
-    cellMainLabel.textColor = UIColor.blue
+    cellMainLabel.textColor = DFColorPalette.colorForType(.textColor)
     cellMainLabel.numberOfLines = 0
     cellMainLabel.textAlignment = NSTextAlignment.center
     cellMainLabel.font = cellMainLabel.font.withSize(18)
@@ -32,6 +32,7 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
     
     amountTextField = UITextField()
     amountTextField.text = "0"
+    amountTextField.textColor = DFColorPalette.colorForType(.textColor)
     amountTextField.font = amountTextField.font?.withSize(24)
     amountTextField.clearsOnBeginEditing = true
     amountTextField.textAlignment = NSTextAlignment.center
@@ -40,13 +41,13 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
     
     removeIngredientButton = UIButton(type: UIButtonType.system)
     removeIngredientButton.setTitle("Remove", for: UIControlState.normal)
-    removeIngredientButton.setTitleColor(UIColor.blue, for: UIControlState.normal)
+    removeIngredientButton.setTitleColor(DFColorPalette.colorForType(.textColor), for: UIControlState.normal)
     removeIngredientButton.isSelected = false
     removeIngredientButton.isHidden = true
-    removeIngredientButton.backgroundColor = UIColor.white
+    removeIngredientButton.backgroundColor = UIColor.clear
     
     super.init(frame: frame)
-    self.backgroundColor = UIColor.white
+    self.backgroundColor = DFColorPalette.colorForType(.ingredientCellBackground)
     self.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     
     supportedUnitsRow.delegate = self
@@ -54,7 +55,7 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
     removeIngredientButton.addTarget(self, action: #selector(self.removeIngredient), for: UIControlEvents.touchUpInside)
     
     self.layer.borderWidth = 1
-    self.layer.borderColor = UIColor.blue.cgColor
+    self.layer.borderColor = DFColorPalette.colorForType(.borderColor).cgColor
     self.layer.cornerRadius = 10
     
     self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))

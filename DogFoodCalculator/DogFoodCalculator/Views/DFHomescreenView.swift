@@ -18,7 +18,7 @@ class DFHomescreenView: UIView {
     self.ingredientCollectionView = ingredientCollectionView
     self.recipeCollectionView = recipeCollectionView
     self.calorieCounter = UILabel()
-    self.calorieCounter.textColor = UIColor.blue
+    self.calorieCounter.textColor = DFColorPalette.colorForType(.textColor)
     self.calorieCounter.numberOfLines = 1
     self.calorieCounter.textAlignment = NSTextAlignment.center
     self.calorieCounter.font = self.calorieCounter.font.withSize(18)
@@ -29,6 +29,7 @@ class DFHomescreenView: UIView {
     self.addSubview(self.ingredientCollectionView)
     self.addSubview(self.recipeCollectionView)
     self.addSubview(self.calorieCounter)
+    self.backgroundColor = DFColorPalette.colorForType(.backgroundColor)
   }
   
   required convenience init?(coder aDecoder: NSCoder) {

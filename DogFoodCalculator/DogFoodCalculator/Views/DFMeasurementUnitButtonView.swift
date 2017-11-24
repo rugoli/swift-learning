@@ -22,7 +22,7 @@ class DFMeasurementUnitButtonView: UIView {
     button = DFMeasurementUnitButton(frame: .zero)
     self.buttonAction = targetAction
     
-    button.setTitleColor(.blue, for: .normal)
+    button.setTitleColor(DFColorPalette.colorForType(.textColor), for: .normal)
     button.setTitleColor(.white, for: .selected)
     button.setTitleColor(.black, for: .highlighted)
     
@@ -36,7 +36,7 @@ class DFMeasurementUnitButtonView: UIView {
     self.backgroundColor = .white
     self.layer.cornerRadius = 5
     self.layer.borderWidth = 1
-    self.layer.borderColor = UIColor.black.cgColor
+    self.layer.borderColor = DFColorPalette.colorForType(.borderColor).cgColor
     
     button.addTarget(self, action: #selector(self.tappedMeasurementButton(sender:)), for: UIControlEvents.touchUpInside)
     button.delegate = self
@@ -85,11 +85,11 @@ class DFMeasurementUnitButtonView: UIView {
 
 extension DFMeasurementUnitButtonView : DFMeasurementUnitButtonDelegate {
   func willSetSelectedValue(isSelected: Bool) {
-    self.backgroundColor = isSelected ? UIColor(red: 152/255.0, green: 193/255.0, blue: 217/255.0, alpha: 1.0) : UIColor.white
+    self.backgroundColor = isSelected ? DFColorPalette.colorForType(.measurementUnitSelected) : UIColor.white
   }
   
   func willSetHighlightValue(isHighlighted: Bool) {
-    self.backgroundColor = isHighlighted ? UIColor(red: 152/255.0, green: 193/255.0, blue: 217/255.0, alpha: 0.25) : UIColor.white
+    self.backgroundColor = isHighlighted ? DFColorPalette.colorForType(.measurementUnitHighlighted) : UIColor.white
   }
 }
 
