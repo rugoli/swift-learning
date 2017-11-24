@@ -29,6 +29,7 @@
 		01C704C41FAA617E0001BFBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C704C21FAA617E0001BFBD /* LaunchScreen.storyboard */; };
 		01C704D01FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704CF1FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift */; };
 		01C704D21FAA7C2B0001BFBD /* DFIngredientsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C704D11FAA7C2B0001BFBD /* DFIngredientsCollectionViewCell.swift */; };
+		01EB89241FC66A8F0013313E /* DFMeasurementUnitButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EB89231FC66A8F0013313E /* DFMeasurementUnitButtonView.swift */; };
 		01F9D8661FBC07A6001F9F69 /* DFRecipeCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F9D8651FBC07A6001F9F69 /* DFRecipeCollectionViewDataSource.swift */; };
 		01F9D8681FBC0AB5001F9F69 /* DFRecipeIngredientCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F9D8671FBC0AB4001F9F69 /* DFRecipeIngredientCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -70,6 +71,7 @@
 		01C704C51FAA617E0001BFBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01C704CF1FAA78910001BFBD /* DFIngredientCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		01C704D11FAA7C2B0001BFBD /* DFIngredientsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientsCollectionViewCell.swift; sourceTree = "<group>"; };
+		01EB89231FC66A8F0013313E /* DFMeasurementUnitButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFMeasurementUnitButtonView.swift; sourceTree = "<group>"; };
 		01F9D8651FBC07A6001F9F69 /* DFRecipeCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipeCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		01F9D8671FBC0AB4001F9F69 /* DFRecipeIngredientCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipeIngredientCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,6 +152,7 @@
 		01C704CD1FAA78570001BFBD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				01EB89231FC66A8F0013313E /* DFMeasurementUnitButtonView.swift */,
 				0199D4951FBFC09F002CEB92 /* DFHomescreenView.swift */,
 				01F9D8671FBC0AB4001F9F69 /* DFRecipeIngredientCollectionViewCell.swift */,
 				01C704D11FAA7C2B0001BFBD /* DFIngredientsCollectionViewCell.swift */,
@@ -295,6 +298,7 @@
 				015119591FABC8DF005EEC71 /* DFIngredientModel.swift in Sources */,
 				01C704BC1FAA617E0001BFBD /* DFCalculatorViewController.swift in Sources */,
 				01C704BA1FAA617E0001BFBD /* AppDelegate.swift in Sources */,
+				01EB89241FC66A8F0013313E /* DFMeasurementUnitButtonView.swift in Sources */,
 				013BB1C81FB6C44B00768857 /* DFRecipe.swift in Sources */,
 				0151195B1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift in Sources */,
 				0111B1661FBA334F003CBD9B /* DFIngredientCellViewModel.swift in Sources */,
