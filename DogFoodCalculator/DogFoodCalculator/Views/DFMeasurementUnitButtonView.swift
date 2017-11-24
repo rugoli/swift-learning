@@ -59,13 +59,12 @@ class DFMeasurementUnitButtonView: UIView {
     
     self.button.translatesAutoresizingMaskIntoConstraints = false
     self.translatesAutoresizingMaskIntoConstraints = false
-    let left = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.button, attribute: NSLayoutAttribute.left, multiplier: 1.0, constant: 0)
-    let right = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.button, attribute: NSLayoutAttribute.right, multiplier: 1.0, constant: 0)
-    let bottom = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.button, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0)
-    let top = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.button, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0)
-    let width = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.width)
-    let height = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.height)
-    NSLayoutConstraint.activate([left, right, bottom, top, width, height])
+
+    self.button.constrainEdges(toView: self)
+    let width = self.button.widthConstraint(forWidth: buttonSize.width)
+    let height = self.button.heightConstraint(forHeight: buttonSize.height)
+
+    NSLayoutConstraint.activate([width, height])
   }
   
   func configureWithViewModel(viewModel: DFMeasurementUnitViewModel) {

@@ -218,10 +218,10 @@ extension DFIngredientsCollectionViewCell {
     let labelSize: CGSize = cellMainLabel.sizeThatFits(CGSize(width: cellSize.width - cellMargins.left - cellMargins.right, height: cellSize.height))
     
     cellMainLabel.translatesAutoresizingMaskIntoConstraints = false
-    let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: cellMainLabel, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
     let topPadding = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.topMargin, relatedBy: NSLayoutRelation.equal, toItem: cellMainLabel, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 10)
-    let width = NSLayoutConstraint(item: cellMainLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.width)
-    let height = NSLayoutConstraint(item: cellMainLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.height)
+    let centering = cellMainLabel.centerXConstraint(toView: self)
+    let width = cellMainLabel.widthConstraint(forWidth: labelSize.width)
+    let height = cellMainLabel.heightConstraint(forHeight: labelSize.height)
     NSLayoutConstraint.activate([centering, topPadding, width, height])
   }
   
@@ -233,9 +233,9 @@ extension DFIngredientsCollectionViewCell {
     let rowSize: CGSize = CGSize(width: cellSize.width - cellMargins.left - cellMargins.right, height: 40)
     
     supportedUnitsRow.translatesAutoresizingMaskIntoConstraints = false
-    let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: supportedUnitsRow, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
+    let centering = supportedUnitsRow.centerXConstraint(toView: self)
     let topSpacing = NSLayoutConstraint(item: supportedUnitsRow, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: cellMainLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5)
-    let height = NSLayoutConstraint(item: supportedUnitsRow, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: rowSize.height)
+    let height = supportedUnitsRow.heightConstraint(forHeight: rowSize.height)
     NSLayoutConstraint.activate([centering, topSpacing, height])
   }
   
@@ -244,10 +244,10 @@ extension DFIngredientsCollectionViewCell {
     let textFieldSize = amountTextField.sizeThatFits(CGSize(width: self.bounds.size.width, height: self.bounds.size.height))
     
     amountTextField.translatesAutoresizingMaskIntoConstraints = false
-    let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: amountTextField, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
+    let centering = amountTextField.centerXConstraint(toView: self)
     let topSpacing = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: supportedUnitsRow, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5)
-    let width = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: textFieldSize.width)
-    let height = NSLayoutConstraint(item: amountTextField, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: textFieldSize.height)
+    let width = amountTextField.widthConstraint(forWidth: textFieldSize.width)
+    let height = amountTextField.heightConstraint(forHeight: textFieldSize.height)
     NSLayoutConstraint.activate([centering, topSpacing, height, width])
   }
   
@@ -257,10 +257,10 @@ extension DFIngredientsCollectionViewCell {
     
     removeIngredientButton.translatesAutoresizingMaskIntoConstraints = false
     var constraints: [NSLayoutConstraint] = [NSLayoutConstraint]()
-    constraints.append(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: removeIngredientButton, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0))  // center horizontally with cell
+    constraints.append(removeIngredientButton.centerXConstraint(toView: self))  // center horizontally with cell
     constraints.append(NSLayoutConstraint(item: removeIngredientButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: amountTextField, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5))  // 5 pts below amount text field row
-    constraints.append(NSLayoutConstraint(item: removeIngredientButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.width))  // set width
-    constraints.append(NSLayoutConstraint(item: removeIngredientButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.height)) // set height
+    constraints.append(removeIngredientButton.widthConstraint(forWidth: buttonSize.width))
+    constraints.append(removeIngredientButton.heightConstraint(forHeight: buttonSize.height))
     NSLayoutConstraint.activate(constraints)
   }
 }

@@ -103,10 +103,10 @@ extension DFRecipeIngredientCollectionViewCell {
     let labelSize: CGSize = ingredientNameLabel.sizeThatFits(CGSize(width: cellSize.width - max(cellMargins.right, xOutButton.bounds.width) - cellMargins.left, height: cellSize.height))
     
     ingredientNameLabel.translatesAutoresizingMaskIntoConstraints = false
-    let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: ingredientNameLabel, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
     let topPadding = NSLayoutConstraint(item: xOutButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: ingredientNameLabel, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 10)
-    let width = NSLayoutConstraint(item: ingredientNameLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.width)
-    let height = NSLayoutConstraint(item: ingredientNameLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.height)
+    let centering = ingredientNameLabel.centerXConstraint(toView: self)
+    let width = ingredientNameLabel.widthConstraint(forWidth: labelSize.width)
+    let height = ingredientNameLabel.heightConstraint(forHeight: labelSize.height)
     NSLayoutConstraint.activate([centering, topPadding, width, height])
   }
   
@@ -118,10 +118,10 @@ extension DFRecipeIngredientCollectionViewCell {
     let labelSize: CGSize = ingredientValueLabel.sizeThatFits(CGSize(width: cellSize.width - cellMargins.left - cellMargins.right, height: cellSize.height))
     
     ingredientValueLabel.translatesAutoresizingMaskIntoConstraints = false
-    let centering = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: ingredientValueLabel, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
     let topSpacing = NSLayoutConstraint(item: ingredientValueLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: ingredientNameLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 10)
-    let width = NSLayoutConstraint(item: ingredientValueLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.width)
-    let height = NSLayoutConstraint(item: ingredientValueLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: labelSize.height)
+    let centering = ingredientValueLabel.centerXConstraint(toView: self)
+    let width = ingredientValueLabel.widthConstraint(forWidth: labelSize.width)
+    let height = ingredientValueLabel.heightConstraint(forHeight: labelSize.height)
     NSLayoutConstraint.activate([centering, topSpacing, width, height])
   }
   
@@ -129,8 +129,8 @@ extension DFRecipeIngredientCollectionViewCell {
     xOutButton.translatesAutoresizingMaskIntoConstraints = false
     let topAnchor = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: xOutButton, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0)
     let rightAnchor = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: xOutButton, attribute: NSLayoutAttribute.right, multiplier: 1.0, constant: 0)
-    let width = NSLayoutConstraint(item: xOutButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
-    let height = NSLayoutConstraint(item: xOutButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
+    let width = xOutButton.widthConstraint(forWidth: 20)
+    let height = xOutButton.heightConstraint(forHeight: 20)
     NSLayoutConstraint.activate([topAnchor, rightAnchor, width, height])
   }
 }

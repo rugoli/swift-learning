@@ -79,12 +79,12 @@ class DFSupportedMeasurementUnitsRow: UIView {
     
     button.translatesAutoresizingMaskIntoConstraints = false
     var constraints = [NSLayoutConstraint]()
-    constraints.append(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: button, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0.0))  // align to row Y center
-    constraints.append(NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.width))  // set width
-    constraints.append(NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: buttonSize.height)) // set height
+    constraints.append(button.centerYConstraint(toView: self))
+    constraints.append(button.widthConstraint(forWidth: buttonSize.width))
+    constraints.append(button.heightConstraint(forHeight: buttonSize.height))
     if (prevButton != nil) {
       constraints.append(NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: prevButton, attribute: NSLayoutAttribute.right, multiplier: 1.0, constant: 10))  // horizontal spacing to previous button
-      constraints.append(NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: prevButton, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0))  // center vertical alignment to previous button
+      constraints.append(button.centerYConstraint(toView: prevButton!))  // center vertical alignment to previous button
     }
     NSLayoutConstraint.activate(constraints)
   }
