@@ -56,7 +56,7 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 300, height: 180)
+    return CGSize(width: 300, height: 150)
   }
 }
 
