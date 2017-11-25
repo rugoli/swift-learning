@@ -17,9 +17,11 @@ class DFHomescreenView: UIView {
        recipeCollectionView: UICollectionView = UICollectionView()) {
     self.ingredientCollectionView = ingredientCollectionView
     self.recipeCollectionView = recipeCollectionView
+    
     self.calorieCounter = UILabel()
-    self.calorieCounter.textColor = DFColorPalette.colorForType(.textColor)
+    self.calorieCounter.textColor = DFColorPalette.colorForType(.calorieCounterText)
     self.calorieCounter.numberOfLines = 1
+    self.calorieCounter.backgroundColor = DFColorPalette.colorForType(.calorieCounterBackground)
     self.calorieCounter.textAlignment = NSTextAlignment.center
     self.calorieCounter.font = self.calorieCounter.font.withSize(18)
     self.calorieCounter.text = "0 calories"
@@ -59,7 +61,7 @@ extension DFHomescreenView {
     let leftAnchor = NSLayoutConstraint(item: ingredientCollectionView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1.0, constant: 0)
     let rightAnchor = NSLayoutConstraint(item: ingredientCollectionView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1.0, constant: 0)
     let width = NSLayoutConstraint(item: ingredientCollectionView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
-    let height = ingredientCollectionView.heightConstraint(forHeight: 200)
+    let height = ingredientCollectionView.heightConstraint(forHeight: 160)
     NSLayoutConstraint.activate([topAnchor, width, height, leftAnchor, rightAnchor])
   }
   
@@ -67,7 +69,7 @@ extension DFHomescreenView {
     self.recipeCollectionView.removeConstraints(recipeCollectionView.constraints)
     
     recipeCollectionView.translatesAutoresizingMaskIntoConstraints = false
-    let topSpacing = NSLayoutConstraint(item: recipeCollectionView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: ingredientCollectionView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 10)
+    let topSpacing = NSLayoutConstraint(item: recipeCollectionView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: ingredientCollectionView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5)
     let leftAnchor = NSLayoutConstraint(item: recipeCollectionView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1.0, constant: 0)
     let rightAnchor = NSLayoutConstraint(item: recipeCollectionView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1.0, constant: 0)
     let width = NSLayoutConstraint(item: recipeCollectionView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
