@@ -11,26 +11,20 @@ import UIKit
 class DFHomescreenView: UIView {
   let ingredientCollectionView: UICollectionView
   let recipeCollectionView: UICollectionView
-  let calorieCounter: UILabel
+  let calorieCounterView: DFCalorieCounterView
   
   init(ingredientCollectionView: UICollectionView = UICollectionView(),
        recipeCollectionView: UICollectionView = UICollectionView()) {
     self.ingredientCollectionView = ingredientCollectionView
     self.recipeCollectionView = recipeCollectionView
     
-    self.calorieCounter = UILabel()
-    self.calorieCounter.textColor = DFColorPalette.colorForType(.calorieCounterText)
-    self.calorieCounter.numberOfLines = 1
-    self.calorieCounter.backgroundColor = DFColorPalette.colorForType(.calorieCounterBackground)
-    self.calorieCounter.textAlignment = NSTextAlignment.center
-    self.calorieCounter.font = self.calorieCounter.font.withSize(18)
-    self.calorieCounter.text = "0 calories"
+    self.calorieCounterView = DFCalorieCounterView(frame: .zero)
     
     super.init(frame: CGRect.zero)
     
     self.addSubview(self.ingredientCollectionView)
     self.addSubview(self.recipeCollectionView)
-    self.addSubview(self.calorieCounter)
+    self.addSubview(self.calorieCounterView)
     self.backgroundColor = DFColorPalette.colorForType(.backgroundColor)
   }
   
@@ -39,7 +33,7 @@ class DFHomescreenView: UIView {
   }
   
   func updateCalorieCounterLabel(calories: Float) {
-    self.calorieCounter.text = "\(calories) calories"
+    self.calorieCounterView.setCalorieAmount(calories: calories)
   }
 }
 
@@ -77,14 +71,15 @@ extension DFHomescreenView {
   }
   
   private func setCalorieCounterConstraints() {
-    self.calorieCounter.removeConstraints(calorieCounter.constraints)
+    self.calorieCounterView.removeConstraints(calorieCounterView.constraints)
     
-    calorieCounter.translatesAutoresizingMaskIntoConstraints = false
-    let topPadding = NSLayoutConstraint(item: calorieCounter, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: recipeCollectionView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 20)
-    let bottomPadding = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: calorieCounter, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 20)
-    let centerX = NSLayoutConstraint(item: calorieCounter, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
-    let width = NSLayoutConstraint(item: calorieCounter, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
-    let height = calorieCounter.heightConstraint(forHeight: 30)
-    NSLayoutConstraint.activate([topPadding, bottomPadding, centerX, width, height])
+    calorieCounterView.translatesAutoresizingMaskIntoConstraints = false
+    let topAnchor = NSLayoutConstraint(item: calorieCounterView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: recipeCollectionView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0)
+    let bottomAnchor = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: calorieCounterView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0)
+    let width = NSLayoutConstraint(item: calorieCounterView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
+    let height = calorieCounterView.heightConstraint(forHeight: 80)
+    NSLayoutConstraint.activate([bottomAnchor, topAnchor, width, height])
+    
+    self.calorieCounterView.setAutolayoutConstraints()
   }
 }
