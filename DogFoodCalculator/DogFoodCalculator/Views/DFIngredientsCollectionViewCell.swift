@@ -56,8 +56,6 @@ class DFIngredientsCollectionViewCell: UICollectionViewCell {
     
     self.layer.cornerRadius = 5
     
-    self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-    
     self.addSubview(cellMainLabel)
     self.addSubview(supportedUnitsRow)
     self.addSubview(amountTextField)
@@ -122,14 +120,6 @@ extension DFIngredientsCollectionViewCell : DFSupportedMeasurementsProtocol {
   }
 }
 
-// MARK : Gesture recognizer
-
-extension DFIngredientsCollectionViewCell {
-  @objc private func dismissKeyboard() {
-    self.endEditing(true)
-  }
-}
-
 // MARK: Text field delegate
 
 extension DFIngredientsCollectionViewCell : UITextFieldDelegate {
@@ -150,13 +140,14 @@ extension DFIngredientsCollectionViewCell : UITextFieldDelegate {
   }
   
   public func textFieldDidEndEditing(_ textField: UITextField) {
-    guard let input = textField.text else {  // remove ingredient if text is nil
-      self.removeIngredient()
+    let input = textField.text
+    guard input != nil &&  input!.count > 0 else {  // do nothing if text field is empty or nil
+      self.configureAmountTextFieldProperties()
       return
     }
     
     let newIngredientAmount = DFMeasurement(measurementUnit: self.ingredientModel.viewModel.ingredientAmount.measurementUnit,
-                                            measurementValue: (input as NSString).floatValue)
+                                            measurementValue: (input as! NSString).floatValue)
     guard newIngredientAmount.measurementValue > 0 else {  // remove ingredient if text is not greater than zero
       self.removeIngredient()
       return
