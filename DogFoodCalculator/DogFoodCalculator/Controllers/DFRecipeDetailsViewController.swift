@@ -10,6 +10,7 @@ import UIKit
 
 class DFRecipeDetailsViewController: UIViewController {
   let recipe: DFRecipe
+  private var recipeDetailsView: DFRecipeDetailsView!
 
   required init(recipe: DFRecipe) {
     self.recipe = recipe
@@ -26,12 +27,16 @@ class DFRecipeDetailsViewController: UIViewController {
   override func loadView() {
     super.loadView()
     
-    self.view.backgroundColor = UIColor.white
-    let doneNavigationItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissDetailView))
-    self.navigationItem.rightBarButtonItem = doneNavigationItem
+    self.recipeDetailsView = DFRecipeDetailsView(recipe: self.recipe, doneButtonAction: { [weak self] in
+      self?.dismiss(animated: true, completion: nil)
+    })
+    self.view.addSubview(self.recipeDetailsView)
   }
   
-  @objc private func dismissDetailView() {
-    self.dismiss(animated: true, completion: nil)
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    
+    self.recipeDetailsView.frame = self.view.bounds
+    self.recipeDetailsView.setAllConstraints()
   }
 }

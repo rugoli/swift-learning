@@ -14,6 +14,7 @@ enum DFColorPalette {
   case measurementUnitSelected, measurementUnitHighlighted
   case ingredientCellTextColor, ingredientCellBackground
   case calorieCounterText, calorieCounterBackground
+  case recipeDetailsViewBackground
   
   static func colorForType(_ type: DFColorPalette) -> UIColor {
     switch type {
@@ -45,7 +46,12 @@ enum DFColorPalette {
       return self.darkBlueColorWithAlpha(1.0)
     case .calorieCounterBackground:
       return self.beigeColor()
+      
+    // recipe details view
+    case .recipeDetailsViewBackground:
+      return self.beigeColor()
     }
+    
   }
   
   static private func darkBlueColorWithAlpha(_ alpha: CGFloat) -> UIColor {
