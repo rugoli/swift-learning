@@ -63,7 +63,7 @@ extension DFRecipeDetailsView {
     self.calorieCountLabel.translatesAutoresizingMaskIntoConstraints = false
     let labelSize = calorieCountLabel.sizeThatFits(CGSize(width: self.bounds.size.width, height: 50))
     
-    let topPadding = NSLayoutConstraint(item: calorieCountLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 20)
+    let topPadding = NSLayoutConstraint(item: calorieCountLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 30)
     let centerX = calorieCountLabel.centerXConstraint(toView: self)
     let width = calorieCountLabel.widthConstraint(forWidth: labelSize.width)
     let height = calorieCountLabel.heightConstraint(forHeight: labelSize.height)
