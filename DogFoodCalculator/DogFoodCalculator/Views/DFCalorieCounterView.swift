@@ -23,6 +23,12 @@ class DFCalorieCounterView: UIView {
     
     self.backgroundColor = DFColorPalette.colorForType(.calorieCounterBackground)
     self.addSubview(self.calorieCounterLabel)
+    
+    // gesture recognizers
+    let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(openRecipeDetailView))
+    swipeGesture.direction = UISwipeGestureRecognizerDirection.up
+    self.addGestureRecognizer(swipeGesture)
+    self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openRecipeDetailView)))
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -44,4 +50,12 @@ class DFCalorieCounterView: UIView {
     NSLayoutConstraint.activate([centerY, labelHeight, leftInset, rightInset])
   }
   
+}
+
+// MARK: Gesture recognizers
+
+extension DFCalorieCounterView {
+  @objc private func openRecipeDetailView() {
+    print("test")
+  }
 }
