@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol DFRecipeCalorieCounterDelegate : class {
+  func openRecipeDetailView()
+}
+
 class DFCalorieCounterView: UIView {
   private var calorieCounterLabel: UILabel
+  weak var delegate: DFRecipeCalorieCounterDelegate?
   
   required override init(frame: CGRect) {
     self.calorieCounterLabel = UILabel()
@@ -56,6 +61,6 @@ class DFCalorieCounterView: UIView {
 
 extension DFCalorieCounterView {
   @objc private func openRecipeDetailView() {
-    print("test")
+    delegate?.openRecipeDetailView()
   }
 }
