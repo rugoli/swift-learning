@@ -9,16 +9,12 @@
 import UIKit
 
 class DFRecipeBreakdownTable: UIView {
-  let tableRows: [DFRecipeBreakdownRow]
+  let tableRows: [DFRecipeBreakdownRowViewModel]
   
-  required init(rows: [DFRecipeBreakdownRow]) {
+  required init(rows: [DFRecipeBreakdownRowViewModel]) {
     self.tableRows = rows
     
     super.init(frame: .zero)
-    
-    for rowView in rows {
-      self.addSubview(rowView)
-    }
   }
   
   required convenience init?(coder aDecoder: NSCoder) {

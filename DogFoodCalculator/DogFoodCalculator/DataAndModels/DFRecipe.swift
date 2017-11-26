@@ -74,3 +74,16 @@ extension DFRecipe {
     return calories
   }
 }
+
+// MARK: Caloric breakdowns
+
+extension DFRecipe {
+  func breakdownByIngredient() -> [DFRecipeBreakdownRowViewModel] {
+    var ingredientModels = [DFRecipeBreakdownRowViewModel]()
+    let totalCalories = self.recipeCalorieCount()
+    for ingredient: DFIngredientModel in self.ingredients {
+      ingredientModels.append(DFRecipeBreakdownRowViewModel(name: ingredient.ingredientName, percentage: 100.00 * ingredient.ingredientCalories() / totalCalories))
+    }
+    return ingredientModels
+  }
+}

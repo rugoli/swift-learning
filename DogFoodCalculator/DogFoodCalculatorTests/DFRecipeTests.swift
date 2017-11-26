@@ -89,10 +89,37 @@ class DFRecipeTests: XCTestCase {
     XCTAssertTrue(self.wasNotificationObserved, "Notification was not observed")
   }
   
+  func testIngredientCaloricBreakdown() {
+    let ingredient1 = DFRecipeTests.testIngredient()
+    let calories1 = ingredient1.ingredientCalories()
+    
+    let ingredient2 = DFRecipeTests.testIngredient()
+    let calories2 = ingredient2.ingredientCalories()
+    
+    let recipe = DFRecipe()
+    recipe.addIngredient(ingredient1)
+    recipe.addIngredient(ingredient2)
+    let totalCalories = recipe.recipeCalorieCount()
+    
+    let caloricBreakdown = recipe.breakdownByIngredient()
+    for breakdownRow: DFRecipeBreakdownRowViewModel in caloricBreakdown {
+      switch breakdownRow.name {
+        case ingredient1.ingredientName:
+          XCTAssertEqual(100.00 * calories1 / totalCalories, breakdownRow.percentage)
+        case ingredient2.ingredientName:
+          XCTAssertEqual(100.00 * calories2 / totalCalories, breakdownRow.percentage)
+        default:
+          XCTFail("Found unexpected ingredient name in breakdown rows")
+      }
+    }
+  }
+  
   private class func testIngredient() -> DFIngredientModel {
-    return DFIngredientModel(ingredientName: "Test: \(arc4random_uniform(100))",
+    let measurementValue = Float(arc4random_uniform(5) + 1)
+    return DFIngredientModel(ingredientName: "Test: \(arc4random_uniform(10000))",
       supportedMeasurementUnits: [DFMeasurementUnit.cup, DFMeasurementUnit.tsp],
-      nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.lb, measurementValue: 1.0)))
+      nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 1.0), fat: 1.0, carbs: 2.0),
+      amount: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: measurementValue))
   }
   
   private func notifTestingBlockForUpdateType(_ updateType: DFRecipeUpdateType) -> ((DFRecipeUpdateModel) -> Void) {
