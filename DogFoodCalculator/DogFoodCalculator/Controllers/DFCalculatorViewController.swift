@@ -40,7 +40,9 @@ class DFCalculatorViewController: UIViewController {
     self.configureIngredientListCollectionView()
     self.configureRecipeCollectionView()
     
-    self.homeScreenView = DFHomescreenView(ingredientCollectionView: self.ingredientListCollectionView, recipeCollectionView: self.recipeCollectionView)
+    self.homeScreenView = DFHomescreenView(ingredientCollectionView: self.ingredientListCollectionView,
+                                           recipeCollectionView: self.recipeCollectionView,
+                                           calorieCounterDelegate: self)
     self.view.addSubview(self.homeScreenView!)
   }
   
@@ -144,6 +146,18 @@ extension DFCalculatorViewController : DFRecipeCollectionViewDelegate {
       self.ingredientListCollectionView.scrollToItem(at: ingredientIndexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
     }
   }
+}
+
+// MARK: Recipe calorie counter delegate
+
+extension DFCalculatorViewController : DFRecipeCalorieCounterDelegate {
+  func openRecipeDetailView() {
+    self.present(DFRecipeDetailsViewController(recipe: self.recipe), animated: true) {
+      print("successfully launched")
+    }
+  }
+  
+  
 }
 
 

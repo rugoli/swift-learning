@@ -14,11 +14,13 @@ class DFHomescreenView: UIView {
   let calorieCounterView: DFCalorieCounterView
   
   init(ingredientCollectionView: UICollectionView = UICollectionView(),
-       recipeCollectionView: UICollectionView = UICollectionView()) {
+       recipeCollectionView: UICollectionView = UICollectionView(),
+       calorieCounterDelegate: DFRecipeCalorieCounterDelegate? = nil) {
     self.ingredientCollectionView = ingredientCollectionView
     self.recipeCollectionView = recipeCollectionView
     
     self.calorieCounterView = DFCalorieCounterView(frame: .zero)
+    self.calorieCounterView.delegate = calorieCounterDelegate
     
     super.init(frame: CGRect.zero)
     
