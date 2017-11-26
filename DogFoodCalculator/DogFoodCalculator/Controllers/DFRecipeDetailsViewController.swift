@@ -15,6 +15,8 @@ class DFRecipeDetailsViewController: UIViewController {
     self.recipe = recipe
     
     super.init(nibName: nil, bundle: nil)
+    
+    self.title = "Recipe"
   }
   
   required convenience init?(coder aDecoder: NSCoder) {
@@ -24,7 +26,12 @@ class DFRecipeDetailsViewController: UIViewController {
   override func loadView() {
     super.loadView()
     
-    self.view.backgroundColor = UIColor.red
+    self.view.backgroundColor = UIColor.white
+    let doneNavigationItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissDetailView))
+    self.navigationItem.rightBarButtonItem = doneNavigationItem
   }
-
+  
+  @objc private func dismissDetailView() {
+    self.dismiss(animated: true, completion: nil)
+  }
 }

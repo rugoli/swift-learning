@@ -152,12 +152,10 @@ extension DFCalculatorViewController : DFRecipeCollectionViewDelegate {
 
 extension DFCalculatorViewController : DFRecipeCalorieCounterDelegate {
   func openRecipeDetailView() {
-    self.present(DFRecipeDetailsViewController(recipe: self.recipe), animated: true) {
+    self.present(UINavigationController(rootViewController: DFRecipeDetailsViewController(recipe: self.recipe)), animated: true) {
       print("successfully launched")
     }
   }
-  
-  
 }
 
 
