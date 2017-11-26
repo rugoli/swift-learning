@@ -11,6 +11,7 @@ import UIKit
 class DFRecipeDetailsView: UIView {
   let recipe: DFRecipe
   let calorieCountLabel: UILabel
+  let calorieBreakdownTable: DFRecipeBreakdownTable
   
   let doneButton: UIButton
   let closeViewAction: () -> Void
@@ -32,12 +33,15 @@ class DFRecipeDetailsView: UIView {
     self.doneButton.titleLabel?.font = self.doneButton.titleLabel?.font?.withSize(20)
     self.closeViewAction = doneButtonAction
     
+    self.calorieBreakdownTable = DFRecipeBreakdownTable(rows: recipe.breakdownByIngredient())
+    
     super.init(frame: .zero)
     
     self.backgroundColor = DFColorPalette.colorForType(.recipeDetailsViewBackground)
     
     self.addSubview(self.calorieCountLabel)
     self.addSubview(self.doneButton)
+    self.addSubview(self.calorieBreakdownTable)
     
     self.doneButton.addTarget(self, action: #selector(tappedDoneButton), for: .touchUpInside)
   }
@@ -56,6 +60,7 @@ class DFRecipeDetailsView: UIView {
 extension DFRecipeDetailsView {
   func setAllConstraints() {
     self.setCalorieCountLabelConstraints()
+    self.setIngredientBreakdownTableConstraints()
     self.setDoneButtonConstraints()
   }
   
@@ -69,6 +74,18 @@ extension DFRecipeDetailsView {
     let height = calorieCountLabel.heightConstraint(forHeight: labelSize.height)
     
     NSLayoutConstraint.activate([topPadding, centerX, width, height])
+  }
+  
+  private func setIngredientBreakdownTableConstraints() {
+    self.calorieBreakdownTable.translatesAutoresizingMaskIntoConstraints = false
+    
+    let topPadding = NSLayoutConstraint(item: calorieBreakdownTable, attribute: .top, relatedBy: .equal, toItem: calorieCountLabel, attribute: .bottom, multiplier: 1.0, constant: 20)
+    let leftPadding = calorieBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .left, toView: self)
+    let rightPadding = calorieBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .right, toView: self)
+    let centerX = calorieBreakdownTable.centerXConstraint(toView: self)
+    let height = calorieBreakdownTable.heightConstraint(forHeight: 500)
+    
+    NSLayoutConstraint.activate([topPadding, centerX, height, leftPadding, rightPadding])
   }
   
   private func setDoneButtonConstraints() {

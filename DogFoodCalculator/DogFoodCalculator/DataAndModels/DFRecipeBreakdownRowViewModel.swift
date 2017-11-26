@@ -10,7 +10,7 @@ import UIKit
 
 class DFRecipeBreakdownRowViewModel: NSObject {
   let name: String
-  let percentage: Float
+  private let percentage: Float
   
   required init(name: String,
                 percentage: Float) {
@@ -18,5 +18,13 @@ class DFRecipeBreakdownRowViewModel: NSObject {
     self.percentage = percentage
     
     super.init()
+  }
+  
+  func formattedPercentage() -> String {
+    let formatter = NumberFormatter()
+    formatter.minimumFractionDigits = 1
+    formatter.maximumFractionDigits = 1
+    
+    return "\(formatter.string(from: NSNumber(value: self.percentage))!)%"
   }
 }
