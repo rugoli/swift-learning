@@ -79,11 +79,32 @@ extension DFRecipe {
 
 extension DFRecipe {
   func breakdownByIngredient() -> [DFRecipeBreakdownRowViewModel] {
-    var ingredientModels = [DFRecipeBreakdownRowViewModel]()
+    var viewModels = [DFRecipeBreakdownRowViewModel]()
     let totalCalories = self.recipeCalorieCount()
     for ingredient: DFIngredientModel in self.ingredients {
-      ingredientModels.append(DFRecipeBreakdownRowViewModel(name: ingredient.ingredientName, percentage: 100.00 * ingredient.ingredientCalories() / totalCalories))
+      viewModels.append(DFRecipeBreakdownRowViewModel(name: ingredient.ingredientName, percentage: 100.00 * ingredient.ingredientCalories() / totalCalories))
     }
-    return ingredientModels
+    return viewModels
+  }
+  
+  func breakdownByMacros() -> [DFRecipeBreakdownRowViewModel] {
+    var calorieCounters: [DFMacroCalories] = DFMacroNutrientTypes.allTypes().map { macroType in
+      return DFMacroCalories(macroType: macroType, calories: 0.0)
+    }
+    
+    for ingredient: DFIngredientModel in self.ingredients {
+      let ingredientBreakdown = ingredient.nutritionalInfo.caloriesForMeasurementByMacro(measurement: ingredient.ingredientAmount)
+      calorieCounters = calorieCounters.map { macroCalories -> DFMacroCalories in
+        return macroCalories.withMoreCalories(ingredientBreakdown[macroCalories.macroType]?.calories ?? 0)
+      }
+    }
+    
+    let calorieTotal = calorieCounters.reduce(0.0, { totalCalories, macroCalories in
+      totalCalories + macroCalories.calories
+    })
+    
+    return calorieCounters.map { macroCalorie -> DFRecipeBreakdownRowViewModel in
+      return DFRecipeBreakdownRowViewModel(name: macroCalorie.macroType.rawValue, percentage: 100.00 * macroCalorie.calories / calorieTotal)
+    }
   }
 }

@@ -22,6 +22,10 @@ enum DFMacroNutrientTypes : String {
         return 4.0
     }
   }
+  
+  static func allTypes() -> [DFMacroNutrientTypes] {
+    return [.fat, .protein, .carbs, .fiber]
+  }
 }
 
 struct DFMacroNutrient {
@@ -37,6 +41,15 @@ extension DFMacroNutrient : Equatable {
   static func ==(lhs: DFMacroNutrient, rhs: DFMacroNutrient) -> Bool {
     return lhs.macroType == rhs.macroType
       && lhs.grams == rhs.grams
+  }
+}
+
+struct DFMacroCalories {
+  let macroType: DFMacroNutrientTypes
+  var calories: Float
+  
+  func withMoreCalories(_ moreCalories: Float) -> DFMacroCalories {
+    return DFMacroCalories(macroType: macroType, calories: calories + moreCalories)
   }
 }
 
@@ -59,16 +72,36 @@ struct DFNutritionalInfo {
     self.fiber = DFMacroNutrient(macroType: DFMacroNutrientTypes.fiber, grams: fiber)
   }
   
-  private func caloriesForServingSize() -> Float {
-    return self.fat.calories() + self.protein.calories() + self.carbs.calories() + self.fiber.calories()
+  func calculateCaloriesForMeasurement(measurement: DFMeasurement) -> Float {
+    let macroBreakdown = self.caloriesForMeasurementByMacro(measurement: measurement).map { (_, value) in
+      value
+    }
+    
+    return macroBreakdown.reduce(0.0, { totalCalories, macroCalories in
+      totalCalories + macroCalories.calories
+    })
   }
   
-  func calculateCaloriesForMeasurement(measurement: DFMeasurement) throws -> Float {
-    do {
-      let newMeasurement = try measurement.convertTo(newMeasurementUnit: self.servingSize.measurementUnit)
-      return (newMeasurement.measurementValue / self.servingSize.measurementValue) * self.caloriesForServingSize()
-    } catch {
-      throw error
+  func caloriesForMeasurementByMacro(measurement: DFMeasurement) -> [DFMacroNutrientTypes : DFMacroCalories] {
+    var macroMap: [DFMacroNutrientTypes: DFMacroCalories] = [:]
+    _ = DFMacroNutrientTypes.allTypes().map { macroType -> Void in
+      do {
+        let newMeasurement = try measurement.convertTo(newMeasurementUnit: self.servingSize.measurementUnit)
+        macroMap[macroType] = DFMacroCalories(macroType: macroType, calories: (newMeasurement.measurementValue / self.servingSize.measurementValue) * caloriesForMacroType(macroType: macroType))
+      } catch {
+        macroMap[macroType] = DFMacroCalories(macroType: macroType, calories: 0.0)
+      }
+    }
+    
+    return macroMap
+  }
+  
+  private func caloriesForMacroType(macroType : DFMacroNutrientTypes) -> Float {
+    switch macroType {
+      case .fat: return self.fat.calories()
+      case .carbs: return self.carbs.calories()
+      case .protein: return self.protein.calories()
+      case .fiber: return self.fiber.calories()
     }
   }
 }

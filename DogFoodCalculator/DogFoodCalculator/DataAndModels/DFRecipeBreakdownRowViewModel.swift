@@ -10,7 +10,7 @@ import UIKit
 
 class DFRecipeBreakdownRowViewModel: NSObject {
   let name: String
-  private let percentage: Float
+  let percentage: Float
   
   required init(name: String,
                 percentage: Float) {
