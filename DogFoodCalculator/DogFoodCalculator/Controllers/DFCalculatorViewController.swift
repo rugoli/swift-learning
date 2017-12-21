@@ -143,6 +143,7 @@ extension DFCalculatorViewController : DFRecipeCollectionViewDelegate {
   
   func didTapRecipeIngredient(collectionView: UICollectionView, ingredientModel: DFIngredientModel) {
     if let ingredientIndexPath: IndexPath = self.ingredientDataSource.getIndexPathForIngredientModel(ingredientModel) {
+      self.view.endEditing(true)
       self.ingredientListCollectionView.scrollToItem(at: ingredientIndexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
     }
   }
@@ -153,7 +154,7 @@ extension DFCalculatorViewController : DFRecipeCollectionViewDelegate {
 extension DFCalculatorViewController : DFRecipeCalorieCounterDelegate {
   func openRecipeDetailView() {
     self.present(DFRecipeDetailsViewController(recipe: self.recipe), animated: true) {
-      print("successfully launched")
+      // no-op
     }
   }
 }

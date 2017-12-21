@@ -60,6 +60,13 @@ class DFIngredientCollectionViewDataSource: NSObject, UICollectionViewDataSource
   }
 }
 
+extension DFIngredientCollectionViewDataSource : UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    collectionView.endEditing(true)
+    collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
+  }
+}
+
 extension DFIngredientCollectionViewDataSource : DFIngredientDataSourceAdapterProtocol {
   func updateModel(model: DFIngredientModel, atIndexPath indexPath: IndexPath) {
     self.ingredients[indexPath.row] = model
@@ -83,16 +90,15 @@ extension DFIngredientCollectionViewDataSource {
                         supportedMeasurementUnits: [DFMeasurementUnit.cup],
                         nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.cup, measurementValue: 1.0), fat: 0.5, protein: 4.25, carbs: 44.5, fiber: 0.6)
       ),
-      DFIngredientModel(ingredientName: "Uncooked white rice",
-                        supportedMeasurementUnits: [DFMeasurementUnit.cup],
-                        nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.cup, measurementValue: 0.25), fat: 0, protein: 3, carbs: 33, fiber: 0)
-      ),
       DFIngredientModel(ingredientName: "Canned pumpkin",
                         supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp, DFMeasurementUnit.cup],
                         nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.tbsp, measurementValue: 8.0), fat: 0, protein: 2, carbs: 11, fiber: 3),
                         defaultMeasurementUnit: DFMeasurementUnit.tbsp
       ),
-      
+      DFIngredientModel(ingredientName: "Uncooked white rice",
+                        supportedMeasurementUnits: [DFMeasurementUnit.cup],
+                        nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.cup, measurementValue: 0.25), fat: 0, protein: 3, carbs: 33, fiber: 0)
+      ),
       DFIngredientModel(ingredientName: "Corn oil",
                         supportedMeasurementUnits: [DFMeasurementUnit.tsp, DFMeasurementUnit.tbsp],
                         nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 3.0),

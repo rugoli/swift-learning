@@ -29,7 +29,9 @@ class DFHomescreenView: UIView {
     self.addSubview(self.calorieCounterView)
     self.backgroundColor = DFColorPalette.colorForType(.backgroundColor)
     
-    self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapHomeScreen)))
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapHomeScreen))
+    gestureRecognizer.delegate = self
+    self.addGestureRecognizer(gestureRecognizer)
   }
   
   required convenience init?(coder aDecoder: NSCoder) {
@@ -39,9 +41,18 @@ class DFHomescreenView: UIView {
   func updateCalorieCounterLabel(calories: Float) {
     self.calorieCounterView.setCalorieAmount(calories: calories)
   }
-  
-  @objc private func didTapHomeScreen() {
+}
+
+// MARK: gesture recognizer
+
+extension DFHomescreenView : UIGestureRecognizerDelegate {
+  @objc
+  private func didTapHomeScreen() {
     self.endEditing(true)
+  }
+  
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    return !(touch.view?.isKind(of: UICollectionViewCell.classForCoder()) ?? false || touch.view?.superview?.isKind(of: UICollectionViewCell.classForCoder()) ?? false)
   }
 }
 
