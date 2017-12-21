@@ -66,7 +66,6 @@ class DFRecipeIngredientCollectionViewCell: UICollectionViewCell {
   @objc func tappedRemoveIngredient(sender: UIButton) {
     self.delegate?.removedIngredientFromRecipe(cell: self, ingredient: self.ingredientModel)
   }
-    
 }
 
 // MARK: configuring views and models
