@@ -9,7 +9,7 @@
 import XCTest
 @testable import DogFoodCalculator
 
-class DFIngredientModelTests: XCTestCase {
+class DFIngredientModelTests: XCTestCase, DFIngredientGeneratorHelper {
   
   func testIncompatibleNutritionalUnit() {
     let ingredient = DFIngredientModel(ingredientName: "Test", supportedMeasurementUnits: [.tsp], nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 1.0), fat: 1.0, protein: 4.0, carbs: 5.0, fiber: 2.0))
@@ -37,10 +37,10 @@ class DFIngredientModelTests: XCTestCase {
   }
   
   func testIngredientCaloricBreakdown() {
-    let ingredient1 = DFIngredientModelTests.testIngredient()
+    let ingredient1 = generateTestIngredient()
     let calories1 = ingredient1.ingredientCalories()
     
-    let ingredient2 = DFIngredientModelTests.testIngredient()
+    let ingredient2 = generateTestIngredient()
     let calories2 = ingredient2.ingredientCalories()
     
     let recipe = DFRecipe()
@@ -62,7 +62,7 @@ class DFIngredientModelTests: XCTestCase {
   }
   
   func testMacroCaloricBreakdown() {
-    let ingredient = DFIngredientModelTests.testIngredient()
+    let ingredient = generateTestIngredient()
     let newMeasurement = try! ingredient.ingredientAmount.convertTo(newMeasurementUnit: ingredient.nutritionalInfo.servingSize.measurementUnit)
     let servingSizeRatio = (newMeasurement.measurementValue / ingredient.nutritionalInfo.servingSize.measurementValue)
     let macroBreakdown = ingredient.caloriesForMeasurementByMacro()
@@ -85,13 +85,4 @@ class DFIngredientModelTests: XCTestCase {
     let caloriesForTwiceServing = ingredient.ingredientCalories(measurement: twiceServingSize)
     XCTAssertEqual(2 * caloriesPerServingSize, caloriesForTwiceServing)
   }
-  
-  private class func testIngredient() -> DFIngredientModel {
-    let measurementValue = Float(arc4random_uniform(5) + 1)
-    return DFIngredientModel(ingredientName: "Test: \(arc4random_uniform(10000))",
-      supportedMeasurementUnits: [DFMeasurementUnit.cup, DFMeasurementUnit.tsp],
-      nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 1.0), fat: 1.0, protein: 3.0, carbs: 2.0, fiber: 1.0),
-      amount: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: measurementValue))
-  }
-    
 }
