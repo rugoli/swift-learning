@@ -11,6 +11,7 @@
 		0111B1681FBA3A21003CBD9B /* DFIngredientModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0111B1671FBA3A21003CBD9B /* DFIngredientModelBuilder.swift */; };
 		0111B16A1FBAB56B003CBD9B /* DFIngredientModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0111B1691FBAB56B003CBD9B /* DFIngredientModelBuilderTests.swift */; };
 		011EC85E1FEB3B6A00F2575B /* DFIngredientModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011EC85D1FEB3B6A00F2575B /* DFIngredientModelTests.swift */; };
+		011EC8601FEB3F9100F2575B /* DFIngredientGeneratorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011EC85F1FEB3F9100F2575B /* DFIngredientGeneratorHelper.swift */; };
 		013BB1C81FB6C44B00768857 /* DFRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013BB1C71FB6C44B00768857 /* DFRecipe.swift */; };
 		013BB1CA1FB6C60400768857 /* DFRecipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013BB1C91FB6C60400768857 /* DFRecipeTests.swift */; };
 		014AB0DF1FABAC1D006ABF3E /* DFMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014AB0DE1FABAC1D006ABF3E /* DFMeasurementTests.swift */; };
@@ -57,6 +58,7 @@
 		0111B1671FBA3A21003CBD9B /* DFIngredientModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientModelBuilder.swift; sourceTree = "<group>"; };
 		0111B1691FBAB56B003CBD9B /* DFIngredientModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientModelBuilderTests.swift; sourceTree = "<group>"; };
 		011EC85D1FEB3B6A00F2575B /* DFIngredientModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientModelTests.swift; sourceTree = "<group>"; };
+		011EC85F1FEB3F9100F2575B /* DFIngredientGeneratorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientGeneratorHelper.swift; sourceTree = "<group>"; };
 		013BB1C71FB6C44B00768857 /* DFRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipe.swift; sourceTree = "<group>"; };
 		013BB1C91FB6C60400768857 /* DFRecipeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipeTests.swift; sourceTree = "<group>"; };
 		014AB0DC1FABAC1D006ABF3E /* DogFoodCalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogFoodCalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +115,7 @@
 		014AB0DD1FABAC1D006ABF3E /* DogFoodCalculatorTests */ = {
 			isa = PBXGroup;
 			children = (
+				011EC85F1FEB3F9100F2575B /* DFIngredientGeneratorHelper.swift */,
 				011EC85D1FEB3B6A00F2575B /* DFIngredientModelTests.swift */,
 				0111B1691FBAB56B003CBD9B /* DFIngredientModelBuilderTests.swift */,
 				013BB1C91FB6C60400768857 /* DFRecipeTests.swift */,
@@ -316,6 +319,7 @@
 				013BB1CA1FB6C60400768857 /* DFRecipeTests.swift in Sources */,
 				0151195F1FAD4B2C005EEC71 /* DFIngredientViewModelTests.swift in Sources */,
 				011EC85E1FEB3B6A00F2575B /* DFIngredientModelTests.swift in Sources */,
+				011EC8601FEB3F9100F2575B /* DFIngredientGeneratorHelper.swift in Sources */,
 				014AB0DF1FABAC1D006ABF3E /* DFMeasurementTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

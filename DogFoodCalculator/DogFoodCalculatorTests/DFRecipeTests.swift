@@ -9,7 +9,7 @@
 import XCTest
 @testable import DogFoodCalculator
 
-class DFRecipeTests: XCTestCase {
+class DFRecipeTests: XCTestCase, DFIngredientGeneratorHelper {
   private var testRecipe: DFRecipe = DFRecipe()
   private var wasNotificationObserved: Bool = false
   private var notificationTestingBlock: ((DFRecipeUpdateModel) -> Void)?
@@ -33,14 +33,14 @@ class DFRecipeTests: XCTestCase {
   
   func testAddIngredient() {
     XCTAssertTrue(self.testRecipe.ingredients.count == 0)
-    self.testRecipe.addIngredient(DFRecipeTests.testIngredient())
+    self.testRecipe.addIngredient(generateTestIngredient())
     XCTAssertTrue(self.testRecipe.ingredients.count == 1)
   }
   
   func testRemoveIngredient() {
-    self.testRecipe.addIngredient(DFRecipeTests.testIngredient())
+    self.testRecipe.addIngredient(generateTestIngredient())
     
-    let ingredientToRemove = DFRecipeTests.testIngredient()
+    let ingredientToRemove = generateTestIngredient()
     self.testRecipe.addIngredient(ingredientToRemove)
     XCTAssertTrue(self.testRecipe.ingredients.count == 2)
     XCTAssertTrue(self.testRecipe.ingredients.contains(ingredientToRemove))
@@ -51,8 +51,8 @@ class DFRecipeTests: XCTestCase {
   }
   
   func testRemoveAllIngredients() {
-    self.testRecipe.addIngredient(DFRecipeTests.testIngredient())
-    self.testRecipe.addIngredient(DFRecipeTests.testIngredient())
+    self.testRecipe.addIngredient(generateTestIngredient())
+    self.testRecipe.addIngredient(generateTestIngredient())
     XCTAssertTrue(self.testRecipe.ingredients.count == 2)
     
     self.testRecipe.removeAllIngredients()
@@ -90,8 +90,8 @@ class DFRecipeTests: XCTestCase {
   }
   
   func testMacroBreakdownEqualsCaloricTotal() {
-    let ingredient1 = DFRecipeTests.testIngredient()
-    let ingredient2 = DFRecipeTests.testIngredient()
+    let ingredient1 = generateTestIngredient()
+    let ingredient2 = generateTestIngredient()
     let ingredients: [DFIngredientModel] = [ingredient1, ingredient2]
     
     testRecipe.addIngredient(ingredient1)
@@ -106,14 +106,6 @@ class DFRecipeTests: XCTestCase {
       })
     }
     XCTAssertEqual(summedMacroCalories, totalCalories)
-  }
-  
-  private class func testIngredient() -> DFIngredientModel {
-    let measurementValue = Float(arc4random_uniform(5) + 1)
-    return DFIngredientModel(ingredientName: "Test: \(arc4random_uniform(10000))",
-      supportedMeasurementUnits: [DFMeasurementUnit.cup, DFMeasurementUnit.tsp],
-      nutritionalInfo: DFNutritionalInfo(servingSize: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: 1.0), fat: 1.0, carbs: 2.0),
-      amount: DFMeasurement(measurementUnit: DFMeasurementUnit.tsp, measurementValue: measurementValue))
   }
   
   private func notifTestingBlockForUpdateType(_ updateType: DFRecipeUpdateType) -> ((DFRecipeUpdateModel) -> Void) {
