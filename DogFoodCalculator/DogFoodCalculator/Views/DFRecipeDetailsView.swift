@@ -83,23 +83,19 @@ extension DFRecipeDetailsView {
   private func setIngredientBreakdownTableConstraints() {
     self.ingredientBreakdownTable.translatesAutoresizingMaskIntoConstraints = false
     
-    let topPadding = NSLayoutConstraint(item: ingredientBreakdownTable, attribute: .top, relatedBy: .equal, toItem: calorieCountLabel, attribute: .bottom, multiplier: 1.0, constant: 20)
-    let leftPadding = ingredientBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .left, toView: self)
-    let rightPadding = ingredientBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .right, toView: self)
-    let centerX = ingredientBreakdownTable.centerXConstraint(toView: self)
-    let height = ingredientBreakdownTable.heightConstraint(forHeight: 200)
-    
-    NSLayoutConstraint.activate([topPadding, centerX, height, leftPadding, rightPadding])
+    NSLayoutConstraint(item: ingredientBreakdownTable, attribute: .top, relatedBy: .equal, toItem: calorieCountLabel, attribute: .bottom, multiplier: 1.0, constant: 20).isActive = true
+    ingredientBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .left, toView: self).isActive = true
+    ingredientBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .right, toView: self).isActive = true
+    ingredientBreakdownTable.centerXConstraint(toView: self).isActive = true
   }
   
   private func setMacroBreakdownTableConstraints() {
     self.macroBreakdownTable.translatesAutoresizingMaskIntoConstraints = false
     
-    NSLayoutConstraint(item: macroBreakdownTable, attribute: .top, relatedBy: .equal, toItem: ingredientBreakdownTable, attribute: .bottom, multiplier: 1.0, constant: 20).isActive = true
+    NSLayoutConstraint(item: macroBreakdownTable, attribute: .top, relatedBy: .equal, toItem: ingredientBreakdownTable, attribute: .bottom, multiplier: 1.0, constant: 30).isActive = true
     macroBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .left, toView: self).isActive = true
     macroBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .right, toView: self).isActive = true
     macroBreakdownTable.centerXConstraint(toView: self).isActive = true
-    macroBreakdownTable.heightConstraint(forHeight: 300).isActive = true
   }
   
   private func setDoneButtonConstraints() {

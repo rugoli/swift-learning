@@ -30,6 +30,8 @@ class DFRecipeBreakdownTable: UIView {
   }
   
   private func setAutolayoutConstraints() {
+    guard self.tableRows.count > 0 else { return }
+    
     var prevRow: DFRecipeBreakdownRowView? = nil
     for row in self.tableRows {
       self.setRowAutolayout(row: row, previousRow: prevRow)
@@ -37,9 +39,9 @@ class DFRecipeBreakdownTable: UIView {
       prevRow = row
     }
     
-    if let firstRow = self.tableRows.first {
-      NSLayoutConstraint.activate([NSLayoutConstraint(item: firstRow, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0)])
-    }
+    NSLayoutConstraint.activate([NSLayoutConstraint(item: self.tableRows.first!, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0)])
+    NSLayoutConstraint.activate([NSLayoutConstraint(item: self.tableRows.last!, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0)])
+    
   }
   
   private func setRowAutolayout(row: DFRecipeBreakdownRowView, previousRow: DFRecipeBreakdownRowView?) {
