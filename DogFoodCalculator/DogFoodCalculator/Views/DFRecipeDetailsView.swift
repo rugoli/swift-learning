@@ -11,7 +11,8 @@ import UIKit
 class DFRecipeDetailsView: UIView {
   let recipe: DFRecipe
   let calorieCountLabel: UILabel
-  let calorieBreakdownTable: DFRecipeBreakdownTable
+  let ingredientBreakdownTable: DFRecipeBreakdownTable
+  let macroBreakdownTable: DFRecipeBreakdownTable
   
   let doneButton: UIButton
   let closeViewAction: () -> Void
@@ -33,7 +34,8 @@ class DFRecipeDetailsView: UIView {
     self.doneButton.titleLabel?.font = self.doneButton.titleLabel?.font?.withSize(20)
     self.closeViewAction = doneButtonAction
     
-    self.calorieBreakdownTable = DFRecipeBreakdownTable(rows: recipe.breakdownByIngredient())
+    self.ingredientBreakdownTable = DFRecipeBreakdownTable(rows: recipe.breakdownByIngredient())
+    self.macroBreakdownTable = DFRecipeBreakdownTable(rows: recipe.breakdownByMacros())
     
     super.init(frame: .zero)
     
@@ -41,7 +43,8 @@ class DFRecipeDetailsView: UIView {
     
     self.addSubview(self.calorieCountLabel)
     self.addSubview(self.doneButton)
-    self.addSubview(self.calorieBreakdownTable)
+    self.addSubview(self.ingredientBreakdownTable)
+    self.addSubview(self.macroBreakdownTable)
     
     self.doneButton.addTarget(self, action: #selector(tappedDoneButton), for: .touchUpInside)
   }
@@ -61,6 +64,7 @@ extension DFRecipeDetailsView {
   func setAllConstraints() {
     self.setCalorieCountLabelConstraints()
     self.setIngredientBreakdownTableConstraints()
+    self.setMacroBreakdownTableConstraints()
     self.setDoneButtonConstraints()
   }
   
@@ -77,15 +81,25 @@ extension DFRecipeDetailsView {
   }
   
   private func setIngredientBreakdownTableConstraints() {
-    self.calorieBreakdownTable.translatesAutoresizingMaskIntoConstraints = false
+    self.ingredientBreakdownTable.translatesAutoresizingMaskIntoConstraints = false
     
-    let topPadding = NSLayoutConstraint(item: calorieBreakdownTable, attribute: .top, relatedBy: .equal, toItem: calorieCountLabel, attribute: .bottom, multiplier: 1.0, constant: 20)
-    let leftPadding = calorieBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .left, toView: self)
-    let rightPadding = calorieBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .right, toView: self)
-    let centerX = calorieBreakdownTable.centerXConstraint(toView: self)
-    let height = calorieBreakdownTable.heightConstraint(forHeight: 500)
+    let topPadding = NSLayoutConstraint(item: ingredientBreakdownTable, attribute: .top, relatedBy: .equal, toItem: calorieCountLabel, attribute: .bottom, multiplier: 1.0, constant: 20)
+    let leftPadding = ingredientBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .left, toView: self)
+    let rightPadding = ingredientBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .right, toView: self)
+    let centerX = ingredientBreakdownTable.centerXConstraint(toView: self)
+    let height = ingredientBreakdownTable.heightConstraint(forHeight: 200)
     
     NSLayoutConstraint.activate([topPadding, centerX, height, leftPadding, rightPadding])
+  }
+  
+  private func setMacroBreakdownTableConstraints() {
+    self.macroBreakdownTable.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint(item: macroBreakdownTable, attribute: .top, relatedBy: .equal, toItem: ingredientBreakdownTable, attribute: .bottom, multiplier: 1.0, constant: 20).isActive = true
+    macroBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .left, toView: self).isActive = true
+    macroBreakdownTable.constraintPaddingForDirection(padding: 20, direction: .right, toView: self).isActive = true
+    macroBreakdownTable.centerXConstraint(toView: self).isActive = true
+    macroBreakdownTable.heightConstraint(forHeight: 300).isActive = true
   }
   
   private func setDoneButtonConstraints() {
