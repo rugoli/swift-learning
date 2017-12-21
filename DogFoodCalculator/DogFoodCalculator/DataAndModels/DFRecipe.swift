@@ -79,12 +79,10 @@ extension DFRecipe {
 
 extension DFRecipe {
   func breakdownByIngredient() -> [DFRecipeBreakdownRowViewModel] {
-    var viewModels = [DFRecipeBreakdownRowViewModel]()
     let totalCalories = self.recipeCalorieCount()
-    for ingredient: DFIngredientModel in self.ingredients {
-      viewModels.append(DFRecipeBreakdownRowViewModel(name: ingredient.ingredientName, percentage: 100.00 * ingredient.ingredientCalories() / totalCalories))
+    return self.ingredients.map { ingredient -> DFRecipeBreakdownRowViewModel in
+      DFRecipeBreakdownRowViewModel(name: ingredient.ingredientName, percentage: 100.00 * ingredient.ingredientCalories() / totalCalories)
     }
-    return viewModels
   }
   
   func breakdownByMacros() -> [DFRecipeBreakdownRowViewModel] {
