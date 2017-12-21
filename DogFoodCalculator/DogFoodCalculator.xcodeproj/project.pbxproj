@@ -10,6 +10,7 @@
 		0111B1661FBA334F003CBD9B /* DFIngredientCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0111B1651FBA334F003CBD9B /* DFIngredientCellViewModel.swift */; };
 		0111B1681FBA3A21003CBD9B /* DFIngredientModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0111B1671FBA3A21003CBD9B /* DFIngredientModelBuilder.swift */; };
 		0111B16A1FBAB56B003CBD9B /* DFIngredientModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0111B1691FBAB56B003CBD9B /* DFIngredientModelBuilderTests.swift */; };
+		011EC85E1FEB3B6A00F2575B /* DFIngredientModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011EC85D1FEB3B6A00F2575B /* DFIngredientModelTests.swift */; };
 		013BB1C81FB6C44B00768857 /* DFRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013BB1C71FB6C44B00768857 /* DFRecipe.swift */; };
 		013BB1CA1FB6C60400768857 /* DFRecipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013BB1C91FB6C60400768857 /* DFRecipeTests.swift */; };
 		014AB0DF1FABAC1D006ABF3E /* DFMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014AB0DE1FABAC1D006ABF3E /* DFMeasurementTests.swift */; };
@@ -17,7 +18,6 @@
 		0151195B1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151195A1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift */; };
 		0151195F1FAD4B2C005EEC71 /* DFIngredientViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0151195E1FAD4B2C005EEC71 /* DFIngredientViewModelTests.swift */; };
 		0155E50C1FBEB0D500D6ED4E /* DFNutritionalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0155E50B1FBEB0D500D6ED4E /* DFNutritionalInfo.swift */; };
-		0155E50E1FBEB43F00D6ED4E /* DFNutritionalInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0155E50D1FBEB43F00D6ED4E /* DFNutritionalInfoTests.swift */; };
 		01850F6A1FAB9EDE00837AC6 /* DFMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */; };
 		0199D4961FBFC09F002CEB92 /* DFHomescreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0199D4951FBFC09F002CEB92 /* DFHomescreenView.swift */; };
 		01A30A0B1FBC192C002E86EE /* DFRecipeUpdateNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A30A0A1FBC192C002E86EE /* DFRecipeUpdateNotification.swift */; };
@@ -56,6 +56,7 @@
 		0111B1651FBA334F003CBD9B /* DFIngredientCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientCellViewModel.swift; sourceTree = "<group>"; };
 		0111B1671FBA3A21003CBD9B /* DFIngredientModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientModelBuilder.swift; sourceTree = "<group>"; };
 		0111B1691FBAB56B003CBD9B /* DFIngredientModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientModelBuilderTests.swift; sourceTree = "<group>"; };
+		011EC85D1FEB3B6A00F2575B /* DFIngredientModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientModelTests.swift; sourceTree = "<group>"; };
 		013BB1C71FB6C44B00768857 /* DFRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipe.swift; sourceTree = "<group>"; };
 		013BB1C91FB6C60400768857 /* DFRecipeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipeTests.swift; sourceTree = "<group>"; };
 		014AB0DC1FABAC1D006ABF3E /* DogFoodCalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogFoodCalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,7 +66,6 @@
 		0151195A1FABD169005EEC71 /* DFSupportedMeasurementUnitsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFSupportedMeasurementUnitsRow.swift; sourceTree = "<group>"; };
 		0151195E1FAD4B2C005EEC71 /* DFIngredientViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFIngredientViewModelTests.swift; sourceTree = "<group>"; };
 		0155E50B1FBEB0D500D6ED4E /* DFNutritionalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFNutritionalInfo.swift; sourceTree = "<group>"; };
-		0155E50D1FBEB43F00D6ED4E /* DFNutritionalInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFNutritionalInfoTests.swift; sourceTree = "<group>"; };
 		01850F691FAB9EDE00837AC6 /* DFMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DFMeasurement.swift; path = DogFoodCalculator/DataAndModels/DFMeasurement.swift; sourceTree = SOURCE_ROOT; };
 		0199D4951FBFC09F002CEB92 /* DFHomescreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFHomescreenView.swift; sourceTree = "<group>"; };
 		01A30A0A1FBC192C002E86EE /* DFRecipeUpdateNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFRecipeUpdateNotification.swift; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 		014AB0DD1FABAC1D006ABF3E /* DogFoodCalculatorTests */ = {
 			isa = PBXGroup;
 			children = (
-				0155E50D1FBEB43F00D6ED4E /* DFNutritionalInfoTests.swift */,
+				011EC85D1FEB3B6A00F2575B /* DFIngredientModelTests.swift */,
 				0111B1691FBAB56B003CBD9B /* DFIngredientModelBuilderTests.swift */,
 				013BB1C91FB6C60400768857 /* DFRecipeTests.swift */,
 				0151195E1FAD4B2C005EEC71 /* DFIngredientViewModelTests.swift */,
@@ -314,8 +314,8 @@
 			files = (
 				0111B16A1FBAB56B003CBD9B /* DFIngredientModelBuilderTests.swift in Sources */,
 				013BB1CA1FB6C60400768857 /* DFRecipeTests.swift in Sources */,
-				0155E50E1FBEB43F00D6ED4E /* DFNutritionalInfoTests.swift in Sources */,
 				0151195F1FAD4B2C005EEC71 /* DFIngredientViewModelTests.swift in Sources */,
+				011EC85E1FEB3B6A00F2575B /* DFIngredientModelTests.swift in Sources */,
 				014AB0DF1FABAC1D006ABF3E /* DFMeasurementTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

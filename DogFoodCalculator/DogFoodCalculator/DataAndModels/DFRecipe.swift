@@ -91,7 +91,7 @@ extension DFRecipe {
     }
     
     for ingredient: DFIngredientModel in self.ingredients {
-      let ingredientBreakdown = ingredient.nutritionalInfo.caloriesForMeasurementByMacro(measurement: ingredient.ingredientAmount)
+      let ingredientBreakdown = ingredient.caloriesForMeasurementByMacro()
       calorieCounters = calorieCounters.map { macroCalories -> DFMacroCalories in
         return macroCalories.withMoreCalories(ingredientBreakdown[macroCalories.macroType]?.calories ?? 0)
       }
