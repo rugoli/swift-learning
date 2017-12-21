@@ -100,7 +100,7 @@ class DFRecipeTests: XCTestCase {
     
     var summedMacroCalories: Float = 0.0
     for ingredient in ingredients {
-      let breakdown = ingredient.nutritionalInfo.caloriesForMeasurementByMacro(measurement: ingredient.ingredientAmount).map { (_ , value) in value}
+      let breakdown = ingredient.caloriesForMeasurementByMacro(amount: ingredient.ingredientAmount).map { (_ , value) in value}
       summedMacroCalories += breakdown.reduce(0.0, { currentSum, macroCalories in
         currentSum + macroCalories.calories
       })
