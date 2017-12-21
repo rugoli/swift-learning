@@ -55,11 +55,7 @@ class DFIngredientModel: NSObject {
   }
   
   func ingredientCalories() -> Float {
-    do {
-      return try self.nutritionalInfo.calculateCaloriesForMeasurement(measurement: self.ingredientAmount)
-    } catch {
-      return 0
-    }
+    return self.nutritionalInfo.calculateCaloriesForMeasurement(measurement: self.ingredientAmount)
   }
   
   override var description : String {
