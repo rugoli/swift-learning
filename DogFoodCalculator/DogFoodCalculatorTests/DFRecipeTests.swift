@@ -89,29 +89,23 @@ class DFRecipeTests: XCTestCase {
     XCTAssertTrue(self.wasNotificationObserved, "Notification was not observed")
   }
   
-  func testIngredientCaloricBreakdown() {
+  func testMacroBreakdownEqualsCaloricTotal() {
     let ingredient1 = DFRecipeTests.testIngredient()
-    let calories1 = ingredient1.ingredientCalories()
-    
     let ingredient2 = DFRecipeTests.testIngredient()
-    let calories2 = ingredient2.ingredientCalories()
+    let ingredients: [DFIngredientModel] = [ingredient1, ingredient2]
     
-    let recipe = DFRecipe()
-    recipe.addIngredient(ingredient1)
-    recipe.addIngredient(ingredient2)
-    let totalCalories = recipe.recipeCalorieCount()
+    testRecipe.addIngredient(ingredient1)
+    testRecipe.addIngredient(ingredient2)
+    let totalCalories = testRecipe.recipeCalorieCount()
     
-    let caloricBreakdown = recipe.breakdownByIngredient()
-    for breakdownRow: DFRecipeBreakdownRowViewModel in caloricBreakdown {
-      switch breakdownRow.name {
-        case ingredient1.ingredientName:
-          XCTAssertEqual(100.00 * calories1 / totalCalories, breakdownRow.percentage)
-        case ingredient2.ingredientName:
-          XCTAssertEqual(100.00 * calories2 / totalCalories, breakdownRow.percentage)
-        default:
-          XCTFail("Found unexpected ingredient name in breakdown rows")
-      }
+    var summedMacroCalories: Float = 0.0
+    for ingredient in ingredients {
+      let breakdown = ingredient.nutritionalInfo.caloriesForMeasurementByMacro(measurement: ingredient.ingredientAmount).map { (_ , value) in value}
+      summedMacroCalories += breakdown.reduce(0.0, { currentSum, macroCalories in
+        currentSum + macroCalories.calories
+      })
     }
+    XCTAssertEqual(summedMacroCalories, totalCalories)
   }
   
   private class func testIngredient() -> DFIngredientModel {
